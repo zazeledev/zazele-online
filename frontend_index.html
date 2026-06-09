@@ -1,0 +1,701 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zazele Online - Digital Learning Platform</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div id="app">
+      <!-- 1. LANDING / AUTH PORTAL -->
+      <div id="landing-page" class="page active">
+        <header class="app-header">
+          <div class="header-content">
+            <a href="#" class="school-brand">
+              <img src="assets/logo.png" alt="Zazele Online Logo" class="brand-logo" onerror="this.style.display='none'">
+              <span>Zazele <span>Online</span></span>
+            </a>
+            <button class="theme-toggle" id="landing-theme-toggle" title="Toggle Dark Mode">🌙</button>
+          </div>
+        </header>
+
+        <main class="app-container" style="max-width: 520px; margin-top: 80px;">
+          <!-- Upcoming Events Section -->
+          <div id="upcoming-events-container" class="app-card" style="margin-bottom: 24px; display: none;">
+            <h3 style="margin-bottom: 16px; text-align: center;">Upcoming Webinars</h3>
+            <div id="events-list" class="events-list">
+              <!-- Events will be injected here -->
+            </div>
+          </div>
+
+          <div class="portal-form-box app-card">
+            <h2 style="margin-bottom: 12px; text-align: center;">Welcome to Zazele Online</h2>
+            <div class="form-tabs portal-tabs" style="margin-bottom: 18px;">
+              <button class="tab-btn active portal-tab" data-tab="login">Login</button>
+              <button class="tab-btn portal-tab" data-tab="register">Register</button>
+            </div>
+
+            <form id="login-form" class="form active">
+              <div id="login-error" class="error-message"></div>
+              <div class="form-group">
+                <label for="login-email">Email</label>
+                <input type="email" id="login-email" required>
+              </div>
+              <div class="form-group">
+                <label for="login-password">Password</label>
+                <div class="password-wrapper">
+                  <input type="password" id="login-password" required>
+                  <span class="toggle-password" data-target="login-password">👁️</span>
+                </div>
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-top: 12px; margin-bottom:12px;">
+                <a href="#" id="forgot-password-link" style="font-size:0.9rem; color:var(--primary);">Forgot Password?</a>
+                <button type="submit" class="btn btn-primary">Login</button>
+              </div>
+            </form>
+
+            <form id="register-form" class="form">
+              <div id="register-error" class="error-message"></div>
+              <div class="form-group"><label for="register-fullname">Full Name</label><input type="text" id="register-fullname" required></div>
+              <div class="form-group"><label for="register-email">Email</label><input type="email" id="register-email" required></div>
+              <div class="form-group">
+                <label for="register-country">Country</label>
+                <select id="register-country" required>
+                  <option value="">-- Select Country --</option>
+                  <option value="South Africa">South Africa</option>
+                  <option disabled>──────────</option>
+                  <option value="Botswana">Botswana</option>
+                  <option value="Lesotho">Lesotho</option>
+                  <option value="Namibia">Namibia</option>
+                  <option value="Swaziland">Eswatini (Swaziland)</option>
+                  <option value="Zimbabwe">Zimbabwe</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="register-province">Province / State</label>
+                <div id="province-container">
+                  <input type="text" id="register-province" required placeholder="Enter your province">
+                </div>
+              </div>
+              <div class="form-group"><label for="register-contact">Contact</label><input type="tel" id="register-contact" required></div>
+              <div class="form-group">
+                <label for="register-password">Password</label>
+                <div class="password-wrapper">
+                  <input type="password" id="register-password" required>
+                  <span class="toggle-password" data-target="register-password">👁️</span>
+                </div>
+              </div>
+              <div class="form-group"><label for="register-id-doc">ID Document</label><input type="file" id="register-id-doc" accept="image/*,.pdf"></div>
+              <div class="form-group"><label for="register-payment-proof">Payment Proof</label><input type="file" id="register-payment-proof" accept="image/*,.pdf"></div>
+              <button type="submit" class="btn btn-primary" style="width:100%">Create Account</button>
+            </form>
+          </div>
+        </main>
+      </div>
+
+    <!-- 2. PENDING APPROVAL -->
+    <div id="pending-page" class="page">
+      <header class="app-header">
+        <div class="header-content">
+          <a href="#" class="school-brand">
+            <img src="assets/logo.png" alt="Zazele Online Logo" class="brand-logo" onerror="this.style.display='none'">
+            <span>Zazele <span>Online</span></span>
+          </a>
+        </div>
+      </header>
+      <main class="app-container" style="text-align: center; max-width: 600px;">
+        <div class="app-card" style="padding: 60px;">
+          <h2>Account Pending Approval</h2>
+          <p style="margin-bottom: 30px; color: var(--text-soft);">Your documents and payment proof are being verified by our admissions team.</p>
+          <div class="status-pill pending" style="display: inline-block; margin-bottom: 30px;">Verification in Progress</div>
+          <p style="font-size: 0.9rem; color: var(--text-muted);">Email: <strong>support@zazele.online</strong> | WhatsApp: <strong>079 842 0873</strong></p>
+          <button class="btn btn-secondary" id="logout-pending-btn" style="margin-top: 40px; width: 100%;">Logout</button>
+        </div>
+      </main>
+    </div>
+
+    <!-- 3. STUDENT DASHBOARD (linear layout) -->
+    <div id="dashboard-page" class="page">
+      <header class="app-header">
+        <div class="header-content">
+          <a href="#" class="school-brand">
+            <img src="assets/logo.png" alt="Zazele Online Logo" class="brand-logo" onerror="this.style.display='none'">
+            <span>Zazele <span>Online</span></span>
+          </a>
+          <div class="user-nav">
+            <div class="notification-wrapper">
+              <button class="notification-btn" id="student-notification-btn">
+                <span class="icon">🔔</span>
+                <span class="notification-badge" id="student-unread-count" style="display: none;">0</span>
+              </button>
+              <div class="notification-dropdown" id="student-notification-dropdown">
+                <div class="notification-header">
+                  <h4>Notifications</h4>
+                  <button class="mark-all-read" id="student-mark-all-read">Mark all as read</button>
+                </div>
+                <div class="notification-list" id="student-notification-list">
+                  <div class="no-notifications">No new notifications</div>
+                </div>
+              </div>
+            </div>
+            <div class="profile-badge" id="profile-badge" style="cursor:pointer;">
+              <span id="user-display-name">Student</span>
+            </div>
+            <button id="logout-btn" class="btn btn-danger btn-small">Logout</button>
+          </div>
+        </div>
+      </header>
+
+      <main class="app-container">
+        <section class="app-card" style="margin-bottom:24px; padding:32px;">
+          <h2 style="font-size: 1.8rem; margin-bottom: 20px;">e Learner Platinum Certificate</h2>
+          <div style="margin-bottom: 24px;">
+            <h3 style="font-size: 1.2rem; color: var(--primary); margin-bottom: 8px;">Together We Will Explore</h3>
+            <p style="color: var(--text-soft);">This comprehensive course is designed to take you through the essential digital skills needed in today's modern workforce. We will explore financial literacy, digital tools, and professional communication.</p>
+          </div>
+          <div>
+            <h3 style="font-size: 1.2rem; color: var(--primary); margin-bottom: 8px;">Why We Created This Course</h3>
+            <p style="color: var(--text-soft);">Zazele Online was founded on the belief that quality education should be accessible to everyone. We created this course to bridge the digital divide and empower students with practical, industry-relevant knowledge.</p>
+          </div>
+        </section>
+
+        <section style="margin-bottom:40px;">
+          <h2 class="section-title">Learning Progress</h2>
+          <div id="progress-overview" class="progress-section-card" style="margin-bottom:0; padding:0;">
+            <p class="loading">Loading progress...</p>
+          </div>
+        </section>
+
+        <section style="margin-bottom:40px;">
+          <h2 class="section-title">Course Content</h2>
+          <div class="module-selector-grid" id="modules-container">
+            <p class="loading">Loading modules...</p>
+          </div>
+        </section>
+
+        <!-- Standalone Module Viewer -->
+        <section id="module-viewer" class="app-card" style="display:none; margin-bottom: 40px; min-height: 400px; padding: 40px;">
+          <div id="viewer-header" style="margin-bottom: 32px; border-bottom: 1px solid var(--border-color); padding-bottom: 24px; display: flex; justify-content: space-between; align-items: flex-start;">
+            <div>
+              <h2 id="viewer-module-title" style="margin-bottom: 8px;">Module Title</h2>
+              <p id="viewer-module-desc" style="color: var(--text-soft); max-width: 800px;">Module description goes here.</p>
+            </div>
+            <button class="btn btn-secondary btn-small" onclick="closeModuleViewer()">← Back to Modules</button>
+          </div>
+
+          <div class="module-tabs">
+            <div class="tabs-header">
+              <button class="module-tab-btn active" id="tab-btn-content">Content</button>
+              <button class="module-tab-btn" id="tab-btn-resources">Resources</button>
+              <button class="module-tab-btn" id="tab-btn-assessment">Assessment</button>
+              <button class="module-tab-btn" id="tab-btn-support" style="color: var(--primary); border-left: 1px solid var(--border-color); padding-left: 24px; margin-left: 12px;">Live Support</button>
+            </div>
+            <div class="tabs-content">
+              <div id="panel-content" class="module-tab-panel active"></div>
+              <div id="panel-resources" class="module-tab-panel"></div>
+              <div id="panel-assessment" class="module-tab-panel"></div>
+              <div id="panel-support" class="module-tab-panel">
+                <div style="max-width: 600px; margin: 0 auto; text-align: center; padding: 40px 0;">
+                  <h3 style="margin-bottom: 16px;">Need extra help?</h3>
+                  <p style="color: var(--text-soft); margin-bottom: 32px;">If you're struggling with a specific lesson, you can request a live 1-on-1 support session with an instructor on MS Teams.</p>
+                  <button class="btn btn-primary btn-large" onclick="openSupportModal()">Request Live Support Session</button>
+                  
+                  <div id="my-requests-container" style="margin-top: 48px; text-align: left;">
+                    <h4 style="margin-bottom: 16px; font-size: 0.9rem; text-transform: uppercase; color: var(--text-muted);">Your Recent Requests</h4>
+                    <div id="support-requests-list">
+                      <p class="text-muted" style="font-size: 0.85rem;">No requests yet.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+
+    <!-- Profile Menu & Edit Modal -->
+    <div id="profile-menu" class="app-card" style="display:none; position: absolute; right: 24px; top: 80px; z-index: 2001; padding: 24px; min-width: 250px;">
+      <h3 style="margin-bottom: 12px; font-size: 1.1rem;">Profile Info</h3>
+      <p id="profile-fullname" style="font-weight: 700; margin-bottom: 4px;">Full Name</p>
+      <p id="profile-email" style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 4px;">email@example.com</p>
+      <p id="profile-contact" style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 16px;">-</p>
+      <div style="display:flex; flex-direction: column; gap:8px;">
+        <button class="btn btn-secondary btn-small btn-theme-toggle" style="justify-content: flex-start; gap: 10px;">
+          <span class="theme-icon">🌙</span> Dark Mode
+        </button>
+        <button id="edit-profile-btn" class="btn btn-secondary btn-small">Update Profile</button>
+        <button id="profile-logout-btn" class="btn btn-danger btn-small">Logout</button>
+      </div>
+    </div>
+
+    <div id="edit-profile-modal" class="modal">
+      <div class="modal-content" style="max-width: 500px;">
+        <h3>Update Profile</h3>
+        <p style="color: var(--text-muted); margin-bottom: 24px; font-size: 0.9rem;">Keep your contact information up to date.</p>
+        <form id="edit-profile-form">
+          <div class="form-group"><label>Full Name</label><input id="edit-fullname" required></div>
+          <div class="form-group"><label>Contact Number</label><input id="edit-contact"></div>
+          <div class="form-group"><label>Email Address</label><input id="edit-email" type="email" required></div>
+          <div style="display:flex; gap:12px; margin-top:12px;">
+            <button type="submit" class="btn btn-primary" style="flex: 1;">Save Changes</button>
+            <button type="button" id="close-edit-modal" class="btn btn-secondary" style="flex: 1;">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Live Support Request Modal -->
+    <div id="support-modal" class="modal">
+      <div class="modal-content" style="max-width: 500px;">
+        <h3>Request Live Support</h3>
+        <p style="color: var(--text-muted); margin-bottom: 24px; font-size: 0.9rem;">Select a lesson and tell us what you're struggling with.</p>
+        <form id="support-request-form">
+          <div class="form-group">
+            <label>Select Lesson</label>
+            <select id="support-lesson-select" required>
+              <option value="">-- Choose a lesson --</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>How can we help? (Details)</label>
+            <textarea id="support-details" rows="4" placeholder="e.g. I don't understand the formula for calculating compound interest in Excel..." required></textarea>
+          </div>
+          <p style="font-size: 0.75rem; color: var(--text-muted); background: #f8f9fa; padding: 12px; border-radius: 8px; margin-bottom: 20px;">
+            <strong>Note:</strong> Sessions are conducted via MS Teams. We will notify you once your session is scheduled.
+          </p>
+          <div style="display:flex; gap:12px;">
+            <button type="submit" class="btn btn-primary" style="flex: 1;">Send Request</button>
+            <button type="button" id="close-support-modal" class="btn btn-secondary" style="flex: 1;">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- 4. ADMIN PORTAL -->
+    <div id="admin-page" class="page">
+      <header class="app-header">
+        <div class="header-content">
+          <a href="#" class="school-brand">
+            <img src="assets/logo.png" alt="Zazele Online Logo" class="brand-logo" onerror="this.style.display='none'">
+            <span>Zazele <span>Online</span></span>
+          </a>
+          <div class="user-nav">
+            <div class="notification-wrapper">
+              <button class="notification-btn" id="admin-notification-btn">
+                <span class="icon">🔔</span>
+                <span class="notification-badge" id="admin-unread-count" style="display: none;">0</span>
+              </button>
+              <div class="notification-dropdown" id="admin-notification-dropdown">
+                <div class="notification-header">
+                  <h4>Notifications</h4>
+                  <button class="mark-all-read" id="admin-mark-all-read">Mark all as read</button>
+                </div>
+                <div class="notification-list" id="admin-notification-list">
+                  <div class="no-notifications">No new notifications</div>
+                </div>
+              </div>
+            </div>
+            <div class="user-info-text">
+              <span class="name" id="admin-user-name">Administrator</span>
+              <span class="role">Admin Portal</span>
+              <a href="#" class="btn-theme-toggle" style="font-size: 0.75rem; color: var(--primary); text-decoration: none; display: block; margin-top: 4px;">
+                <span class="theme-icon">🌙</span> Dark Mode
+              </a>
+            </div>
+            <button id="admin-logout-btn" class="btn btn-danger btn-small">Logout</button>
+          </div>
+        </div>
+      </header>
+
+      <main class="app-container">
+        <nav class="admin-nav-bar">
+          <button class="admin-nav-item active" data-section="users">Active Learners</button>
+          <button class="admin-nav-item" data-section="archive">Archive (Graduated)</button>
+          <button class="admin-nav-item" data-section="profile-requests">Profile Requests</button>
+          <button class="admin-nav-item" data-section="support-sessions">Support Sessions</button>
+          <button class="admin-nav-item" data-section="modules">Course Modules</button>
+          <button class="admin-nav-item" data-section="webinars">Webinars</button>
+        </nav>
+
+        <section id="archive-section" class="admin-section">
+          <h2 class="section-title">Archived / Graduated Students</h2>
+          <div id="archived-users-list">
+            <p class="loading">Loading archived students...</p>
+          </div>
+        </section>
+
+        <section id="support-sessions-section" class="admin-section">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px;">
+            <h2 class="section-title" style="margin-bottom: 0;">Live Support Requests</h2>
+          </div>
+          <div id="admin-support-requests-list">
+            <p class="loading">Loading support requests...</p>
+          </div>
+        </section>
+
+        <section id="profile-requests-section" class="admin-section">
+          <h2 class="section-title">Profile Update Requests</h2>
+          <div id="profile-requests-list">
+            <p class="loading">Loading requests...</p>
+          </div>
+        </section>
+
+        <section id="users-section" class="admin-section active">
+          <h2 class="section-title">User Management</h2>
+          <div id="users-list">
+            <p class="loading">Loading users...</p>
+          </div>
+          
+          <div id="user-detail" style="display: none;">
+            <button class="btn btn-secondary btn-small" id="back-to-users" style="margin-bottom: 24px;">← Back to Users</button>
+            
+            <div class="admin-detail-grid">
+              <!-- Left: Profile info and uploads -->
+              <div class="admin-detail-main">
+                <div class="app-card" style="padding: 32px; margin-bottom: 24px;">
+                  <h3 style="margin-bottom: 24px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px;">Student Profile</h3>
+                  <div class="info-grid">
+                    <div class="info-item">
+                      <label>Full Name</label>
+                      <p id="user-detail-name">-</p>
+                    </div>
+                    <div class="info-item">
+                      <label>Email Address</label>
+                      <p id="user-detail-email">-</p>
+                    </div>
+                    <div class="info-item">
+                      <label>Contact Number</label>
+                      <p id="user-detail-contact">-</p>
+                    </div>
+                    <div class="info-item">
+                      <label>Location</label>
+                      <p><span id="user-detail-country">-</span>, <span id="user-detail-province">-</span></p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="app-card" style="padding: 32px;">
+                  <h3 style="margin-bottom: 24px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px;">Documents</h3>
+                  <div class="docs-grid">
+                    <div class="doc-card">
+                      <label>ID Document</label>
+                      <div id="user-id-doc" class="doc-link-container">
+                        <a href="#" target="_blank" class="btn btn-secondary btn-small">View ID Document</a>
+                      </div>
+                    </div>
+                    <div class="doc-card">
+                      <label>Proof of Payment</label>
+                      <div id="user-payment-doc" class="doc-link-container">
+                        <a href="#" target="_blank" class="btn btn-secondary btn-small">View Proof</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Student Progress Section (Loaded via JS) -->
+                <div id="user-progress-detail"></div>
+              </div>
+
+              <!-- Right: Admin Actions -->
+              <div class="admin-detail-sidebar">
+                <div class="app-card" style="padding: 32px; position: sticky; top: 120px;">
+                  <h3 style="margin-bottom: 24px; border-bottom: 1px solid var(--border-color); padding-bottom: 12px;">Admin Actions</h3>
+                  
+                  <div class="status-summary" style="margin-bottom: 32px;">
+                    <div class="status-item">
+                      <span>Account Access:</span>
+                      <span id="user-detail-status" class="status pending">Pending</span>
+                    </div>
+                    <div class="status-item">
+                      <span>ID Verification:</span>
+                      <span id="id-status" class="status-pill pending">Pending</span>
+                    </div>
+                    <div class="status-item">
+                      <span>Payment Verification:</span>
+                      <span id="payment-status" class="status-pill pending">Pending</span>
+                    </div>
+                  </div>
+
+                  <div class="action-buttons-group">
+                    <div id="id-verification-action" class="action-box">
+                      <p class="action-hint">Verify student identity document</p>
+                      <button id="verify-id-btn" class="btn btn-secondary" style="width: 100%;">Verify ID</button>
+                    </div>
+
+                    <div id="payment-verification-action" class="action-box">
+                      <p class="action-hint">Confirm payment received</p>
+                      <button id="verify-payment-btn" class="btn btn-secondary" style="width: 100%;">Verify Payment</button>
+                    </div>
+
+                    <div id="approve-action" class="action-box highlight">
+                      <p class="action-hint">Grant full dashboard access</p>
+                      <button id="approve-btn" class="btn btn-primary" style="width: 100%;">Approve Account</button>
+                    </div>
+
+                    <div id="admin-complete-action" class="action-box highlight-success" style="display: none;">
+                      <p class="action-hint">Mark student as graduated/completed</p>
+                      <button id="admin-mark-complete-btn" class="btn btn-success" style="width: 100%;">Mark as Completed</button>
+                    </div>
+
+                    <div class="action-box">
+                      <p class="action-hint">Manually update student info</p>
+                      <button id="admin-edit-user-btn" class="btn btn-secondary" style="width: 100%;">Edit Student Details</button>
+                    </div>
+
+                    <div id="verified-message" style="display:none; text-align: center;">
+                      <div class="status approved" style="padding: 12px; display: block;">User fully verified and approved</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="modules-section" class="admin-section">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px;">
+            <h2 class="section-title" style="margin-bottom: 0;">Course Modules</h2>
+            <button class="btn btn-primary btn-small" id="add-module-btn">+ Add Module</button>
+          </div>
+          <div id="modules-management" class="modules-management-container">
+            <p class="loading">Loading modules...</p>
+          </div>
+        </section>
+
+        <section id="webinars-section" class="admin-section">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px;">
+            <h2 class="section-title" style="margin-bottom: 0;">Upcoming Webinars & Events</h2>
+            <button class="btn btn-primary btn-small" id="add-event-btn">+ Add Event</button>
+          </div>
+          
+          <div id="admin-events-list">
+            <p class="loading">Loading events...</p>
+          </div>
+
+          <!-- Event Detail View (Registrations) -->
+          <div id="event-detail" style="display: none;">
+            <button class="btn btn-secondary btn-small" id="back-to-events" style="margin-bottom: 24px;">← Back to Events</button>
+            <div class="app-card" style="padding: 32px;">
+              <h3 id="admin-event-name" style="margin-bottom: 8px;">Event Name</h3>
+              <p id="admin-event-info" style="color: var(--text-muted); margin-bottom: 24px;">Date: - | Time: -</p>
+              
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                <h4 style="margin: 0;">Registered Participants</h4>
+                <button class="btn btn-primary btn-small" id="send-links-btn">Send Teams Link to Selected</button>
+              </div>
+
+              <div class="table-container">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th><input type="checkbox" id="select-all-registrations"></th>
+                      <th>Full Name</th>
+                      <th>Email</th>
+                      <th>Contact</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="registrations-list">
+                    <!-- Registrations will be injected here -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Admin Modals -->
+        <div id="module-modal" class="modal">
+          <!-- ... -->
+        </div>
+
+        <div id="event-modal" class="modal">
+          <div class="modal-content" style="max-width: 600px;">
+            <h2 id="event-modal-title">Add New Webinar/Event</h2>
+            <form id="event-form">
+              <div class="form-group"><label>Event Name</label><input type="text" id="event-name" required></div>
+              <div class="form-group"><label>Description</label><textarea id="event-description" rows="3" required></textarea></div>
+              <div class="form-group"><label>Date</label><input type="date" id="event-date" required></div>
+              <div class="form-group"><label>Time</label><input type="text" id="event-time" placeholder="e.g. 14:00 - 15:30" required></div>
+              <div class="form-group"><label>MS Teams Link</label><input type="url" id="event-teams-link" placeholder="https://teams.microsoft.com/l/meetup-join/..."></div>
+              <div class="form-actions" style="display: flex; gap: 12px; margin-top: 24px;">
+                <button type="submit" class="btn btn-primary" style="flex: 1;">Save Event</button>
+                <button type="button" class="btn btn-secondary" id="close-event-modal" style="flex: 1;">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div id="lesson-modal" class="modal">
+          <div class="modal-content" style="max-width: 600px;">
+            <h2 id="lesson-modal-title">Lesson Details</h2>
+            <form id="lesson-form">
+              <input type="hidden" id="lesson-module-id">
+              <div class="form-group"><label>Lesson Title</label><input type="text" id="lesson-title" required></div>
+              <div class="form-group"><label>YouTube URL</label><input type="url" id="lesson-youtube-url"></div>
+              <div class="form-group"><label>Description</label><textarea id="lesson-description" rows="3"></textarea></div>
+              <div class="form-group"><label>Order</label><input type="number" id="lesson-order" required min="1"></div>
+              <div class="form-group"><label>Notes (PDF/Image)</label><input type="file" id="lesson-notes"></div>
+              <div class="form-actions" style="display: flex; gap: 12px; margin-top: 24px;">
+                <button type="submit" class="btn btn-primary" style="flex: 1;">Save Lesson</button>
+                <button type="button" class="btn btn-secondary" id="close-lesson-modal" style="flex: 1;">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div id="assignment-modal" class="modal">
+          <div class="modal-content" style="max-width: 800px;">
+            <h3 style="margin-bottom: 12px;">Manage Assignment Questions</h3>
+            <p style="color: var(--text-muted); margin-bottom: 12px;">Edit or add questions for the selected module.</p>
+            <form id="assignment-form">
+              <input type="hidden" id="assignment-module-id" value="">
+              <div id="questions-list" style="max-height: 420px; overflow:auto; margin-bottom: 12px;">
+                <p class="loading">No questions loaded.</p>
+              </div>
+
+              <div style="display:flex; gap:8px; align-items:center;">
+                <button type="button" id="add-question-btn" class="btn btn-secondary">Add Question</button>
+                <button type="submit" class="btn btn-primary">Save Questions</button>
+                <button type="button" id="close-assignment-modal" class="btn btn-secondary">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div id="admin-edit-user-modal" class="modal">
+          <div class="modal-content" style="max-width: 500px;">
+            <h3>Edit Student Details</h3>
+            <p style="color: var(--text-muted); margin-bottom: 24px; font-size: 0.9rem;">Update student profile information manually.</p>
+            <form id="admin-edit-user-form">
+              <div class="form-group"><label>Full Name</label><input id="admin-edit-fullname" required></div>
+              <div class="form-group"><label>Email Address</label><input id="admin-edit-email" type="email" required></div>
+              <div class="form-group"><label>Contact Number</label><input id="admin-edit-contact"></div>
+              <div class="form-group"><label>Country</label><input id="admin-edit-country"></div>
+              <div class="form-group"><label>Province</label><input id="admin-edit-province"></div>
+              <div style="display:flex; gap:12px; margin-top:12px;">
+                <button type="submit" class="btn btn-primary" style="flex: 1;">Save Changes</button>
+                <button type="button" id="close-admin-edit-modal" class="btn btn-secondary" style="flex: 1;">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </main>
+    </div>
+
+    <!-- 5. QUIZ PORTAL -->
+    <div id="assignment-page" class="page">
+      <header class="app-header">
+        <div class="header-content">
+          <a href="#" class="school-brand">Zazele <span>Online</span> Assessment</a>
+          <div class="user-nav">
+            <span class="name" id="assignment-user-name" style="font-weight: 700;">-</span>
+          </div>
+        </div>
+      </header>
+      <main class="app-container">
+        <div id="assignment-container">
+          <p class="loading">Preparing your assessment...</p>
+        </div>
+      </main>
+    </div>
+
+    <footer class="dashboard-footer">
+      <div class="app-container">
+        <p class="school-brand" style="font-size: 1.8rem; margin-bottom: 16px; color: white;">Zazele <span>Online</span></p>
+        <div style="margin-bottom: 24px;">
+          <p style="font-size: 1.1rem; margin-bottom: 8px;">Email: <strong>support@zazele.online</strong></p>
+          <p style="font-size: 1.1rem; margin-bottom: 8px;">WhatsApp: <strong>079 842 0873</strong></p>
+          <p style="color: rgba(255,255,255,0.6);">Support available Mon - Fri, 9am - 5pm</p>
+        </div>
+        <div class="social-links" style="margin-bottom: 24px;">
+          <a href="https://www.facebook.com/zazeleohb" target="_blank" class="facebook-link">
+            <svg style="width: 24px; height: 24px; fill: white; vertical-align: middle; margin-right: 8px;" viewBox="0 0 24 24"><path d="M12 2.04c-5.5 0-10 4.49-10 10.02 0 5 3.66 9.15 8.44 9.9v-7h-2.54v-2.9h2.54v-2.2c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.23.19 2.23.19v2.47h-1.26c-1.24 0-1.63.77-1.63 1.56v1.88h2.78l-.45 2.9h-2.33v7a10 10 0 0 0 8.44-9.9c0-5.53-4.5-10.02-10-10.02z"/></svg>
+            Follow us on Facebook
+          </a>
+        </div>
+        <div style="width: 60px; height: 2px; background: var(--primary); margin-bottom: 24px;"></div>
+        <p style="font-size: 0.9rem; color: rgba(255,255,255,0.6);">&copy; 2026 Zazele Online. All Rights Reserved. Professional Digital Training.</p>
+      </div>
+    </footer>
+
+    <div id="event-registration-modal" class="modal">
+      <div class="modal-content" style="max-width: 500px;">
+        <h3 id="event-reg-title" style="margin-bottom: 12px;">Event Registration</h3>
+        <form id="event-registration-form">
+          <input type="hidden" id="event-reg-id" value="">
+          <div class="form-group"><label for="event-reg-fullname">Full Name</label><input id="event-reg-fullname" name="fullname" required></div>
+          <div class="form-group"><label for="event-reg-email">Email</label><input id="event-reg-email" name="email" type="email" required></div>
+          <div class="form-group"><label for="event-reg-contact">Contact Number</label><input id="event-reg-contact" name="contact" type="tel" required></div>
+          <div style="display:flex; gap:12px; margin-top:12px;">
+            <button type="submit" class="btn btn-primary" style="flex:1;">Register</button>
+            <button type="button" id="close-event-reg-modal" class="btn btn-secondary" style="flex:1;">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Forgot Password Modal -->
+  <div id="forgot-password-modal" class="modal" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5); align-items: center; justify-content: center;">
+    <div class="modal-content" style="background-color: #fefefe; padding: 32px; border: 1px solid #888; width: 90%; max-width: 440px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); position: relative;">
+      <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+        <h3 id="fp-modal-title" style="margin: 0; font-size: 1.4rem;">Reset Password</h3>
+        <button id="close-fp-modal" class="close-btn" style="background: none; border: none; font-size: 1.8rem; cursor: pointer; color: #999;">&times;</button>
+      </div>
+      
+      <!-- Step 1: Request Reset -->
+      <form id="forgot-password-form">
+        <p style="font-size: 0.95rem; color: #666; line-height: 1.5; margin-bottom: 24px;">
+          Enter your email address and we'll send you a 6-digit code to reset your password.
+        </p>
+        <div id="fp-error" class="error-message" style="color: #dc3545; background: #f8d7da; padding: 10px; border-radius: 6px; margin-bottom: 16px; display: none; font-size: 0.85rem;"></div>
+        <div class="form-group" style="margin-bottom: 20px;">
+          <label for="fp-email" style="display: block; font-weight: 600; margin-bottom: 8px; font-size: 0.9rem;">Email Address</label>
+          <input type="email" id="fp-email" required placeholder="your@email.com" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 1rem;">
+        </div>
+        <button type="submit" id="fp-submit-btn" class="btn btn-primary" style="width: 100%; padding: 12px; font-size: 1rem; font-weight: 600;">Get Reset Code</button>
+      </form>
+
+      <!-- Step 2: Reset with Token -->
+      <form id="reset-password-form" style="display: none;">
+        <p style="font-size: 0.95rem; color: #666; line-height: 1.5; margin-bottom: 24px;">
+          Enter the 6-digit code sent to your email and your new password.
+        </p>
+        <div id="rp-error" class="error-message" style="color: #dc3545; background: #f8d7da; padding: 10px; border-radius: 6px; margin-bottom: 16px; display: none; font-size: 0.85rem;"></div>
+        <div class="form-group" style="margin-bottom: 20px;">
+          <label for="rp-token" style="display: block; font-weight: 600; margin-bottom: 8px; font-size: 0.9rem;">Reset Code (6 digits)</label>
+          <input type="text" id="rp-token" required maxlength="6" placeholder="123456" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 1rem; letter-spacing: 2px; text-align: center;">
+        </div>
+        <div class="form-group" style="margin-bottom: 24px;">
+          <label for="rp-new-password" style="display: block; font-weight: 600; margin-bottom: 8px; font-size: 0.9rem;">New Password</label>
+          <input type="password" id="rp-new-password" required minlength="6" placeholder="••••••••" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 1rem;">
+        </div>
+        <button type="submit" id="rp-submit-btn" class="btn btn-primary" style="width: 100%; padding: 12px; font-size: 1rem; font-weight: 600;">Reset Password</button>
+      </form>
+
+      <div id="fp-success-msg" style="display: none; text-align: center; padding: 12px 0;">
+        <div style="font-size: 4rem; color: #28a745; margin-bottom: 16px;">✓</div>
+        <h4 style="margin-bottom: 8px; font-size: 1.3rem;">Password Reset Successful</h4>
+        <p style="font-size: 1rem; color: #666; margin-bottom: 24px;">You can now login with your new password.</p>
+        <button id="fp-done-btn" class="btn btn-primary" style="width: 100%; padding: 12px; font-size: 1rem; font-weight: 600;">Back to Login</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/notifications.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/assignment.js"></script>
+  <script src="js/student-dashboard.js"></script>
+  <script src="js/admin-dashboard.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
+

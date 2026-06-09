@@ -1,0 +1,251 @@
+/* 
+  Zazele Online - Mobile & Responsiveness Styles
+  Targets: Landing Page, Student Dashboard, Admin Dashboard
+*/
+
+/* --- Global Mobile Overrides --- */
+@media (max-width: 768px) {
+  :root {
+    --header-height: 70px;
+  }
+
+  .app-container {
+    padding: 0 16px;
+    margin: 20px auto;
+  }
+
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.5rem; }
+  h3 { font-size: 1.2rem; }
+
+  /* Table Responsiveness */
+  .table-container {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 1rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--border-color);
+  }
+
+  .users-table, .admin-table {
+    min-width: 600px; /* Force scroll on very small screens */
+  }
+
+  /* Modals */
+  .modal-content {
+    width: 95% !important;
+    padding: 20px !important;
+    margin: 10px;
+  }
+
+  /* Forms */
+  .portal-form-box {
+    padding: 24px !important;
+  }
+
+  /* Header */
+  .app-header {
+    padding: 0 16px;
+  }
+
+  .school-brand span {
+    display: none; /* Hide "Online" text on small mobiles if needed, or just shrink */
+  }
+  
+  .school-brand {
+    font-size: 1.1rem;
+  }
+
+  .user-nav {
+    gap: 12px;
+  }
+
+  .user-info-text {
+    display: none; /* Hide name/role on mobile header to save space */
+  }
+
+  /* Grid layouts */
+  .admin-detail-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .docs-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .module-selector-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .progress-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Module Viewer Tabs */
+  .tabs-header {
+    overflow-x: auto;
+    white-space: nowrap;
+    display: flex;
+    padding-bottom: 8px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .module-tab-btn {
+    padding: 10px 16px;
+    font-size: 0.8rem;
+    flex-shrink: 0;
+  }
+
+  /* Admin Navigation */
+  .admin-nav-bar {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 4px;
+    gap: 20px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .admin-nav-item {
+    flex-shrink: 0;
+  }
+
+  /* Quiz UI */
+  .quiz-header {
+    padding: 20px !important;
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+  }
+
+  .quiz-content {
+    padding: 30px 20px !important;
+  }
+
+  .question-text {
+    font-size: 1.2rem !important;
+  }
+
+  .option-label {
+    padding: 15px !important;
+  }
+
+  .quiz-navigation {
+    padding: 20px !important;
+    flex-direction: column-reverse;
+    gap: 12px;
+  }
+
+  .quiz-navigation .btn {
+    width: 100%;
+  }
+
+  .results-score {
+    grid-template-columns: 1fr !important;
+    padding: 20px !important;
+  }
+
+  /* Hero Section */
+  .hero-section h1 {
+    font-size: 2rem !important;
+  }
+
+  .hero-stats {
+    gap: 20px !important;
+  }
+
+  .stat-number {
+    font-size: 1.5rem !important;
+  }
+
+  /* Admin Module Management */
+  .module-sections {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+
+  .assignment-section-admin {
+    padding-left: 0 !important;
+    border-left: none !important;
+    border-top: 1px solid var(--border-color);
+    padding-top: 20px;
+  }
+
+  /* Lesson Items */
+  .lesson-item-admin {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 12px;
+  }
+
+  .lesson-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  /* Footer */
+  .dashboard-footer {
+    padding: 40px 20px !important;
+  }
+
+  /* Improved Touch Targets */
+  .btn, .tab-btn, .admin-nav-item, .module-tab-btn {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Better spacing for student dashboard cards */
+  .progress-section-card {
+    padding: 20px !important;
+  }
+
+  .module-select-card {
+    padding: 20px !important;
+  }
+
+  /* Make header sticky on mobile for easier navigation */
+  .app-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: var(--shadow-soft);
+  }
+
+  /* Centered Notification Dropdown for Mobile */
+  .notification-dropdown {
+    position: fixed !important;
+    top: calc(var(--header-height) + 10px) !important;
+    left: 10px !important;
+    right: 10px !important;
+    width: calc(100% - 20px) !important;
+    max-width: none !important;
+    margin-top: 0 !important;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.15) !important;
+  }
+}
+
+/* --- Small Mobile Fixes (iPhone SE etc) --- */
+@media (max-width: 400px) {
+  .hero-section h1 {
+    font-size: 1.6rem !important;
+  }
+
+  .portal-tabs {
+    flex-direction: column;
+  }
+
+  .app-header {
+    padding: 0 10px;
+  }
+
+  .brand-logo {
+    height: 32px;
+  }
+}
