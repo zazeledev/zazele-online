@@ -25,7 +25,9 @@ const corsOptions = {
       'https://zazele.online', 
       'https://www.zazele.online',
       'http://zazele.online',
-      'http://www.zazele.online'
+      'http://www.zazele.online',
+      'https://zazele-online.vercel.app',
+      'https://www.zazele-online.vercel.app'
     ];
     
     // Allow requests with no origin (like mobile apps or curl)
