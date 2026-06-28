@@ -52,7 +52,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use((req, res, next) => {
   // Only log non-static requests in production to reduce noise
   if (!req.url.startsWith('/uploads')) {
-    console.log(`${new Date().toISOString()} - ${req.method} ${req.url} - Origin: ${req.get('Origin') || 'None'}`);
+    const start = Date.now();
+    res.on('finish', () => {
+      const duration = Date.now() - start;
+      console.log(`${new Date().toISOString()} - ${req.method} ${req.url} - Status: ${res.statusCode} - ${duration}ms - Origin: ${req.get('Origin') || 'None'}`);
+    });
   }
   next();
 });
@@ -67,31 +71,36 @@ app.use(express.static(path.join(__dirname, '../../frontend')));
 const mongooseOptions = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  serverSelectionTimeoutMS: 15000,
+  serverSelectionTimeoutMS: 5000, // Reduced from 15s to fail faster and retry
   socketTimeoutMS: 45000,
-  heartbeatFrequencyMS: 10000, // Check connection every 10 seconds
+  heartbeatFrequencyMS: 10000,
 };
 
+let isConnected = false;
+
 function connectWithRetry() {
-  console.log('Attempting MongoDB connection...');
+  console.log(`[${new Date().toISOString()}] Attempting MongoDB connection...`);
   mongoose
     .connect(process.env.MONGODB_URI, mongooseOptions)
     .then(() => {
-      console.log('✅ MongoDB connected successfully');
+      console.log(`[${new Date().toISOString()}] ✅ MongoDB connected successfully`);
+      isConnected = true;
     })
     .catch((err) => {
-      console.error('❌ MongoDB connection error:', err.message);
+      console.error(`[${new Date().toISOString()}] ❌ MongoDB connection error:`, err.message);
+      isConnected = false;
       console.log('Retrying in 5 seconds...');
       setTimeout(connectWithRetry, 5000);
     });
 }
 
 mongoose.connection.on('disconnected', () => {
-  console.warn('⚠️ MongoDB disconnected! Attempting to reconnect...');
+  isConnected = false;
+  console.warn(`[${new Date().toISOString()}] ⚠️ MongoDB disconnected! Attempting to reconnect...`);
 });
 
 mongoose.connection.on('error', (err) => {
-  console.error('🔥 MongoDB connection error:', err);
+  console.error(`[${new Date().toISOString()}] 🔥 MongoDB connection error:`, err);
 });
 
 connectWithRetry();
@@ -107,7 +116,12 @@ app.use('/api/events', eventRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {
-  res.json({ message: 'Server is running' });
+  const dbStatus = mongoose.connection.readyState === 1 ? 'connected' : 'disconnected';
+  res.json({ 
+    status: 'ok', 
+    database: dbStatus,
+    timestamp: new Date().toISOString()
+  });
 });
 
 // Serve frontend for all other routes (SPA support)
@@ -117,13 +131,47 @@ app.get('*', (req, res) => {
 
 // Error handler
 app.use((err, req, res, next) => {
-  console.error('Error:', err);
-  res.status(500).json({ message: 'Server error', error: err.message });
+  const timestamp = new Date().toISOString();
+  console.error(`[${timestamp}] Internal Error:`, {
+    message: err.message,
+    stack: err.stack,
+    path: req.path,
+    method: req.method
+  });
+  
+  res.status(500).json({ 
+    message: 'Server error', 
+    error: process.env.NODE_ENV === 'production' ? 'An internal error occurred' : err.message,
+    timestamp
+  });
+});
+
+// Handle unhandled rejections
+process.on('unhandledRejection', (reason, promise) => {
+  console.error(`[${new Date().toISOString()}] Unhandled Rejection at:`, promise, 'reason:', reason);
+});
+
+process.on('uncaughtException', (err) => {
+  console.error(`[${new Date().toISOString()}] Uncaught Exception:`, err);
+  // Give some time for logging before exiting
+  setTimeout(() => process.exit(1), 1000);
 });
 
 // Start server
-app.listen(PORT, () => {
-  console.log(`Zazele Online backend running on http://localhost:${PORT}`);
+const server = app.listen(PORT, () => {
+  console.log(`[${new Date().toISOString()}] Zazele Online backend running on http://localhost:${PORT}`);
+});
+
+// Graceful shutdown
+process.on('SIGTERM', () => {
+  console.info('SIGTERM signal received.');
+  server.close(() => {
+    console.log('Http server closed.');
+    mongoose.connection.close(false, () => {
+      console.log('Mongo connection closed.');
+      process.exit(0);
+    });
+  });
 });
 
 module.exports = app;

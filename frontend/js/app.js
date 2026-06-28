@@ -3,10 +3,76 @@ document.addEventListener('DOMContentLoaded', () => {
   // Auth is initialized in auth.js
   // This file can be used for additional app-wide initialization
   
+  initPortalNavigation();
   initPasswordToggles();
   initThemeToggle();
   initUpcomingEvents();
 });
+
+// Portal Selection Navigation
+function initPortalNavigation() {
+  const btnCourses = document.getElementById('btn-home-courses');
+  const btnWebDev = document.getElementById('btn-home-webdev');
+  const btnSrvCourses = document.getElementById('btn-srv-courses');
+  const btnSrvWebdev = document.getElementById('btn-srv-webdev');
+  const btnPortalLogin = document.getElementById('btn-home-portal-login');
+  const backBtns = document.querySelectorAll('.btn-back-to-portal');
+
+  if (btnCourses) {
+    btnCourses.addEventListener('click', () => {
+      if (window.showPage) window.showPage('landing-page');
+    });
+  }
+
+  if (btnWebDev) {
+    btnWebDev.addEventListener('click', () => {
+      if (window.showPage) window.showPage('webdev-page');
+    });
+  }
+
+  if (btnSrvCourses) {
+    btnSrvCourses.addEventListener('click', () => {
+      if (window.showPage) {
+        window.showPage('landing-page');
+        setTimeout(() => {
+          const el = document.getElementById('courses');
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+    });
+  }
+
+  if (btnSrvWebdev) {
+    btnSrvWebdev.addEventListener('click', () => {
+      if (window.showPage) {
+        window.showPage('webdev-page');
+        setTimeout(() => {
+          const el = document.getElementById('packages');
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+    });
+  }
+
+  if (btnPortalLogin) {
+    btnPortalLogin.addEventListener('click', () => {
+      if (window.showPage) {
+        window.showPage('landing-page');
+        setTimeout(() => {
+          const el = document.getElementById('portal');
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+    });
+  }
+
+  backBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (window.showPage) window.showPage('selection-portal');
+    });
+  });
+}
 
 // Upcoming Events Logic
 async function initUpcomingEvents() {
@@ -104,7 +170,7 @@ async function initUpcomingEvents() {
 
 // Theme Toggle Logic (Dark Mode)
 function initThemeToggle() {
-  const themeToggles = document.querySelectorAll('.btn-theme-toggle, #landing-theme-toggle');
+  const themeToggles = document.querySelectorAll('.btn-theme-toggle, #landing-theme-toggle, #webdev-theme-toggle, #home-theme-toggle');
   
   // Check for saved theme preference
   const savedTheme = localStorage.getItem('zazele_theme');

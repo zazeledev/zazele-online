@@ -120,8 +120,12 @@ function navigateToPage(user) {
 function showPage(pageId) {
   const pages = document.querySelectorAll('.page');
   pages.forEach((page) => page.classList.remove('active'));
-  document.getElementById(pageId).classList.add('active');
+  const target = document.getElementById(pageId);
+  if (target) target.classList.add('active');
 }
+
+// Global Export
+window.showPage = showPage;
 
 // Initialize logout buttons
 function initLogoutButtons() {
@@ -132,7 +136,7 @@ function initLogoutButtons() {
   if (logoutBtn) {
     logoutBtn.addEventListener('click', () => {
       logoutUser();
-      showPage('landing-page');
+      showPage('selection-portal');
       resetForms();
     });
   }
@@ -140,7 +144,7 @@ function initLogoutButtons() {
   if (adminLogoutBtn) {
     adminLogoutBtn.addEventListener('click', () => {
       logoutUser();
-      showPage('landing-page');
+      showPage('selection-portal');
       resetForms();
     });
   }
@@ -148,7 +152,7 @@ function initLogoutButtons() {
   if (logoutPendingBtn) {
     logoutPendingBtn.addEventListener('click', () => {
       logoutUser();
-      showPage('landing-page');
+      showPage('selection-portal');
       resetForms();
     });
   }
@@ -156,8 +160,10 @@ function initLogoutButtons() {
 
 // Reset all forms
 function resetForms() {
-  document.getElementById('login-form').reset();
-  document.getElementById('register-form').reset();
+  const loginForm = document.getElementById('login-form');
+  const registerForm = document.getElementById('register-form');
+  if (loginForm) loginForm.reset();
+  if (registerForm) registerForm.reset();
 }
 
 // Initialize auth module
@@ -170,7 +176,7 @@ function initAuth() {
   if (token && user) {
     navigateToPage(user);
   } else {
-    showPage('landing-page');
+    showPage('selection-portal');
   }
 
   initLoginForm();
@@ -180,6 +186,7 @@ function initAuth() {
   initForgotPassword();
   initRegistrationLocationLogic();
 }
+
 
 // Registration Location Logic
 function initRegistrationLocationLogic() {

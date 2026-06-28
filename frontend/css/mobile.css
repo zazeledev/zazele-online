@@ -249,3 +249,89 @@
     height: 32px;
   }
 }
+
+/* --- Homepage Mobile & Tablet Styles --- */
+@media (max-width: 768px) {
+  .home-header {
+    height: 70px;
+  }
+  .home-header .header-content {
+    padding: 0 16px;
+  }
+  .home-nav {
+    display: none; /* Hide top nav links on mobile to save space */
+  }
+  .home-main {
+    padding-top: 70px;
+  }
+  .home-hero-section,
+  .home-mission-section,
+  .home-services-section,
+  .home-why-section,
+  .home-footer-section {
+    padding: 60px 0;
+  }
+  .home-hero-content h1 {
+    font-size: 2.2rem;
+    line-height: 1.2;
+  }
+  .home-hero-lead {
+    font-size: 1.1rem;
+    margin-bottom: 32px;
+  }
+  .home-hero-ctas,
+  .footer-ctas {
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+  .home-hero-ctas .btn,
+  .footer-ctas .btn {
+    width: 100%;
+    text-align: center;
+  }
+  .mission-grid,
+  .services-compare-grid,
+  .why-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .mission-text-side h2,
+  .home-section-header h2,
+  .why-info-side h2,
+  .footer-cta-card h2 {
+    font-size: 1.8rem;
+    line-height: 1.3;
+  }
+  .mission-text-side p,
+  .home-section-header p,
+  .why-info-side p,
+  .footer-cta-card p {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  .service-compare-card {
+    padding: 32px 24px;
+  }
+  .advantage-metrics {
+    gap: 24px;
+    justify-content: flex-start;
+  }
+  .footer-cta-card {
+    padding: 40px 20px;
+  }
+  .footer-links-row {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+    padding-top: 24px;
+  }
+  .social-links {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+}
+

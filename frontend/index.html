@@ -9,105 +9,319 @@
 </head>
 <body>
   <div id="app">
-      <!-- 1. LANDING / AUTH PORTAL -->
-      <div id="landing-page" class="page active">
-        <header class="app-header">
+      <!-- 0. SELECTION PORTAL -->
+      <div id="selection-portal" class="page active">
+        <!-- Modern Header -->
+        <header class="home-header">
           <div class="header-content">
-            <a href="#" class="school-brand">
+            <a href="#" class="home-brand">
               <img src="assets/logo.png" alt="Zazele Online Logo" class="brand-logo" onerror="this.style.display='none'">
               <span>Zazele <span>Online</span></span>
             </a>
+            <nav class="home-nav">
+              <ul>
+                <li><a href="#home-hero">Home</a></li>
+                <li><a href="#home-mission">Mission</a></li>
+                <li><a href="#home-services">Services</a></li>
+                <li><a href="#home-why">Why Us</a></li>
+                <li><a href="#home-portal-contact" class="btn btn-secondary btn-small">Portal & Contact</a></li>
+              </ul>
+            </nav>
+            <button class="theme-toggle home-theme-toggle" id="home-theme-toggle" title="Toggle Dark Mode">🌙</button>
+          </div>
+        </header>
+
+        <main class="home-main">
+          <!-- Hero Section -->
+          <section id="home-hero" class="home-hero-section">
+            <div class="home-hero-content">
+              <div class="home-badge">Empowering Digital Growth</div>
+              <h1>Empowering Your Digital Future—Through Education and Innovation.</h1>
+              <p class="home-hero-lead">From foundational digital literacy training to custom-built web applications, Zazele provides the skills and the technology to help individuals and businesses thrive online.</p>
+              <div class="home-hero-ctas">
+                <button id="btn-home-courses" class="btn btn-primary btn-large">Access Learning Portal</button>
+                <button id="btn-home-webdev" class="btn btn-secondary btn-large">Build Your Website</button>
+              </div>
+            </div>
+            <div class="hero-glow"></div>
+          </section>
+
+          <!-- Mission Statement Section -->
+          <section id="home-mission" class="home-mission-section">
+            <div class="home-container">
+              <div class="mission-grid">
+                <div class="mission-text-side">
+                  <div class="section-tag">Our Vision</div>
+                  <h2>Bridging the Gap Between Learning and Building</h2>
+                  <p>We believe that true digital empowerment means having both the knowledge to navigate the web and the infrastructure to succeed on it. Zazele serves as a dual-engine platform: equipping communities with essential digital skills through our dedicated learning portal, while engineering secure, high-performance websites and web applications for growing businesses.</p>
+                </div>
+                <div class="mission-graphic-side">
+                  <div class="dual-engine-box">
+                    <div class="engine-node education">
+                      <div class="node-icon">🎓</div>
+                      <h4>Digital Skills</h4>
+                      <p>Foundational & Business IT</p>
+                    </div>
+                    <div class="engine-connector"><div class="connector-line"></div></div>
+                    <div class="engine-node technology">
+                      <div class="node-icon">💻</div>
+                      <h4>Web Engineering</h4>
+                      <p>Custom Code & Databases</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Services Comparison Section -->
+          <section id="home-services" class="home-services-section">
+            <div class="home-container">
+              <div class="home-section-header">
+                <div class="section-tag">Dual Solutions</div>
+                <h2>Compare Our Services</h2>
+                <p>Choose the path that fits your current goals. Learn the skills or build the solution with us.</p>
+              </div>
+
+              <div class="services-compare-grid">
+                <!-- Service 1 Card -->
+                <div class="service-compare-card education-card">
+                  <div class="card-glow-bg"></div>
+                  <div class="card-header">
+                    <span class="card-icon-large">🎓</span>
+                    <h3>Digital Literacy & E-Learning</h3>
+                    <p class="card-tagline">Equipping the next generation of digital entrepreneurs.</p>
+                  </div>
+                  <div class="card-body">
+                    <ul class="compare-features-list">
+                      <li>
+                        <strong>Comprehensive Curriculum</strong>
+                        <span>Master essential IT and digital skills from basic operations to professional productivity tools.</span>
+                      </li>
+                      <li>
+                        <strong>Integrated Learning Portal</strong>
+                        <span>Access course materials, submit assignments, and track your progress in real-time.</span>
+                      </li>
+                      <li>
+                        <strong>Community-Driven Growth</strong>
+                        <span>Join an ecosystem of learners, connect with instructors, and build your digital network.</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="card-footer">
+                    <button id="btn-srv-courses" class="btn btn-primary">Explore Our Courses</button>
+                  </div>
+                </div>
+
+                <!-- Service 2 Card -->
+                <div class="service-compare-card dev-card">
+                  <div class="card-glow-bg"></div>
+                  <div class="card-header">
+                    <span class="card-icon-large">💻</span>
+                    <h3>Custom Web Development</h3>
+                    <p class="card-tagline">Scalable, secure, and built specifically for your business needs.</p>
+                  </div>
+                  <div class="card-body">
+                    <ul class="compare-features-list">
+                      <li>
+                        <strong>Full-Stack Solutions</strong>
+                        <span>End-to-end web applications built from scratch to streamline your business workflows.</span>
+                      </li>
+                      <li>
+                        <strong>Secure Infrastructure</strong>
+                        <span>Robust user authentication systems, secure database routing, and data protection.</span>
+                      </li>
+                      <li>
+                        <strong>Seamless Integrations</strong>
+                        <span>Custom API setups, live scheduling widgets, event fetching, and custom integrations.</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="card-footer">
+                    <button id="btn-srv-webdev" class="btn btn-primary">Start a Development Project</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Why Choose Us Section -->
+          <section id="home-why" class="home-why-section">
+            <div class="home-container">
+              <div class="why-grid">
+                <div class="why-info-side">
+                  <div class="section-tag">The Zazele Advantage</div>
+                  <h2>Built with Code, Driven by Education.</h2>
+                  <p>Most development agencies only know how to write code. Because our roots are in digital education, we understand how people actually interact with technology. We build user-friendly, highly accessible web applications backed by clean architecture and reliable server infrastructure.</p>
+                  
+                  <div class="advantage-metrics">
+                    <div class="metric-box">
+                      <span class="metric-num">100%</span>
+                      <span class="metric-lbl">User-Centric Design</span>
+                    </div>
+                    <div class="metric-box">
+                      <span class="metric-num">SETA</span>
+                      <span class="metric-lbl">Accredited Pedagogy</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="why-graphic-side">
+                  <div class="mockup-code-card">
+                    <div class="mockup-header">
+                      <span class="dot red"></span>
+                      <span class="dot yellow"></span>
+                      <span class="dot green"></span>
+                      <span class="mockup-title">zazele_core.js</span>
+                    </div>
+                    <pre class="mockup-code"><code>const Zazele = {
+  philosophy: "Education + Engineering",
+  approach: "User-First Accessibility",
+  stack: ["NodeJS", "Express", "MongoDB", "VanillaJS"],
+  empower: (user) => {
+    return user.learn().then(user.build);
+  }
+};</code></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Portal & Contact / Footer -->
+          <section id="home-portal-contact" class="home-footer-section">
+            <div class="home-container">
+              <div class="footer-cta-card">
+                <h2>Ready to upgrade your digital presence?</h2>
+                <p>Whether you are looking to upskill your team or build a custom web application from the ground up, let’s make it happen.</p>
+                <div class="footer-ctas">
+                  <a href="https://wa.me/27798420873" target="_blank" class="btn btn-primary btn-large">Contact Us Today</a>
+                  <button id="btn-home-portal-login" class="btn btn-secondary btn-large">Student Portal Login</button>
+                </div>
+              </div>
+              
+              <div class="footer-links-row">
+                <p>&copy; 2026 Zazele Online. All Rights Reserved.</p>
+                <div class="social-links">
+                  <a href="mailto:support@zazele.online">support@zazele.online</a>
+                  <a href="https://wa.me/27798420873" target="_blank">WhatsApp Chat</a>
+                </div>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+
+      <!-- 1. COURSE PORTAL -->
+      <div id="landing-page" class="page">
+        <header class="app-header">
+          <div class="header-content">
+            <a href="#" class="school-brand btn-back-to-portal">
+              <img src="assets/logo.png" alt="Zazele Online Logo" class="brand-logo" onerror="this.style.display='none'">
+              <span>Zazele <span>Online</span></span>
+            </a>
+            <nav class="main-nav">
+              <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#courses">Courses</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#portal" class="btn btn-primary btn-small" style="color: white;">Student Portal</a></li>
+                <li><a href="#" class="btn-back-to-portal" style="font-size: 0.8rem; opacity: 0.7;">← Back to Services</a></li>
+              </ul>
+            </nav>
             <button class="theme-toggle" id="landing-theme-toggle" title="Toggle Dark Mode">🌙</button>
           </div>
         </header>
 
         <main class="landing-main">
           <!-- Hero Section -->
-          <section class="hero-section">
+          <section id="home" class="hero-section">
             <div class="hero-content">
-              <h1>Empowering Communities Through Digital Literacy</h1>
-              <p class="hero-lead">Welcome to Zazele Online. We are dedicated to training, equipping, and supporting the next generation of digital entrepreneurs.</p>
-              <div class="hero-stats">
-                <div class="stat-item">
-                  <span class="stat-number">3,500+</span>
-                  <span class="stat-label">Adult Learners Certified</span>
+              <h1>MICT SETA Accredited Digital Skills Training</h1>
+              <p class="hero-lead">Empowering communities through professional digital literacy programs designed to equip you with essential skills for the modern workplace.</p>
+              <div class="hero-ctas">
+                <a href="#courses" class="btn btn-primary btn-large">Explore Courses</a>
+                <a href="#portal" class="btn btn-secondary btn-large">Student Login</a>
+              </div>
+            </div>
+          </section>
+
+          <!-- Courses Section -->
+          <section id="courses" class="courses-section app-container" style="margin-bottom: 100px; scroll-margin-top: 100px;">
+            <div class="section-header">
+              <h2>Our Accredited Courses</h2>
+              <p>Expert-led training designed to bridge the digital divide and create economic opportunities.</p>
+            </div>
+
+            <div class="landing-grid">
+              <!-- Left Side: Marketing Content -->
+              <div class="marketing-content">
+                <div class="app-card" style="padding: 40px; margin-bottom: 24px;">
+                  <h2 style="margin-bottom: 20px; color: var(--primary);">e-Learner Platinum Certificate</h2>
+                  <p style="margin-bottom: 24px; font-size: 1.1rem; color: var(--text-soft);">Our flagship digital literacy program designed to empower individuals with essential computer skills for the modern workplace and entrepreneurial ventures.</p>
+                  
+                  <h3 style="margin-bottom: 16px;">What you will learn:</h3>
+                  <ul class="course-features">
+                    <li><strong>IT Basics:</strong> Foundation of computing.</li>
+                    <li><strong>File Management:</strong> Master digital organization.</li>
+                    <li><strong>Drawing & Design:</strong> Digital creativity tools.</li>
+                    <li><strong>Word Processing:</strong> Professional documents.</li>
+                    <li><strong>Spreadsheets:</strong> Data and analysis.</li>
+                    <li><strong>Presentations:</strong> Visual communication.</li>
+                    <li><strong>Web & Email:</strong> Online communication.</li>
+                  </ul>
+
+                  <div class="benefit-box" style="margin-top: 30px; padding: 20px; background: var(--bg-secondary); border-radius: var(--radius); border-left: 4px solid var(--primary);">
+                    <p><strong>Why this course?</strong> It's more than just a certificate. It enables you to further develop entrepreneurship in any sector and creates opportunities for job creation in your community.</p>
+                  </div>
                 </div>
-                <div class="stat-item">
-                  <span class="stat-number">5,000+</span>
-                  <span class="stat-label">Students Trained</span>
+
+                <div class="app-card pricing-card" style="padding: 40px; margin-bottom: 24px;">
+                  <h2 style="margin-bottom: 20px; color: var(--primary);">Course Pricing & Registration</h2>
+                  <div style="font-size: 1.5rem; font-weight: 800; margin-bottom: 16px; color: var(--secondary);">
+                      Total Course Fee: R2,500
+                  </div>
+                  <p style="margin-bottom: 20px; color: var(--text-soft);">Flexible payment options to suit your budget:</p>
+                  
+                  <div style="display: grid; gap: 16px; margin-bottom: 32px;">
+                      <div class="payment-option">
+                          <strong style="display: block; margin-bottom: 6px; color: var(--primary); font-size: 1.1rem;">Option 1: Pay as you learn</strong>
+                          Pay <strong>R1,000</strong> registration fee now, and pay the remaining balance as you progress.
+                      </div>
+                      <div class="payment-option">
+                          <strong style="display: block; margin-bottom: 6px; color: var(--primary); font-size: 1.1rem;">Option 2: Full Payment</strong>
+                          Pay the full amount of <strong>R2,500</strong> at once for complete peace of mind.
+                      </div>
+                  </div>
                 </div>
-                <div class="stat-item">
-                  <span class="stat-number">MICT SETA</span>
-                  <span class="stat-label">Accredited Programs</span>
+              </div>
+
+              <!-- Right Side: Certificate & Events -->
+              <div class="portal-side">
+                <div class="app-card" style="padding: 24px; text-align: center; margin-bottom: 24px;">
+                  <h3 style="margin-bottom: 16px; font-size: 1rem; color: var(--text-soft); text-transform: uppercase; letter-spacing: 1px;">Accredited Certificate</h3>
+                  <div style="padding: 8px; background: white; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: var(--shadow-soft);">
+                    <img src="assets/certificate.png" alt="Zazele Certificate" style="width: 100%; height: auto; border-radius: 4px; display: block;">
+                  </div>
+                </div>
+
+                <div id="upcoming-events-container" class="app-card" style="margin-bottom: 24px; display: none;">
+                  <h3 style="margin-bottom: 16px; text-align: center;">Upcoming Webinars</h3>
+                  <div id="events-list" class="events-list"></div>
                 </div>
               </div>
             </div>
           </section>
 
-          <div class="landing-grid app-container">
-            <!-- Left Side: Marketing Content -->
-            <div class="marketing-content">
-              <div class="app-card" style="padding: 40px; margin-bottom: 24px;">
-                <h2 style="margin-bottom: 20px; color: var(--primary);">e-Learner Platinum Certificate</h2>
-                <p style="margin-bottom: 24px; font-size: 1.1rem; color: var(--text-soft);">Our flagship digital literacy program designed to empower individuals with essential computer skills for the modern workplace and entrepreneurial ventures.</p>
-                
-                <h3 style="margin-bottom: 16px;">What you will learn:</h3>
-                <ul class="course-features">
-                  <li><strong>IT Basics:</strong> Understand the foundation of computing.</li>
-                  <li><strong>File & Folder Management:</strong> Master digital organization.</li>
-                  <li><strong>Drawing & Design:</strong> Express creativity with digital tools.</li>
-                  <li><strong>Word Processing:</strong> Professional document creation.</li>
-                  <li><strong>Spreadsheets:</strong> Data management and analysis.</li>
-                  <li><strong>Presentations:</strong> Effective visual communication.</li>
-                  <li><strong>Web & Email:</strong> Safe and efficient online communication.</li>
-                </ul>
-
-                <div class="benefit-box" style="margin-top: 30px; padding: 20px; background: var(--bg-secondary); border-radius: var(--radius); border-left: 4px solid var(--primary);">
-                  <p><strong>Why this course?</strong> It's more than just a certificate. It enables you to further develop entrepreneurship in any sector and creates opportunities for job creation in your community.</p>
-                </div>
-              </div>
-
-              <div class="app-card pricing-card" style="padding: 40px; margin-bottom: 24px;">
-                <h2 style="margin-bottom: 20px; color: var(--primary);">Course Pricing & Registration</h2>
-                <div style="font-size: 1.5rem; font-weight: 800; margin-bottom: 16px; color: var(--secondary);">
-                    Total Course Fee: R2,500
-                </div>
-                <p style="margin-bottom: 20px; color: var(--text-soft);">To begin your journey, you have two flexible payment options:</p>
-                
-                <div style="display: grid; gap: 16px; margin-bottom: 32px;">
-                    <div class="payment-option">
-                        <strong style="display: block; margin-bottom: 6px; color: var(--primary); font-size: 1.1rem;">Option 1: Pay as you learn</strong>
-                        Pay <strong>R1,000</strong> registration fee now, and pay the remaining balance as you progress or just before your final exam.
-                    </div>
-                    <div class="payment-option">
-                        <strong style="display: block; margin-bottom: 6px; color: var(--primary); font-size: 1.1rem;">Option 2: Full Payment</strong>
-                        Pay the full amount of <strong>R2,500</strong> at once for complete peace of mind.
-                    </div>
-                </div>
-
-                <h3 style="margin-bottom: 16px;">How to Register:</h3>
-                <ol style="padding-left: 20px; color: var(--text-soft); line-height: 1.8;">
-                    <li>Make your payment to our <strong>Nedbank account</strong> (details available in the Register tab).</li>
-                    <li>Go to the <strong>Student Portal</strong> and click the <strong>Register</strong> tab.</li>
-                    <li>Fill in your details and upload your <strong>Proof of Payment</strong> and <strong>ID Document</strong>.</li>
-                    <li>Our team will verify your documents and approve your account within 24-48 hours.</li>
-                </ol>
-              </div>
+          <!-- Portal Section -->
+          <section id="portal" class="portal-section app-container" style="padding: 100px 0; scroll-margin-top: 80px;">
+            <div class="section-header">
+              <h2>Student Portal</h2>
+              <p>Already a student? Login to continue your learning journey. New here? Register for our accredited courses.</p>
             </div>
-
-            <!-- Right Side: Portal Forms -->
-            <div class="portal-side">
-              <!-- Upcoming Events Section -->
-              <div id="upcoming-events-container" class="app-card" style="margin-bottom: 24px; display: none;">
-                <h3 style="margin-bottom: 16px; text-align: center;">Upcoming Webinars</h3>
-                <div id="events-list" class="events-list">
-                  <!-- Events will be injected here -->
-                </div>
-              </div>
-
-              <div class="portal-form-box app-card" style="margin-bottom: 24px;">
-                <h2 style="margin-bottom: 12px; text-align: center;">Student Portal</h2>
-                <div class="form-tabs portal-tabs" style="margin-bottom: 18px;">
+            
+            <div style="max-width: 600px; margin: 0 auto;">
+              <div class="portal-form-box app-card">
+                <div class="form-tabs portal-tabs">
                   <button class="tab-btn active portal-tab" data-tab="login">Login</button>
                   <button class="tab-btn portal-tab" data-tab="register">Register</button>
                 </div>
@@ -182,21 +396,199 @@
                   <button type="submit" class="btn btn-primary" style="width:100%">Create Account</button>
                 </form>
               </div>
+            </div>
+          </section>
 
-              <div class="app-card" style="padding: 32px; margin-bottom: 24px;">
-                <h3 style="margin-bottom: 16px;">About Zazele Training</h3>
-                <p style="color: var(--text-soft); margin-bottom: 16px; font-size: 0.95rem;">Established in 2011, Zazele is a 100% woman and black-owned B-BBEE company. We specialize in educating individuals to set up, manage, and grow their own computer literacy hub businesses.</p>
-                <p style="color: var(--text-soft); font-size: 0.95rem;">Our trainers are experts who bring real business experience and vast computer knowledge to every session, ensuring a high level of learning and motivation.</p>
-              </div>
-
-              <div class="app-card" style="padding: 24px; text-align: center;">
-                <h3 style="margin-bottom: 16px; font-size: 1rem; color: var(--text-soft); text-transform: uppercase; letter-spacing: 1px;">Earn Your Accredited Certificate</h3>
-                <div style="padding: 8px; background: white; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: var(--shadow-soft);">
-                  <img src="assets/certificate.png" alt="Zazele e-Learner Platinum Certificate Sample" style="width: 100%; height: auto; border-radius: 4px; display: block;">
+          <!-- About Section -->
+          <section id="about" class="about-section" style="padding: 100px 0; scroll-margin-top: 80px;">
+            <div class="app-container">
+              <div class="landing-grid">
+                <div class="marketing-content">
+                  <h2>About Zazele Training & Development</h2>
+                  <p style="color: var(--text-soft); margin-bottom: 24px; font-size: 1.1rem; line-height: 1.8;">Established in 2011, Zazele is a 100% woman and black-owned B-BBEE company. We specialize in educating individuals to set up, manage, and grow their own computer literacy hub businesses.</p>
+                  <p style="color: var(--text-soft); font-size: 1.1rem; line-height: 1.8;">Our trainers are experts who bring real business experience and vast computer knowledge to every session, ensuring a high level of learning and motivation.</p>
+                </div>
+                <div class="portal-side">
+                  <div class="app-card" style="padding: 40px; border-left: 4px solid var(--primary); background: var(--bg-secondary);">
+                    <h3 style="margin-bottom: 16px;">Our Legacy</h3>
+                    <p style="color: var(--text-soft); margin-bottom: 20px;">We have a proven track record of empowering the next generation of digital entrepreneurs in South Africa and beyond.</p>
+                    <div class="hero-stats" style="justify-content: flex-start; gap: 40px;">
+                      <div class="stat-item" style="align-items: flex-start;">
+                        <span class="stat-number">3,500+</span>
+                        <span class="stat-label">Graduates</span>
+                      </div>
+                      <div class="stat-item" style="align-items: flex-start;">
+                        <span class="stat-number">5,000+</span>
+                        <span class="stat-label">Trained</span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
+          </section>
+        </main>
+      </div>
+
+      <!-- 1.5 WEB DEV PORTAL -->
+      <div id="webdev-page" class="page">
+        <header class="app-header">
+          <div class="header-content">
+            <a href="#" class="school-brand btn-back-to-portal">
+              <img src="assets/logo.png" alt="Zazele Online Logo" class="brand-logo" onerror="this.style.display='none'">
+              <span>Zazele <span>Online</span></span>
+            </a>
+            <nav class="main-nav">
+              <ul>
+                <li><a href="#webdev-home">Home</a></li>
+                <li><a href="#packages">Web Packages</a></li>
+                <li><a href="#webdev-about">About Services</a></li>
+                <li><a href="#" class="btn-back-to-portal" style="font-size: 0.8rem; opacity: 0.7;">← Back to Services</a></li>
+              </ul>
+            </nav>
+            <button class="theme-toggle" id="webdev-theme-toggle" title="Toggle Dark Mode">🌙</button>
           </div>
+        </header>
+
+        <main class="landing-main">
+          <!-- Web Dev Hero -->
+          <section id="webdev-home" class="hero-section">
+            <div class="hero-content">
+              <h1>Professional Web Development Services</h1>
+              <p class="hero-lead">We build high-performance, responsive websites and custom web applications designed to grow your brand and streamline your operations in the digital economy.</p>
+              <div class="hero-ctas">
+                <a href="#packages" class="btn btn-primary btn-large">View Web Packages</a>
+                <a href="#webdev-about" class="btn btn-secondary btn-large">Learn More</a>
+              </div>
+            </div>
+          </section>
+
+          <!-- Web Development Section -->
+          <section id="packages" class="web-dev-section" style="background: var(--bg-secondary); padding: 100px 0; scroll-margin-top: 80px;">
+            <div class="app-container">
+              <div class="section-header">
+                <h2>Our Web Packages</h2>
+                <p>Zazele Online builds different types of websites based on client needs. We focus on professional, high-performance, and responsive designs.</p>
+              </div>
+
+              <div class="packages-grid">
+                <!-- Package 1 -->
+                <div class="package-card">
+                  <div class="package-best-for">Best for Portfolios</div>
+                  <h3>Starter Showcase</h3>
+                  <div class="package-price">R1,800</div>
+                  <p>A professional single-page website to showcase your brand, project, or personal profile. Clean, fast, and mobile-friendly.</p>
+                  <ul class="course-features" style="grid-template-columns: 1fr; margin-bottom: 20px;">
+                    <li>Single Page Design</li>
+                    <li>Contact Form</li>
+                    <li>Social Media Links</li>
+                    <li>Mobile Responsive</li>
+                  </ul>
+                  <a href="https://wa.me/27798420873" target="_blank" class="btn btn-primary">Request a Quote</a>
+                </div>
+
+                <!-- Package 2 -->
+                <div class="package-card featured">
+                  <div class="package-badge">Most Popular</div>
+                  <div class="package-best-for">Best for Small Business</div>
+                  <h3>Professional Business</h3>
+                  <div class="package-price">R4,500</div>
+                  <p>A comprehensive 5-page website including Home, About, Services, Gallery, and Contact. Perfect for established brands.</p>
+                  <ul class="course-features" style="grid-template-columns: 1fr; margin-bottom: 20px;">
+                    <li>Up to 5 Custom Pages</li>
+                    <li>SEO Optimization</li>
+                    <li>Google Maps Integration</li>
+                    <li>Professional Design</li>
+                  </ul>
+                  <a href="https://wa.me/27798420873" target="_blank" class="btn btn-primary">Request a Quote</a>
+                </div>
+
+                <!-- Package 3 -->
+                <div class="package-card">
+                  <div class="package-best-for">Best for Service Providers</div>
+                  <h3>Booking & Leads</h3>
+                  <div class="package-price">R6,500</div>
+                  <p>Advanced website with online booking functionality and lead generation forms. Ideal for clinics, salons, or consultants.</p>
+                  <ul class="course-features" style="grid-template-columns: 1fr; margin-bottom: 20px;">
+                    <li>Appointment Scheduling</li>
+                    <li>Lead Capture Forms</li>
+                    <li>Automated Notifications</li>
+                    <li>Client Management</li>
+                  </ul>
+                  <a href="https://wa.me/27798420873" target="_blank" class="btn btn-primary">Request a Quote</a>
+                </div>
+
+                <!-- Package 4 -->
+                <div class="package-card">
+                  <div class="package-best-for">Best for Online Stores</div>
+                  <h3>E-commerce Store</h3>
+                  <div class="package-price">from R8,500</div>
+                  <p>Full online store with product management, secure payment gateway integration, and order tracking systems.</p>
+                  <ul class="course-features" style="grid-template-columns: 1fr; margin-bottom: 20px;">
+                    <li>Product Inventory</li>
+                    <li>Secure Payment (PayFast/Yoco)</li>
+                    <li>Order Management</li>
+                    <li>Shipping Integration</li>
+                  </ul>
+                  <a href="https://wa.me/27798420873" target="_blank" class="btn btn-primary">Request a Quote</a>
+                </div>
+
+                <!-- Package 5 -->
+                <div class="package-card">
+                  <div class="package-best-for">Best for Organizations</div>
+                  <h3>Membership Portal</h3>
+                  <div class="package-price">from R12,500</div>
+                  <p>Websites with restricted member areas, online courses, or client portals for document sharing and interaction.</p>
+                  <ul class="course-features" style="grid-template-columns: 1fr; margin-bottom: 20px;">
+                    <li>User Login/Registration</li>
+                    <li>Protected Content Areas</li>
+                    <li>Member Directories</li>
+                    <li>Subscription Support</li>
+                  </ul>
+                  <a href="https://wa.me/27798420873" target="_blank" class="btn btn-primary">Request a Quote</a>
+                </div>
+
+                <!-- Package 6 -->
+                <div class="package-card">
+                  <div class="package-best-for">Best for Custom Needs</div>
+                  <h3>Custom Development</h3>
+                  <div class="package-price">Custom Quote</div>
+                  <p>Bespoke web applications built from the ground up to handle your unique business processes and data requirements.</p>
+                  <ul class="course-features" style="grid-template-columns: 1fr; margin-bottom: 20px;">
+                    <li>Bespoke Functionality</li>
+                    <li>API Integrations</li>
+                    <li>Database Management</li>
+                    <li>Consultation Included</li>
+                  </ul>
+                  <a href="https://wa.me/27798420873" target="_blank" class="btn btn-primary">Book a Consultation</a>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Web Dev About -->
+          <section id="webdev-about" class="about-section" style="padding: 100px 0; scroll-margin-top: 80px;">
+            <div class="app-container">
+              <div class="landing-grid">
+                <div class="marketing-content">
+                  <h2>Expert Web Solutions</h2>
+                  <p style="color: var(--text-soft); margin-bottom: 24px; font-size: 1.1rem; line-height: 1.8;">Our web development team combines technical excellence with business strategy. We don't just build websites; we build digital tools that help your business succeed.</p>
+                  <p style="color: var(--text-soft); font-size: 1.1rem; line-height: 1.8;">From simple landing pages to complex custom applications, we use modern technologies to ensure your site is fast, secure, and easy to manage.</p>
+                </div>
+                <div class="portal-side">
+                  <div class="app-card" style="padding: 40px; border-left: 4px solid var(--primary); background: var(--bg-secondary);">
+                    <h3 style="margin-bottom: 16px;">Our Expertise</h3>
+                    <ul class="course-features" style="grid-template-columns: 1fr;">
+                      <li>Responsive Design (Mobile First)</li>
+                      <li>SEO & Performance Optimization</li>
+                      <li>E-commerce & Payment Integration</li>
+                      <li>Custom Business Logic & APIs</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
         </main>
       </div>
 
