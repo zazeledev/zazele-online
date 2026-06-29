@@ -34,7 +34,8 @@ const corsOptions = {
     if (!origin) return callback(null, true);
     
     const isLocalhost = origin.includes('localhost') || origin.includes('127.0.0.1');
-    const isAllowedDomain = allowedOrigins.some(domain => domain && origin.startsWith(domain));
+    const isAllowedDomain = allowedOrigins.some(domain => domain && origin.startsWith(domain)) || 
+                            origin.endsWith('.vercel.app');
     
     if (isLocalhost || isAllowedDomain) {
       callback(null, true);
