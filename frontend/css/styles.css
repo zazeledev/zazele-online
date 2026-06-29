@@ -446,25 +446,21 @@ input:focus, select:focus, textarea:focus {
 }
 
 /* Footer Styling */
-.dashboard-footer {
+.app-footer {
   background: var(--bg-footer);
-  color: rgba(255, 255, 255, 0.7);
-  padding: 80px 40px;
+  color: #ffffff;
+  padding: 80px 0 40px 0;
   margin-top: 100px;
   flex-shrink: 0;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.dashboard-footer .app-container {
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-.dashboard-footer strong {
-  color: #fff;
+/* Hide footer when dashboards, pending-page, or assignment-page are active */
+#app:has(#dashboard-page.active) .app-footer,
+#app:has(#admin-page.active) .app-footer,
+#app:has(#pending-page.active) .app-footer,
+#app:has(#assignment-page.active) .app-footer {
+    display: none !important;
 }
 
 /* Landing Page Specifics */
@@ -663,18 +659,31 @@ input:focus, select:focus, textarea:focus {
 /* --- Universal App Shell --- */
 
 .app-header {
-  background: var(--bg-card) !important;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--header-height);
+  background: rgba(252, 250, 246, 0.85) !important; /* Matches warm bg */
   backdrop-filter: blur(20px) saturate(190%);
   -webkit-backdrop-filter: blur(20px) saturate(190%);
-  height: var(--header-height);
   border-bottom: 1px solid var(--border-color);
-  position: sticky;
-  top: 0;
   z-index: 1000;
   display: flex;
   align-items: center;
-  padding: 0 40px;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.02);
+  transition: var(--transition);
+}
+.dark-mode .app-header {
+  background: rgba(21, 18, 20, 0.85) !important; /* Dark warm */
+}
+.app-header .header-content {
+  max-width: var(--app-width);
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 24px;
 }
 
 .app-container {
@@ -779,9 +788,26 @@ h1, h2, h3 { font-weight: 800; color: var(--secondary); margin-bottom: 1rem; let
   align-items: center;
 }
 
-.school-brand { font-size: 1.45rem; font-weight: 800; color: var(--secondary); text-decoration: none; display: flex; align-items: center; gap: 12px; letter-spacing: -0.02em; }
-.brand-logo { height: 40px; width: auto; object-fit: contain; filter: drop-shadow(0 2px 8px rgba(99, 102, 241, 0.1)); }
-.school-brand span span { color: var(--primary); }
+.school-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+}
+.school-brand span span {
+  background: linear-gradient(135deg, var(--primary) 0%, #E09F3E 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.brand-logo {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+}
 
 .user-nav { display: flex; align-items: center; gap: 24px; }
 
@@ -2048,48 +2074,8 @@ h1, h2, h3 { font-weight: 800; color: var(--secondary); margin-bottom: 1rem; let
     display: block;
 }
 
-/* Homepage Header */
-.home-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: var(--header-height);
-    background: rgba(252, 250, 246, 0.85); /* Matches warm bg */
-    backdrop-filter: blur(20px) saturate(190%);
-    -webkit-backdrop-filter: blur(20px) saturate(190%);
-    border-bottom: 1px solid var(--border-color);
-    z-index: 1000;
-    transition: var(--transition);
-}
-.dark-mode .home-header {
-    background: rgba(21, 18, 20, 0.85); /* Dark warm */
-}
-.home-header .header-content {
-    max-width: var(--app-width);
-    margin: 0 auto;
-    height: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 24px;
-}
-.home-brand {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    text-decoration: none;
-    font-size: 1.5rem;
-    font-weight: 800;
-    color: var(--text-main);
-    letter-spacing: -0.02em;
-}
-.home-brand span span {
-    background: linear-gradient(135deg, var(--primary) 0%, #E09F3E 100%); /* Terracotta to warm ochre */
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-.home-nav ul {
+/* Standardized brand and navbar states */
+.main-nav ul {
     display: flex;
     list-style: none;
     gap: 28px;
@@ -2097,14 +2083,15 @@ h1, h2, h3 { font-weight: 800; color: var(--secondary); margin-bottom: 1rem; let
     margin: 0;
     padding: 0;
 }
-.home-nav a {
+.main-nav a {
     text-decoration: none;
     color: var(--text-soft);
     font-weight: 600;
     font-size: 0.95rem;
     transition: var(--transition);
 }
-.home-nav a:hover {
+.main-nav a:hover,
+.main-nav a.active {
     color: var(--primary);
 }
 

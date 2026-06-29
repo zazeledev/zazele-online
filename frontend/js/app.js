@@ -16,6 +16,7 @@ function initPortalNavigation() {
   const btnSrvCourses = document.getElementById('btn-srv-courses');
   const btnSrvWebdev = document.getElementById('btn-srv-webdev');
   const btnPortalLogin = document.getElementById('btn-home-portal-login');
+  const btnPortalHubLogin = document.getElementById('btn-portal-hub-login');
   const backBtns = document.querySelectorAll('.btn-back-to-portal');
 
   if (btnCourses) {
@@ -52,6 +53,16 @@ function initPortalNavigation() {
     });
   }
 
+  if (btnPortalHubLogin) {
+    btnPortalHubLogin.addEventListener('click', () => {
+      if (window.showPage) {
+        window.showPage('portal-login-page');
+        const loginTab = document.querySelector('.tab-btn[data-tab="login"]');
+        if (loginTab) loginTab.click();
+      }
+    });
+  }
+
   const linkFooterLogin = document.getElementById('link-footer-login');
   const linkFooterRegister = document.getElementById('link-footer-register');
 
@@ -76,6 +87,42 @@ function initPortalNavigation() {
       }
     });
   }
+
+  // Bind homepage navbar link overrides
+  document.querySelectorAll('.nav-link-home-hero').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (window.showPage) window.showPage('selection-portal');
+    });
+  });
+
+  document.querySelectorAll('.nav-link-home-mission').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (window.showPage) window.showPage('mission-page');
+    });
+  });
+
+  document.querySelectorAll('.nav-link-home-services').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (window.showPage) window.showPage('services-page');
+    });
+  });
+
+  document.querySelectorAll('.nav-link-home-why').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (window.showPage) window.showPage('why-us-page');
+    });
+  });
+
+  document.querySelectorAll('.nav-link-home-contact').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (window.showPage) window.showPage('portal-contact-page');
+    });
+  });
 
   // Bind course portal navbar link overrides
   document.querySelectorAll('.nav-link-courses-home').forEach(link => {
@@ -102,7 +149,12 @@ function initPortalNavigation() {
   document.querySelectorAll('.nav-link-courses-portal').forEach(link => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
-      if (window.showPage) window.showPage('portal-login-page');
+      if (window.showPage) {
+        window.showPage('portal-login-page');
+        const triggerTab = link.dataset.tabTrigger || 'login';
+        const tabEl = document.querySelector(`.tab-btn[data-tab="${triggerTab}"]`);
+        if (tabEl) tabEl.click();
+      }
     });
   });
 
