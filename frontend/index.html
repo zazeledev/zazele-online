@@ -264,7 +264,7 @@
         </main>
       </div>
 
-      <!-- 1. COURSE PORTAL -->
+      <!-- 1. COURSE PORTAL - HERO PAGE -->
       <div id="landing-page" class="page">
         <header class="app-header">
           <div class="header-content">
@@ -274,14 +274,14 @@
             </a>
             <nav class="main-nav">
               <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#courses">Courses</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#portal" class="btn btn-primary btn-small" style="color: white;">Student Portal</a></li>
+                <li><a href="#" class="nav-link-courses-home active">Home</a></li>
+                <li><a href="#" class="nav-link-courses-list">Courses</a></li>
+                <li><a href="#" class="nav-link-courses-about">About</a></li>
+                <li><a href="#" class="nav-link-courses-portal btn btn-primary btn-small" style="color: white;">Student Portal</a></li>
                 <li><a href="#" class="btn-back-to-portal" style="font-size: 0.8rem; opacity: 0.7;">← Back to Services</a></li>
               </ul>
             </nav>
-            <button class="theme-toggle" id="landing-theme-toggle" title="Toggle Dark Mode">🌙</button>
+            <button class="theme-toggle btn-theme-toggle" title="Toggle Dark Mode">🌙</button>
           </div>
         </header>
 
@@ -292,14 +292,38 @@
               <h1>MICT SETA Accredited Digital Skills Training</h1>
               <p class="hero-lead">Empowering communities through professional digital literacy programs designed to equip you with essential skills for the modern workplace.</p>
               <div class="hero-ctas">
-                <a href="#courses" class="btn btn-primary btn-large">Explore Courses</a>
-                <a href="#portal" class="btn btn-secondary btn-large">Student Login</a>
+                <a href="#" class="btn btn-primary btn-large nav-link-courses-list">Explore Courses</a>
+                <a href="#" class="btn btn-secondary btn-large nav-link-courses-portal">Student Login</a>
               </div>
             </div>
           </section>
+        </main>
+      </div>
 
+      <!-- 1.1 COURSE PORTAL - COURSES LIST PAGE -->
+      <div id="courses-list-page" class="page">
+        <header class="app-header">
+          <div class="header-content">
+            <a href="#" class="school-brand btn-back-to-portal">
+              <img src="assets/logo.png" alt="Zazele Online Logo" class="brand-logo" onerror="this.style.display='none'">
+              <span>Zazele <span>Online</span></span>
+            </a>
+            <nav class="main-nav">
+              <ul>
+                <li><a href="#" class="nav-link-courses-home">Home</a></li>
+                <li><a href="#" class="nav-link-courses-list active">Courses</a></li>
+                <li><a href="#" class="nav-link-courses-about">About</a></li>
+                <li><a href="#" class="nav-link-courses-portal btn btn-primary btn-small" style="color: white;">Student Portal</a></li>
+                <li><a href="#" class="btn-back-to-portal" style="font-size: 0.8rem; opacity: 0.7;">← Back to Services</a></li>
+              </ul>
+            </nav>
+            <button class="theme-toggle btn-theme-toggle" title="Toggle Dark Mode">🌙</button>
+          </div>
+        </header>
+
+        <main class="landing-main">
           <!-- Courses Section -->
-          <section id="courses" class="courses-section app-container" style="margin-bottom: 100px; scroll-margin-top: 100px;">
+          <section id="courses" class="courses-section app-container" style="margin-bottom: 60px;">
             <div class="section-header">
               <h2>Our Accredited Courses</h2>
               <p>Expert-led training designed to bridge the digital divide and create economic opportunities.</p>
@@ -364,9 +388,33 @@
               </div>
             </div>
           </section>
+        </main>
+      </div>
 
+      <!-- 1.2 COURSE PORTAL - PORTAL LOGIN PAGE -->
+      <div id="portal-login-page" class="page">
+        <header class="app-header">
+          <div class="header-content">
+            <a href="#" class="school-brand btn-back-to-portal">
+              <img src="assets/logo.png" alt="Zazele Online Logo" class="brand-logo" onerror="this.style.display='none'">
+              <span>Zazele <span>Online</span></span>
+            </a>
+            <nav class="main-nav">
+              <ul>
+                <li><a href="#" class="nav-link-courses-home">Home</a></li>
+                <li><a href="#" class="nav-link-courses-list">Courses</a></li>
+                <li><a href="#" class="nav-link-courses-about">About</a></li>
+                <li><a href="#" class="nav-link-courses-portal btn btn-primary btn-small active" style="color: white;">Student Portal</a></li>
+                <li><a href="#" class="btn-back-to-portal" style="font-size: 0.8rem; opacity: 0.7;">← Back to Services</a></li>
+              </ul>
+            </nav>
+            <button class="theme-toggle btn-theme-toggle" title="Toggle Dark Mode">🌙</button>
+          </div>
+        </header>
+
+        <main class="landing-main">
           <!-- Portal Section -->
-          <section id="portal" class="portal-section app-container" style="padding: 100px 0; scroll-margin-top: 80px;">
+          <section id="portal" class="portal-section app-container" style="padding: 60px 0;">
             <div class="section-header">
               <h2>Student Portal</h2>
               <p>Already a student? Login to continue your learning journey. New here? Register for our accredited courses.</p>
@@ -451,9 +499,33 @@
               </div>
             </div>
           </section>
+        </main>
+      </div>
 
+      <!-- 1.3 COURSE PORTAL - ABOUT PAGE -->
+      <div id="about-zazele-page" class="page">
+        <header class="app-header">
+          <div class="header-content">
+            <a href="#" class="school-brand btn-back-to-portal">
+              <img src="assets/logo.png" alt="Zazele Online Logo" class="brand-logo" onerror="this.style.display='none'">
+              <span>Zazele <span>Online</span></span>
+            </a>
+            <nav class="main-nav">
+              <ul>
+                <li><a href="#" class="nav-link-courses-home">Home</a></li>
+                <li><a href="#" class="nav-link-courses-list">Courses</a></li>
+                <li><a href="#" class="nav-link-courses-about active">About</a></li>
+                <li><a href="#" class="nav-link-courses-portal btn btn-primary btn-small" style="color: white;">Student Portal</a></li>
+                <li><a href="#" class="btn-back-to-portal" style="font-size: 0.8rem; opacity: 0.7;">← Back to Services</a></li>
+              </ul>
+            </nav>
+            <button class="theme-toggle btn-theme-toggle" title="Toggle Dark Mode">🌙</button>
+          </div>
+        </header>
+
+        <main class="landing-main">
           <!-- About Section -->
-          <section id="about" class="about-section" style="padding: 100px 0; scroll-margin-top: 80px;">
+          <section id="about" class="about-section" style="padding: 80px 0;">
             <div class="app-container">
               <div class="landing-grid">
                 <div class="marketing-content">
@@ -483,7 +555,7 @@
         </main>
       </div>
 
-      <!-- 1.5 WEB DEV PORTAL -->
+      <!-- 1.5 WEB DEV PORTAL - HERO PAGE -->
       <div id="webdev-page" class="page">
         <header class="app-header">
           <div class="header-content">
@@ -493,13 +565,13 @@
             </a>
             <nav class="main-nav">
               <ul>
-                <li><a href="#webdev-home">Home</a></li>
-                <li><a href="#packages">Web Packages</a></li>
-                <li><a href="#webdev-about">About Services</a></li>
+                <li><a href="#" class="nav-link-webdev-home active">Home</a></li>
+                <li><a href="#" class="nav-link-webdev-packages">Web Packages</a></li>
+                <li><a href="#" class="nav-link-webdev-about">About Services</a></li>
                 <li><a href="#" class="btn-back-to-portal" style="font-size: 0.8rem; opacity: 0.7;">← Back to Services</a></li>
               </ul>
             </nav>
-            <button class="theme-toggle" id="webdev-theme-toggle" title="Toggle Dark Mode">🌙</button>
+            <button class="theme-toggle btn-theme-toggle" title="Toggle Dark Mode">🌙</button>
           </div>
         </header>
 
@@ -510,14 +582,37 @@
               <h1>Professional Web Development Services</h1>
               <p class="hero-lead">We build high-performance, responsive websites and custom web applications designed to grow your brand and streamline your operations in the digital economy.</p>
               <div class="hero-ctas">
-                <a href="#packages" class="btn btn-primary btn-large">View Web Packages</a>
-                <a href="#webdev-about" class="btn btn-secondary btn-large">Learn More</a>
+                <a href="#" class="btn btn-primary btn-large nav-link-webdev-packages">View Web Packages</a>
+                <a href="#" class="btn btn-secondary btn-large nav-link-webdev-about">Learn More</a>
               </div>
             </div>
           </section>
+        </main>
+      </div>
 
+      <!-- 1.6 WEB DEV PORTAL - PACKAGES PAGE -->
+      <div id="webdev-packages-page" class="page">
+        <header class="app-header">
+          <div class="header-content">
+            <a href="#" class="school-brand btn-back-to-portal">
+              <img src="assets/logo.png" alt="Zazele Online Logo" class="brand-logo" onerror="this.style.display='none'">
+              <span>Zazele <span>Online</span></span>
+            </a>
+            <nav class="main-nav">
+              <ul>
+                <li><a href="#" class="nav-link-webdev-home">Home</a></li>
+                <li><a href="#" class="nav-link-webdev-packages active">Web Packages</a></li>
+                <li><a href="#" class="nav-link-webdev-about">About Services</a></li>
+                <li><a href="#" class="btn-back-to-portal" style="font-size: 0.8rem; opacity: 0.7;">← Back to Services</a></li>
+              </ul>
+            </nav>
+            <button class="theme-toggle btn-theme-toggle" title="Toggle Dark Mode">🌙</button>
+          </div>
+        </header>
+
+        <main class="landing-main">
           <!-- Web Development Section -->
-          <section id="packages" class="web-dev-section" style="background: var(--bg-secondary); padding: 100px 0; scroll-margin-top: 80px;">
+          <section id="packages" class="web-dev-section" style="background: var(--bg-secondary); padding: 80px 0;">
             <div class="app-container">
               <div class="section-header">
                 <h2>Our Web Packages</h2>
@@ -618,9 +713,32 @@
               </div>
             </div>
           </section>
+        </main>
+      </div>
 
+      <!-- 1.7 WEB DEV PORTAL - ABOUT SERVICES PAGE -->
+      <div id="webdev-about-page" class="page">
+        <header class="app-header">
+          <div class="header-content">
+            <a href="#" class="school-brand btn-back-to-portal">
+              <img src="assets/logo.png" alt="Zazele Online Logo" class="brand-logo" onerror="this.style.display='none'">
+              <span>Zazele <span>Online</span></span>
+            </a>
+            <nav class="main-nav">
+              <ul>
+                <li><a href="#" class="nav-link-webdev-home">Home</a></li>
+                <li><a href="#" class="nav-link-webdev-packages">Web Packages</a></li>
+                <li><a href="#" class="nav-link-webdev-about active">About Services</a></li>
+                <li><a href="#" class="btn-back-to-portal" style="font-size: 0.8rem; opacity: 0.7;">← Back to Services</a></li>
+              </ul>
+            </nav>
+            <button class="theme-toggle btn-theme-toggle" title="Toggle Dark Mode">🌙</button>
+          </div>
+        </header>
+
+        <main class="landing-main">
           <!-- Web Dev About -->
-          <section id="webdev-about" class="about-section" style="padding: 100px 0; scroll-margin-top: 80px;">
+          <section id="webdev-about" class="about-section" style="padding: 80px 0;">
             <div class="app-container">
               <div class="landing-grid">
                 <div class="marketing-content">

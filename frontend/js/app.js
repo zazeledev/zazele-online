@@ -32,39 +32,22 @@ function initPortalNavigation() {
 
   if (btnSrvCourses) {
     btnSrvCourses.addEventListener('click', () => {
-      if (window.showPage) {
-        window.showPage('landing-page');
-        setTimeout(() => {
-          const el = document.getElementById('courses');
-          if (el) el.scrollIntoView({ behavior: 'smooth' });
-        }, 100);
-      }
+      if (window.showPage) window.showPage('courses-list-page');
     });
   }
 
   if (btnSrvWebdev) {
     btnSrvWebdev.addEventListener('click', () => {
-      if (window.showPage) {
-        window.showPage('webdev-page');
-        setTimeout(() => {
-          const el = document.getElementById('packages');
-          if (el) el.scrollIntoView({ behavior: 'smooth' });
-        }, 100);
-      }
+      if (window.showPage) window.showPage('webdev-packages-page');
     });
   }
 
   if (btnPortalLogin) {
     btnPortalLogin.addEventListener('click', () => {
       if (window.showPage) {
-        window.showPage('landing-page');
-        // Default to login tab
+        window.showPage('portal-login-page');
         const loginTab = document.querySelector('.tab-btn[data-tab="login"]');
         if (loginTab) loginTab.click();
-        setTimeout(() => {
-          const el = document.getElementById('portal');
-          if (el) el.scrollIntoView({ behavior: 'smooth' });
-        }, 100);
       }
     });
   }
@@ -76,13 +59,9 @@ function initPortalNavigation() {
     linkFooterLogin.addEventListener('click', (e) => {
       e.preventDefault();
       if (window.showPage) {
-        window.showPage('landing-page');
+        window.showPage('portal-login-page');
         const loginTab = document.querySelector('.tab-btn[data-tab="login"]');
         if (loginTab) loginTab.click();
-        setTimeout(() => {
-          const el = document.getElementById('portal');
-          if (el) el.scrollIntoView({ behavior: 'smooth' });
-        }, 100);
       }
     });
   }
@@ -91,16 +70,63 @@ function initPortalNavigation() {
     linkFooterRegister.addEventListener('click', (e) => {
       e.preventDefault();
       if (window.showPage) {
-        window.showPage('landing-page');
+        window.showPage('portal-login-page');
         const registerTab = document.querySelector('.tab-btn[data-tab="register"]');
         if (registerTab) registerTab.click();
-        setTimeout(() => {
-          const el = document.getElementById('portal');
-          if (el) el.scrollIntoView({ behavior: 'smooth' });
-        }, 100);
       }
     });
   }
+
+  // Bind course portal navbar link overrides
+  document.querySelectorAll('.nav-link-courses-home').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (window.showPage) window.showPage('landing-page');
+    });
+  });
+
+  document.querySelectorAll('.nav-link-courses-list').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (window.showPage) window.showPage('courses-list-page');
+    });
+  });
+
+  document.querySelectorAll('.nav-link-courses-about').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (window.showPage) window.showPage('about-zazele-page');
+    });
+  });
+
+  document.querySelectorAll('.nav-link-courses-portal').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (window.showPage) window.showPage('portal-login-page');
+    });
+  });
+
+  // Bind web dev portal navbar link overrides
+  document.querySelectorAll('.nav-link-webdev-home').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (window.showPage) window.showPage('webdev-page');
+    });
+  });
+
+  document.querySelectorAll('.nav-link-webdev-packages').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (window.showPage) window.showPage('webdev-packages-page');
+    });
+  });
+
+  document.querySelectorAll('.nav-link-webdev-about').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (window.showPage) window.showPage('webdev-about-page');
+    });
+  });
 
   backBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
