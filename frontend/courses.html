@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accredited Courses - Zazele Online</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/mobile.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-content">
+        <a href="index.html" class="school-brand">
+          <img src="assets/logo.png" alt="Zazele Online Logo" class="brand-logo" onerror="this.style.display='none'">
+          <span>Zazele <span>Online</span></span>
+        </a>
+        <nav class="main-nav">
+          <ul>
+            <li><a href="index.html" class="nav-link-home">Home</a></li>
+            <li><a href="about.html" class="nav-link-about">About</a></li>
+            <li><a href="services.html" class="nav-link-services">Services</a></li>
+            <li><a href="courses.html" class="nav-link-courses active">Courses</a></li>
+            <li><a href="portal.html" class="btn btn-secondary btn-small nav-link-portal">Portal & Contact</a></li>
+          </ul>
+        </nav>
+        <button class="theme-toggle btn-theme-toggle" title="Toggle Dark Mode">🌙</button>
+      </div>
+    </header>
+
+    <main class="landing-main">
+      <!-- 1. MICT SETA Hero -->
+      <section id="home" class="hero-section" style="padding-top: 140px; padding-bottom: 80px;">
+        <div class="hero-content">
+          <div class="section-tag">Digital Education</div>
+          <h1>MICT SETA Accredited Digital Skills Training</h1>
+          <p class="hero-lead">Empowering communities through professional digital literacy programs designed to equip you with essential skills for the modern workplace.</p>
+          <div class="hero-ctas">
+            <a href="#courses" class="btn btn-primary btn-large">Explore Courses</a>
+            <a href="portal.html" class="btn btn-secondary btn-large">Student Login</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. Courses List Section -->
+      <section id="courses" class="courses-section app-container" style="margin-bottom: 60px; padding-top: 40px;">
+        <div class="section-header">
+          <div class="section-tag">Curriculum</div>
+          <h2>Our Accredited Courses</h2>
+          <p>Expert-led training designed to bridge the digital divide and create economic opportunities.</p>
+        </div>
+
+        <div class="landing-grid">
+          <!-- Left Side: Marketing Content -->
+          <div class="marketing-content">
+            <div class="app-card" style="padding: 40px; margin-bottom: 24px;">
+              <h2 style="margin-bottom: 20px; color: var(--primary);">e-Learner Platinum Certificate</h2>
+              <p style="margin-bottom: 24px; font-size: 1.1rem; color: var(--text-soft);">Our flagship digital literacy program designed to empower individuals with essential computer skills for the modern workplace and entrepreneurial ventures.</p>
+              
+              <h3 style="margin-bottom: 16px;">What you will learn:</h3>
+              <ul class="course-features" style="margin-bottom: 20px;">
+                <li><strong>IT Basics:</strong> Foundation of computing.</li>
+                <li><strong>File Management:</strong> Master digital organization.</li>
+                <li><strong>Drawing & Design:</strong> Digital creativity tools.</li>
+                <li><strong>Word Processing:</strong> Professional documents.</li>
+                <li><strong>Spreadsheets:</strong> Data and analysis.</li>
+                <li><strong>Presentations:</strong> Visual communication.</li>
+                <li><strong>Web & Email:</strong> Online communication.</li>
+              </ul>
+
+              <div class="benefit-box" style="margin-top: 30px; padding: 20px; background: var(--bg-secondary); border-radius: var(--radius); border-left: 4px solid var(--primary);">
+                <p><strong>Why this course?</strong> It's more than just a certificate. It enables you to further develop entrepreneurship in any sector and creates opportunities for job creation in your community.</p>
+              </div>
+            </div>
+
+            <div class="app-card pricing-card" style="padding: 40px; margin-bottom: 24px;">
+              <h2 style="margin-bottom: 20px; color: var(--primary);">Course Pricing & Registration</h2>
+              <div style="font-size: 1.5rem; font-weight: 800; margin-bottom: 16px; color: var(--secondary);">
+                  Total Course Fee: R2,500
+              </div>
+              <p style="margin-bottom: 20px; color: var(--text-soft);">Flexible payment options to suit your budget:</p>
+              
+              <div style="display: grid; gap: 16px; margin-bottom: 32px;">
+                  <div class="payment-option" style="background: var(--bg-secondary); padding: 16px; border-radius: 8px;">
+                      <strong style="display: block; margin-bottom: 6px; color: var(--primary); font-size: 1.1rem;">Option 1: Pay as you learn</strong>
+                      Pay <strong>R1,000</strong> registration fee now, and pay the remaining balance as you progress.
+                  </div>
+                  <div class="payment-option" style="background: var(--bg-secondary); padding: 16px; border-radius: 8px;">
+                      <strong style="display: block; margin-bottom: 6px; color: var(--primary); font-size: 1.1rem;">Option 2: Full Payment</strong>
+                      Pay the full amount of <strong>R2,500</strong> at once for complete peace of mind.
+                  </div>
+              </div>
+              <a href="portal.html" class="btn btn-primary btn-large" style="width: 100%; text-align: center;">Register & Start Now</a>
+            </div>
+          </div>
+
+          <!-- Right Side: Certificate & Events -->
+          <div class="portal-side">
+            <div class="app-card" style="padding: 24px; text-align: center; margin-bottom: 24px;">
+              <h3 style="margin-bottom: 16px; font-size: 1rem; color: var(--text-soft); text-transform: uppercase; letter-spacing: 1px;">Accredited Certificate</h3>
+              <div style="padding: 8px; background: white; border: 1px solid var(--border-color); border-radius: 8px; box-shadow: var(--shadow-soft);">
+                <img src="assets/certificate.png" alt="Zazele Certificate" style="width: 100%; height: auto; border-radius: 4px; display: block;">
+              </div>
+            </div>
+
+            <div id="upcoming-events-container" class="app-card" style="margin-bottom: 24px; display: none; padding: 24px;">
+              <h3 style="margin-bottom: 16px; text-align: center;">Upcoming Webinars</h3>
+              <div id="events-list" class="events-list"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- GLOBAL SHAREABLE FOOTER -->
+    <footer class="app-footer">
+      <div class="home-container">
+        <div class="footer-main-grid">
+          <div class="footer-brand-col">
+            <a href="index.html" class="school-brand">
+              <img src="assets/logo.png" alt="Zazele Online Logo" class="brand-logo" onerror="this.style.display='none'">
+              <span>Zazele <span>Online</span></span>
+            </a>
+            <p class="footer-brand-desc">
+              Empowering individuals and businesses across Africa. We deliver accredited digital literacy training alongside custom full-stack web applications built for growth.
+            </p>
+            <div class="footer-social-icons">
+              <a href="https://wa.me/27798420873" target="_blank" class="social-icon-btn" title="WhatsApp">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.262 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.457L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.967C16.59 2.016 14.12 1.01 11.5 1.012c-5.437 0-9.862 4.371-9.866 9.8.001 1.955.513 3.866 1.482 5.568l-1.009 3.687 3.774-.989zm11.758-6.974c-.31-.155-1.826-.9-2.106-1.002-.275-.101-.477-.153-.677.147-.2.3-.777.98-.952 1.18-.175.2-.351.224-.661.07-.31-.155-1.307-.48-2.486-1.531-.918-.819-1.537-1.83-1.717-2.139-.18-.3-.02-.463.135-.617.14-.139.31-.362.466-.543.155-.181.206-.31.31-.517.103-.207.052-.388-.026-.543-.078-.155-.677-1.633-.928-2.239-.244-.589-.493-.51-.677-.52l-.578-.01c-.2 0-.527.075-.803.376-.276.3-1.054 1.03-1.054 2.51 0 1.48 1.08 2.913 1.23 3.116.15.203 2.126 3.242 5.15 4.547.719.31 1.28.495 1.718.633.723.23 1.381.198 1.9.12.578-.087 1.826-.747 2.083-1.469.258-.722.258-1.342.181-1.469-.077-.127-.278-.201-.588-.356z"/></svg>
+              </a>
+              <a href="mailto:support@zazele.online" class="social-icon-btn" title="Email">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M0 3v18h24V3H0zm21.518 2L12 12.713 2.482 5h19.036zM2 19V7.183l10 8.104 10-8.104V19H2z"/></svg>
+              </a>
+              <a href="https://linkedin.com" target="_blank" class="social-icon-btn" title="LinkedIn">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+              </a>
+            </div>
+          </div>
+          
+          <div class="footer-links-col">
+            <h4>Portal</h4>
+            <ul>
+              <li><a href="portal.html" class="nav-link-portal">Student Login</a></li>
+              <li><a href="portal.html" class="nav-link-portal">Register Account</a></li>
+              <li><a href="courses.html" class="nav-link-courses">Accredited Courses</a></li>
+              <li><a href="services.html" class="nav-link-services">Our Services</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-links-col">
+            <h4>Services</h4>
+            <ul>
+              <li><a href="services.html" class="nav-link-services">Web Packages</a></li>
+              <li><a href="services.html" class="nav-link-services">Web Development</a></li>
+              <li><a href="courses.html" class="nav-link-courses">IT Training</a></li>
+              <li><a href="services.html" class="nav-link-services">Our Platforms</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-links-col">
+            <h4>Company</h4>
+            <ul>
+              <li><a href="about.html" class="nav-link-about">Our Vision</a></li>
+              <li><a href="about.html" class="nav-link-about">The Zazele Advantage</a></li>
+              <li><a href="about.html" class="nav-link-about">Legacy & About</a></li>
+              <li><a href="mailto:support@zazele.online">Get in Touch</a></li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="footer-bottom">
+          <p>&copy; 2026 Zazele Online. All Rights Reserved.</p>
+          <div class="footer-legal-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms & Conditions</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/notifications.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/assignment.js"></script>
+  <script src="js/student-dashboard.js"></script>
+  <script src="js/admin-dashboard.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

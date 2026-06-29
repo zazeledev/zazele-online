@@ -132,30 +132,18 @@ function initLogoutButtons() {
   const logoutBtn = document.getElementById('logout-btn');
   const adminLogoutBtn = document.getElementById('admin-logout-btn');
   const logoutPendingBtn = document.getElementById('logout-pending-btn');
+  const profileLogoutBtn = document.getElementById('profile-logout-btn');
 
-  if (logoutBtn) {
-    logoutBtn.addEventListener('click', () => {
-      logoutUser();
-      showPage('selection-portal');
-      resetForms();
-    });
-  }
+  const performLogout = () => {
+    logoutUser();
+    resetForms();
+    window.location.href = 'portal.html';
+  };
 
-  if (adminLogoutBtn) {
-    adminLogoutBtn.addEventListener('click', () => {
-      logoutUser();
-      showPage('selection-portal');
-      resetForms();
-    });
-  }
-
-  if (logoutPendingBtn) {
-    logoutPendingBtn.addEventListener('click', () => {
-      logoutUser();
-      showPage('selection-portal');
-      resetForms();
-    });
-  }
+  if (logoutBtn) logoutBtn.addEventListener('click', performLogout);
+  if (adminLogoutBtn) adminLogoutBtn.addEventListener('click', performLogout);
+  if (logoutPendingBtn) logoutPendingBtn.addEventListener('click', performLogout);
+  if (profileLogoutBtn) profileLogoutBtn.addEventListener('click', performLogout);
 }
 
 // Reset all forms
@@ -174,9 +162,13 @@ function initAuth() {
   console.log('Auth initialized:', { hasToken: !!token, hasUser: !!user, userRole: user?.role });
 
   if (token && user) {
-    navigateToPage(user);
+    // Only run navigation redirection if we are on portal.html
+    if (window.location.pathname.endsWith('portal.html') || window.location.pathname === '/' || window.location.pathname.endsWith('/')) {
+      navigateToPage(user);
+    }
   } else {
-    showPage('selection-portal');
+    // Default starting view on portal.html
+    showPage('portal-contact-page');
   }
 
   initLoginForm();

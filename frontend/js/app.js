@@ -11,48 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Portal Selection Navigation
 function initPortalNavigation() {
-  const btnCourses = document.getElementById('btn-home-courses');
-  const btnWebDev = document.getElementById('btn-home-webdev');
-  const btnSrvCourses = document.getElementById('btn-srv-courses');
-  const btnSrvWebdev = document.getElementById('btn-srv-webdev');
-  const btnPortalLogin = document.getElementById('btn-home-portal-login');
   const btnPortalHubLogin = document.getElementById('btn-portal-hub-login');
-  const backBtns = document.querySelectorAll('.btn-back-to-portal');
-
-  if (btnCourses) {
-    btnCourses.addEventListener('click', () => {
-      if (window.showPage) window.showPage('landing-page');
-    });
-  }
-
-  if (btnWebDev) {
-    btnWebDev.addEventListener('click', () => {
-      if (window.showPage) window.showPage('webdev-page');
-    });
-  }
-
-  if (btnSrvCourses) {
-    btnSrvCourses.addEventListener('click', () => {
-      if (window.showPage) window.showPage('courses-list-page');
-    });
-  }
-
-  if (btnSrvWebdev) {
-    btnSrvWebdev.addEventListener('click', () => {
-      if (window.showPage) window.showPage('webdev-packages-page');
-    });
-  }
-
-  if (btnPortalLogin) {
-    btnPortalLogin.addEventListener('click', () => {
-      if (window.showPage) {
-        window.showPage('portal-login-page');
-        const loginTab = document.querySelector('.tab-btn[data-tab="login"]');
-        if (loginTab) loginTab.click();
-      }
-    });
-  }
-
+  
   if (btnPortalHubLogin) {
     btnPortalHubLogin.addEventListener('click', () => {
       if (window.showPage) {
@@ -63,129 +23,20 @@ function initPortalNavigation() {
     });
   }
 
-  const linkFooterLogin = document.getElementById('link-footer-login');
-  const linkFooterRegister = document.getElementById('link-footer-register');
-
-  if (linkFooterLogin) {
-    linkFooterLogin.addEventListener('click', (e) => {
-      e.preventDefault();
-      if (window.showPage) {
-        window.showPage('portal-login-page');
-        const loginTab = document.querySelector('.tab-btn[data-tab="login"]');
-        if (loginTab) loginTab.click();
-      }
-    });
+  // Handle Hash Routing on Load
+  if (window.location.hash === '#register') {
+    if (window.showPage) {
+      window.showPage('portal-login-page');
+      const registerTab = document.querySelector('.tab-btn[data-tab="register"]');
+      if (registerTab) registerTab.click();
+    }
+  } else if (window.location.hash === '#login') {
+    if (window.showPage) {
+      window.showPage('portal-login-page');
+      const loginTab = document.querySelector('.tab-btn[data-tab="login"]');
+      if (loginTab) loginTab.click();
+    }
   }
-
-  if (linkFooterRegister) {
-    linkFooterRegister.addEventListener('click', (e) => {
-      e.preventDefault();
-      if (window.showPage) {
-        window.showPage('portal-login-page');
-        const registerTab = document.querySelector('.tab-btn[data-tab="register"]');
-        if (registerTab) registerTab.click();
-      }
-    });
-  }
-
-  // Bind homepage navbar link overrides
-  document.querySelectorAll('.nav-link-home-hero').forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      if (window.showPage) window.showPage('selection-portal');
-    });
-  });
-
-  document.querySelectorAll('.nav-link-home-mission').forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      if (window.showPage) window.showPage('mission-page');
-    });
-  });
-
-  document.querySelectorAll('.nav-link-home-services').forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      if (window.showPage) window.showPage('services-page');
-    });
-  });
-
-  document.querySelectorAll('.nav-link-home-why').forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      if (window.showPage) window.showPage('why-us-page');
-    });
-  });
-
-  document.querySelectorAll('.nav-link-home-contact').forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      if (window.showPage) window.showPage('portal-contact-page');
-    });
-  });
-
-  // Bind course portal navbar link overrides
-  document.querySelectorAll('.nav-link-courses-home').forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      if (window.showPage) window.showPage('landing-page');
-    });
-  });
-
-  document.querySelectorAll('.nav-link-courses-list').forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      if (window.showPage) window.showPage('courses-list-page');
-    });
-  });
-
-  document.querySelectorAll('.nav-link-courses-about').forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      if (window.showPage) window.showPage('about-zazele-page');
-    });
-  });
-
-  document.querySelectorAll('.nav-link-courses-portal').forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      if (window.showPage) {
-        window.showPage('portal-login-page');
-        const triggerTab = link.dataset.tabTrigger || 'login';
-        const tabEl = document.querySelector(`.tab-btn[data-tab="${triggerTab}"]`);
-        if (tabEl) tabEl.click();
-      }
-    });
-  });
-
-  // Bind web dev portal navbar link overrides
-  document.querySelectorAll('.nav-link-webdev-home').forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      if (window.showPage) window.showPage('webdev-page');
-    });
-  });
-
-  document.querySelectorAll('.nav-link-webdev-packages').forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      if (window.showPage) window.showPage('webdev-packages-page');
-    });
-  });
-
-  document.querySelectorAll('.nav-link-webdev-about').forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      if (window.showPage) window.showPage('webdev-about-page');
-    });
-  });
-
-  backBtns.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      if (window.showPage) window.showPage('selection-portal');
-    });
-  });
 }
 
 // Upcoming Events Logic

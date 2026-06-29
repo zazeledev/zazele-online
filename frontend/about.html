@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Zazele - Zazele Online</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/mobile.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-content">
+        <a href="index.html" class="school-brand">
+          <img src="assets/logo.png" alt="Zazele Online Logo" class="brand-logo" onerror="this.style.display='none'">
+          <span>Zazele <span>Online</span></span>
+        </a>
+        <nav class="main-nav">
+          <ul>
+            <li><a href="index.html" class="nav-link-home">Home</a></li>
+            <li><a href="about.html" class="nav-link-about active">About</a></li>
+            <li><a href="services.html" class="nav-link-services">Services</a></li>
+            <li><a href="courses.html" class="nav-link-courses">Courses</a></li>
+            <li><a href="portal.html" class="btn btn-secondary btn-small nav-link-portal">Portal & Contact</a></li>
+          </ul>
+        </nav>
+        <button class="theme-toggle btn-theme-toggle" title="Toggle Dark Mode">🌙</button>
+      </div>
+    </header>
+
+    <main class="landing-main">
+      <!-- 1. Mission Statement Section -->
+      <section id="home-mission" class="home-mission-section" style="padding-top: 120px; padding-bottom: 80px;">
+        <div class="home-container">
+          <div class="mission-grid">
+            <div class="mission-text-side">
+              <div class="section-tag">Our Vision</div>
+              <h2>Bridging the Gap Between Learning and Building</h2>
+              <p>We believe that true digital empowerment means having both the knowledge to navigate the web and the infrastructure to succeed on it. Zazele serves as a dual-engine platform: equipping communities with essential digital skills through our dedicated learning portal, while engineering secure, high-performance websites and web applications for growing businesses.</p>
+            </div>
+            <div class="mission-graphic-side">
+              <div class="dual-engine-box">
+                <div class="engine-node education">
+                  <div class="node-icon">🎓</div>
+                  <h4>Digital Skills</h4>
+                  <p>Foundational & Business IT</p>
+                </div>
+                <div class="engine-connector"><div class="connector-line"></div></div>
+                <div class="engine-node technology">
+                  <div class="node-icon">💻</div>
+                  <h4>Web Engineering</h4>
+                  <p>Custom Code & Databases</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. Legacy Credentials Section -->
+      <section id="about" class="about-section" style="background: var(--bg-secondary); padding: 80px 0;">
+        <div class="app-container">
+          <div class="landing-grid">
+            <div class="marketing-content">
+              <div class="section-tag">Our Legacy</div>
+              <h2>About Zazele Training & Development</h2>
+              <p style="color: var(--text-soft); margin-bottom: 24px; font-size: 1.1rem; line-height: 1.8;">Established in 2011, Zazele is a 100% woman and black-owned B-BBEE company. We specialize in educating individuals to set up, manage, and grow their own computer literacy hub businesses.</p>
+              <p style="color: var(--text-soft); font-size: 1.1rem; line-height: 1.8;">Our trainers are experts who bring real business experience and vast computer knowledge to every session, ensuring a high level of learning and motivation.</p>
+            </div>
+            <div class="portal-side">
+              <div class="app-card" style="padding: 40px; border-left: 4px solid var(--primary); background: var(--bg-card);">
+                <h3 style="margin-bottom: 16px;">Our Track Record</h3>
+                <p style="color: var(--text-soft); margin-bottom: 20px;">We have a proven track record of empowering the next generation of digital entrepreneurs in South Africa and beyond.</p>
+                <div class="hero-stats" style="justify-content: flex-start; gap: 40px;">
+                  <div class="stat-item" style="align-items: flex-start;">
+                    <span class="stat-number">3,500+</span>
+                    <span class="stat-label">Graduates</span>
+                  </div>
+                  <div class="stat-item" style="align-items: flex-start;">
+                    <span class="stat-number">5,000+</span>
+                    <span class="stat-label">Trained</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. Zazele Advantage Section -->
+      <section id="home-why" class="home-why-section" style="padding: 80px 0;">
+        <div class="home-container">
+          <div class="why-grid">
+            <div class="why-info-side">
+              <div class="section-tag">The Zazele Advantage</div>
+              <h2>Built with Code, Driven by Education.</h2>
+              <p>Most development agencies only know how to write code. Because our roots are in digital education, we understand how people actually interact with technology. We build user-friendly, highly accessible web applications backed by clean architecture and reliable server infrastructure.</p>
+              
+              <div class="advantage-metrics">
+                <div class="metric-box">
+                  <span class="metric-num">100%</span>
+                  <span class="metric-lbl">User-Centric Design</span>
+                </div>
+                <div class="metric-box">
+                  <span class="metric-num">SETA</span>
+                  <span class="metric-lbl">Accredited Pedagogy</span>
+                </div>
+              </div>
+            </div>
+            <div class="why-graphic-side">
+              <div class="mockup-code-card">
+                <div class="mockup-header">
+                  <span class="dot red"></span>
+                  <span class="dot yellow"></span>
+                  <span class="dot green"></span>
+                  <span class="mockup-title">zazele_core.js</span>
+                </div>
+                <pre class="mockup-code"><code>const Zazele = {
+  philosophy: "Education + Engineering",
+  approach: "User-First Accessibility",
+  stack: ["NodeJS", "Express", "MongoDB", "VanillaJS"],
+  empower: (user) => {
+    return user.learn().then(user.build);
+  }
+};</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- GLOBAL SHAREABLE FOOTER -->
+    <footer class="app-footer">
+      <div class="home-container">
+        <div class="footer-main-grid">
+          <div class="footer-brand-col">
+            <a href="index.html" class="school-brand">
+              <img src="assets/logo.png" alt="Zazele Online Logo" class="brand-logo" onerror="this.style.display='none'">
+              <span>Zazele <span>Online</span></span>
+            </a>
+            <p class="footer-brand-desc">
+              Empowering individuals and businesses across Africa. We deliver accredited digital literacy training alongside custom full-stack web applications built for growth.
+            </p>
+            <div class="footer-social-icons">
+              <a href="https://wa.me/27798420873" target="_blank" class="social-icon-btn" title="WhatsApp">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.262 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.457L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.967C16.59 2.016 14.12 1.01 11.5 1.012c-5.437 0-9.862 4.371-9.866 9.8.001 1.955.513 3.866 1.482 5.568l-1.009 3.687 3.774-.989zm11.758-6.974c-.31-.155-1.826-.9-2.106-1.002-.275-.101-.477-.153-.677.147-.2.3-.777.98-.952 1.18-.175.2-.351.224-.661.07-.31-.155-1.307-.48-2.486-1.531-.918-.819-1.537-1.83-1.717-2.139-.18-.3-.02-.463.135-.617.14-.139.31-.362.466-.543.155-.181.206-.31.31-.517.103-.207.052-.388-.026-.543-.078-.155-.677-1.633-.928-2.239-.244-.589-.493-.51-.677-.52l-.578-.01c-.2 0-.527.075-.803.376-.276.3-1.054 1.03-1.054 2.51 0 1.48 1.08 2.913 1.23 3.116.15.203 2.126 3.242 5.15 4.547.719.31 1.28.495 1.718.633.723.23 1.381.198 1.9.12.578-.087 1.826-.747 2.083-1.469.258-.722.258-1.342.181-1.469-.077-.127-.278-.201-.588-.356z"/></svg>
+              </a>
+              <a href="mailto:support@zazele.online" class="social-icon-btn" title="Email">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M0 3v18h24V3H0zm21.518 2L12 12.713 2.482 5h19.036zM2 19V7.183l10 8.104 10-8.104V19H2z"/></svg>
+              </a>
+              <a href="https://linkedin.com" target="_blank" class="social-icon-btn" title="LinkedIn">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+              </a>
+            </div>
+          </div>
+          
+          <div class="footer-links-col">
+            <h4>Portal</h4>
+            <ul>
+              <li><a href="portal.html" class="nav-link-portal">Student Login</a></li>
+              <li><a href="portal.html" class="nav-link-portal">Register Account</a></li>
+              <li><a href="courses.html" class="nav-link-courses">Accredited Courses</a></li>
+              <li><a href="services.html" class="nav-link-services">Our Services</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-links-col">
+            <h4>Services</h4>
+            <ul>
+              <li><a href="services.html" class="nav-link-services">Web Packages</a></li>
+              <li><a href="services.html" class="nav-link-services">Web Development</a></li>
+              <li><a href="courses.html" class="nav-link-courses">IT Training</a></li>
+              <li><a href="services.html" class="nav-link-services">Our Platforms</a></li>
+            </ul>
+          </div>
+          
+          <div class="footer-links-col">
+            <h4>Company</h4>
+            <ul>
+              <li><a href="about.html" class="nav-link-about">Our Vision</a></li>
+              <li><a href="about.html" class="nav-link-about">The Zazele Advantage</a></li>
+              <li><a href="about.html" class="nav-link-about">Legacy & About</a></li>
+              <li><a href="mailto:support@zazele.online">Get in Touch</a></li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="footer-bottom">
+          <p>&copy; 2026 Zazele Online. All Rights Reserved.</p>
+          <div class="footer-legal-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms & Conditions</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/notifications.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/assignment.js"></script>
+  <script src="js/student-dashboard.js"></script>
+  <script src="js/admin-dashboard.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
