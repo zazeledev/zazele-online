@@ -58,6 +58,42 @@ function initPortalNavigation() {
     btnPortalLogin.addEventListener('click', () => {
       if (window.showPage) {
         window.showPage('landing-page');
+        // Default to login tab
+        const loginTab = document.querySelector('.tab-btn[data-tab="login"]');
+        if (loginTab) loginTab.click();
+        setTimeout(() => {
+          const el = document.getElementById('portal');
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+    });
+  }
+
+  const linkFooterLogin = document.getElementById('link-footer-login');
+  const linkFooterRegister = document.getElementById('link-footer-register');
+
+  if (linkFooterLogin) {
+    linkFooterLogin.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (window.showPage) {
+        window.showPage('landing-page');
+        const loginTab = document.querySelector('.tab-btn[data-tab="login"]');
+        if (loginTab) loginTab.click();
+        setTimeout(() => {
+          const el = document.getElementById('portal');
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+    });
+  }
+
+  if (linkFooterRegister) {
+    linkFooterRegister.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (window.showPage) {
+        window.showPage('landing-page');
+        const registerTab = document.querySelector('.tab-btn[data-tab="register"]');
+        if (registerTab) registerTab.click();
         setTimeout(() => {
           const el = document.getElementById('portal');
           if (el) el.scrollIntoView({ behavior: 'smooth' });
