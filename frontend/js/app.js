@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
   initPasswordToggles();
   initThemeToggle();
   initUpcomingEvents();
+  initMobileMenu();
+  initContactForm();
 });
 
 // Portal Selection Navigation
@@ -23,20 +25,28 @@ function initPortalNavigation() {
     });
   }
 
-  // Handle Hash Routing on Load
-  if (window.location.hash === '#register') {
-    if (window.showPage) {
-      window.showPage('portal-login-page');
-      const registerTab = document.querySelector('.tab-btn[data-tab="register"]');
-      if (registerTab) registerTab.click();
-    }
-  } else if (window.location.hash === '#login') {
-    if (window.showPage) {
-      window.showPage('portal-login-page');
-      const loginTab = document.querySelector('.tab-btn[data-tab="login"]');
-      if (loginTab) loginTab.click();
+  // Handle Hash Routing
+  function handleHashRouting() {
+    if (window.location.hash === '#register') {
+      if (window.showPage) {
+        window.showPage('portal-login-page');
+        const registerTab = document.querySelector('.tab-btn[data-tab="register"]');
+        if (registerTab) registerTab.click();
+      }
+    } else if (window.location.hash === '#login') {
+      if (window.showPage) {
+        window.showPage('portal-login-page');
+        const loginTab = document.querySelector('.tab-btn[data-tab="login"]');
+        if (loginTab) loginTab.click();
+      }
     }
   }
+
+  // Handle on load
+  handleHashRouting();
+
+  // Handle on hash change
+  window.addEventListener('hashchange', handleHashRouting);
 }
 
 // Upcoming Events Logic
@@ -198,5 +208,86 @@ function initPasswordToggles() {
         }
       }
     }
+  });
+}
+
+// Mobile Hamburger Menu Navigation Drawer
+function initMobileMenu() {
+  const toggleBtn = document.getElementById('mobile-menu-toggle');
+  const mainNav = document.querySelector('.main-nav');
+  
+  if (!toggleBtn || !mainNav) return;
+
+  // Create overlay background dynamically if it doesn't exist
+  let overlay = document.querySelector('.mobile-overlay');
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.className = 'mobile-overlay';
+    document.body.appendChild(overlay);
+  }
+
+  function toggleMenu() {
+    const isActive = mainNav.classList.toggle('active');
+    toggleBtn.classList.toggle('active', isActive);
+    overlay.classList.toggle('active', isActive);
+    document.body.classList.toggle('no-scroll', isActive);
+  }
+
+  function closeMenu() {
+    toggleBtn.classList.remove('active');
+    mainNav.classList.remove('active');
+    overlay.classList.remove('active');
+    document.body.classList.remove('no-scroll');
+  }
+
+  toggleBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleMenu();
+  });
+
+  overlay.addEventListener('click', closeMenu);
+
+  // Close menu when clicking navigation links (including sub-items or anchor clicks)
+  mainNav.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', closeMenu);
+  });
+  
+  // Close menu if user clicks outside of drawer
+  document.addEventListener('click', (e) => {
+    if (!mainNav.contains(e.target) && !toggleBtn.contains(e.target) && mainNav.classList.contains('active')) {
+      closeMenu();
+    }
+  });
+}
+
+// Contact Form Handler
+function initContactForm() {
+  const form = document.getElementById('contact-form');
+  if (!form) return;
+
+  // Auto-select subject from query parameters if present
+  const urlParams = new URLSearchParams(window.location.search);
+  const subjectParam = urlParams.get('subject');
+  if (subjectParam) {
+    const selectEl = document.getElementById('contact-subject');
+    if (selectEl) {
+      selectEl.value = subjectParam;
+    }
+  }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const btn = form.querySelector('button[type="submit"]');
+    const originalText = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+
+    // Simulate sending with a timeout
+    setTimeout(() => {
+      alert('Thank you for contacting us! Bafana Binda and the Zazele Team will get back to you shortly.');
+      form.reset();
+      btn.disabled = false;
+      btn.textContent = originalText;
+    }, 1200);
   });
 }
