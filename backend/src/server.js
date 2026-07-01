@@ -144,7 +144,7 @@ app.use((err, req, res, next) => {
   
   res.status(500).json({ 
     message: 'Server error', 
-    error: err.message,
+    error: process.env.NODE_ENV === 'production' ? 'An internal error occurred' : err.message,
     timestamp
   });
 });
