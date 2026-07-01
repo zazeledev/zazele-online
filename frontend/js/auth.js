@@ -103,6 +103,37 @@ function initFormTabs() {
 
 // Show appropriate page based on user status
 function navigateToPage(user) {
+  const userNav = document.getElementById('header-user-nav');
+  const portalBtn = document.querySelector('.nav-link-portal');
+  
+  if (userNav) {
+    userNav.style.display = 'flex';
+    
+    // Hide standard portal button in main menu
+    if (portalBtn) portalBtn.style.display = 'none';
+    
+    // Reset all header items to hidden
+    document.getElementById('student-notification-wrapper').style.display = 'none';
+    document.getElementById('admin-notification-wrapper').style.display = 'none';
+    document.getElementById('profile-badge').style.display = 'none';
+    document.getElementById('admin-info-text').style.display = 'none';
+    document.getElementById('logout-btn').style.display = 'none';
+    document.getElementById('admin-logout-btn').style.display = 'none';
+
+    if (user.role === 'admin') {
+      document.getElementById('admin-notification-wrapper').style.display = 'block';
+      document.getElementById('admin-info-text').style.display = 'flex';
+      document.getElementById('admin-logout-btn').style.display = 'block';
+    } else if (user.approved) {
+      document.getElementById('student-notification-wrapper').style.display = 'block';
+      document.getElementById('profile-badge').style.display = 'block';
+      document.getElementById('logout-btn').style.display = 'block';
+    } else {
+      // Pending student
+      document.getElementById('logout-btn').style.display = 'block';
+    }
+  }
+
   if (user.role === 'admin') {
     showPage('admin-page');
     loadAdminDashboard();

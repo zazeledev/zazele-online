@@ -32,6 +32,59 @@
             <li><a href="portal.html#login" class="btn btn-secondary btn-small nav-link-portal active">Student Portal</a></li>
           </ul>
         </nav>
+
+        <!-- User Nav (For logged in users) -->
+        <div class="user-nav" id="header-user-nav" style="display: none; align-items: center; gap: 16px; margin-left: auto; margin-right: 16px;">
+          <!-- Student Notifications -->
+          <div class="notification-wrapper" id="student-notification-wrapper" style="display: none;">
+            <button class="notification-btn" id="student-notification-btn">
+              <span class="icon">🔔</span>
+              <span class="notification-badge" id="student-unread-count" style="display: none;">0</span>
+            </button>
+            <div class="notification-dropdown" id="student-notification-dropdown">
+              <div class="notification-header">
+                <h4>Notifications</h4>
+                <button class="mark-all-read" id="student-mark-all-read">Mark all as read</button>
+              </div>
+              <div class="notification-list" id="student-notification-list">
+                <div class="no-notifications">No new notifications</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Admin Notifications -->
+          <div class="notification-wrapper" id="admin-notification-wrapper" style="display: none;">
+            <button class="notification-btn" id="admin-notification-btn">
+              <span class="icon">🔔</span>
+              <span class="notification-badge" id="admin-unread-count" style="display: none;">0</span>
+            </button>
+            <div class="notification-dropdown" id="admin-notification-dropdown">
+              <div class="notification-header">
+                <h4>Notifications</h4>
+                <button class="mark-all-read" id="admin-mark-all-read">Mark all as read</button>
+              </div>
+              <div class="notification-list" id="admin-notification-list">
+                <div class="no-notifications">No new notifications</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Student Profile Badge -->
+          <div class="profile-badge" id="profile-badge" style="display: none; cursor:pointer;">
+            <span id="user-display-name">Student</span>
+          </div>
+
+          <!-- Admin Profile Name -->
+          <div class="user-info-text" id="admin-info-text" style="display: none;">
+            <span class="name" id="admin-user-name">Administrator</span>
+            <span class="role">Admin Portal</span>
+          </div>
+
+          <!-- Logout Buttons -->
+          <button id="logout-btn" class="btn btn-danger btn-small" style="display: none;">Logout</button>
+          <button id="admin-logout-btn" class="btn btn-danger btn-small" style="display: none;">Logout</button>
+        </div>
+
         <div class="header-actions">
           <button class="theme-toggle btn-theme-toggle" title="Toggle Dark Mode">🌙</button>
           <button class="mobile-menu-toggle" aria-label="Toggle Menu" id="mobile-menu-toggle">
