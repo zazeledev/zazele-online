@@ -106,6 +106,19 @@ function navigateToPage(user) {
   const userNav = document.getElementById('header-user-nav');
   const portalBtn = document.querySelector('.nav-link-portal');
   
+  // Hide main marketing navigation links and mobile hamburger toggle when logged in
+  const mainNavUl = document.querySelector('.main-nav ul');
+  if (mainNavUl) mainNavUl.style.display = 'none';
+  
+  const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+  if (mobileMenuToggle) mobileMenuToggle.style.display = 'none';
+
+  // Prevent brand logo from taking user to landing page while logged in
+  const schoolBrandLinks = document.querySelectorAll('.school-brand');
+  schoolBrandLinks.forEach(link => {
+    link.href = 'portal.html';
+  });
+  
   if (userNav) {
     userNav.style.display = 'flex';
     
