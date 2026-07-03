@@ -212,7 +212,7 @@ function initAuth() {
     }
   } else {
     // Default starting view on portal.html
-    showPage('portal-contact-page');
+    showPage('portal-login-page');
   }
 
   initLoginForm();
