@@ -301,9 +301,8 @@
 }
 
 .package-badge {
-  position: absolute;
-  top: 24px;
-  right: 24px;
+  display: inline-flex;
+  align-self: flex-start;
   background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
   color: white;
   padding: 6px 14px;
@@ -313,6 +312,7 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
   box-shadow: 0 4px 10px rgba(0, 122, 255, 0.2);
+  margin-bottom: 16px;
 }
 
 .package-card h3 {
