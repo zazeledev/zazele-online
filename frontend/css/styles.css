@@ -6,54 +6,54 @@
 */
 
 :root {
-  --primary: #D3543A; /* Terracotta Orange */
-  --primary-dark: #B23E27;
-  --secondary: #1E7F7D; /* Earthy Teal */
-  --bg-body: #FCFAF6; /* Warm off-white */
+  --primary: #007AFF; /* Electric Blue */
+  --primary-dark: #0056B3;
+  --secondary: #1A2B49; /* Deep Navy */
+  --bg-body: #F4F7F9; /* Light Cool Gray */
   --bg-card: #FFFFFF;
   --bg-input: #FFFFFF;
-  --bg-secondary: #F6F3EC; /* Warm sand */
+  --bg-secondary: #EDF2F7; /* Cool sand */
   
-  --success: hsl(142, 76%, 36%); /* Emerald Green */
-  --danger: hsl(354, 84%, 57%); /* Coral Red */
+  --success: #34C759; /* iOS Green */
+  --danger: #FF3B30; /* iOS Red */
   
-  --text-main: #16192E; /* Deep Warm Navy */
-  --text-soft: #484B62; /* Slate Grey */
-  --text-muted: #7D8098;
-  --text-on-secondary: #16192E;
+  --text-main: #1D1D1F; /* Off-black */
+  --text-soft: #424245; /* Slate Gray */
+  --text-muted: #86868B;
+  --text-on-secondary: #FFFFFF;
   
-  --border-color: rgba(22, 25, 46, 0.06);
-  --shadow-soft: 0 8px 32px rgba(22, 25, 46, 0.03);
-  --shadow-medium: 0 16px 48px rgba(22, 25, 46, 0.06);
+  --border-color: #E5E5E7;
+  --shadow-soft: 0 8px 32px rgba(26, 43, 73, 0.04);
+  --shadow-medium: 0 16px 48px rgba(26, 43, 73, 0.08);
   
   --radius: 20px;
   --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   --app-width: 1100px;
   --header-height: 80px;
-  --bg-footer: #1B1515; /* Deep Warm Plum-Dark */
+  --bg-footer: #1A2B49; /* Deep Navy Footer */
 }
 
 /* Dark Mode Variables */
 .dark-mode {
-  --bg-body: #151214; /* Deep Warm Charcoal/Plum */
-  --bg-card: #1F1A1E;
-  --bg-input: #1A1619;
-  --bg-secondary: #241E22;
+  --bg-body: #0F172A; /* Dark Slate Navy */
+  --bg-card: #1E293B;
+  --bg-input: #1E293B;
+  --bg-secondary: #334155;
   
-  --text-main: #F7ECE1; /* Warm Sand Cream */
-  --text-soft: #D8C8B8;
-  --text-muted: #A69585;
+  --text-main: #F8FAFC;
+  --text-soft: #CBD5E1;
+  --text-muted: #94A3B8;
   --text-on-secondary: #FFFFFF;
   
-  --border-color: rgba(247, 236, 225, 0.06);
+  --border-color: rgba(255, 255, 255, 0.08);
   --shadow-soft: 0 8px 32px rgba(0, 0, 0, 0.3);
   --shadow-medium: 0 16px 48px rgba(0, 0, 0, 0.5);
-  --secondary: #218280; /* Teal Accent Hover in dark mode */
-  --bg-footer: #0E0C0D;
+  --secondary: #38BDF8; /* Sky Blue Hover in dark mode */
+  --bg-footer: #0B0F19;
 }
 
 .dark-mode .app-header {
-  background: rgba(18, 18, 18, 0.8) !important;
+  background: rgba(15, 23, 42, 0.85) !important;
   backdrop-filter: blur(20px) saturate(190%);
   -webkit-backdrop-filter: blur(20px) saturate(190%);
 }
@@ -469,8 +469,8 @@ input:focus, select:focus, textarea:focus {
 
 .hero-section {
   position: relative;
-  background: radial-gradient(circle at 10% 20%, rgba(211, 84, 58, 0.15) 0%, transparent 50%),
-              radial-gradient(circle at 90% 80%, rgba(30, 127, 125, 0.1) 0%, transparent 50%),
+  background: radial-gradient(circle at 10% 20%, rgba(0, 122, 255, 0.15) 0%, transparent 50%),
+              radial-gradient(circle at 90% 80%, rgba(26, 43, 73, 0.2) 0%, transparent 50%),
               var(--bg-footer);
   color: white;
   padding: 140px 40px;
@@ -494,8 +494,8 @@ input:focus, select:focus, textarea:focus {
 }
 
 #webdev-home.hero-section {
-  background: radial-gradient(circle at 10% 20%, rgba(30, 127, 125, 0.18) 0%, transparent 50%),
-              radial-gradient(circle at 90% 80%, rgba(211, 84, 58, 0.1) 0%, transparent 50%),
+  background: radial-gradient(circle at 10% 20%, rgba(26, 43, 73, 0.25) 0%, transparent 50%),
+              radial-gradient(circle at 90% 80%, rgba(0, 122, 255, 0.1) 0%, transparent 50%),
               var(--bg-footer);
 }
 
@@ -725,11 +725,11 @@ h1, h2, h3 { font-weight: 800; color: var(--secondary); margin-bottom: 1rem; let
 .btn-primary { 
   background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); 
   color: white; 
-  box-shadow: 0 4px 12px rgba(211, 84, 58, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 122, 255, 0.2);
 }
 .btn-primary:hover { 
   transform: translateY(-2px); 
-  box-shadow: 0 8px 20px rgba(211, 84, 58, 0.35); 
+  box-shadow: 0 8px 20px rgba(0, 122, 255, 0.35); 
 }
 .btn-primary:active {
   transform: translateY(0);
@@ -798,7 +798,7 @@ h1, h2, h3 { font-weight: 800; color: var(--secondary); margin-bottom: 1rem; let
   letter-spacing: -0.02em;
 }
 .school-brand span span {
-  background: linear-gradient(135deg, var(--primary) 0%, #E09F3E 100%);
+  background: linear-gradient(135deg, var(--primary) 0%, #00C6FF 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -2120,7 +2120,7 @@ h1, h2, h3 { font-weight: 800; color: var(--secondary); margin-bottom: 1rem; let
 .section-tag {
     display: inline-block;
     padding: 6px 16px;
-    background: rgba(211, 84, 58, 0.08); /* Terracotta tint */
+    background: rgba(0, 122, 255, 0.08); /* Blue tint */
     color: var(--primary);
     border-radius: 100px;
     font-size: 0.85rem;
@@ -2132,13 +2132,13 @@ h1, h2, h3 { font-weight: 800; color: var(--secondary); margin-bottom: 1rem; let
 .home-badge {
     display: inline-block;
     padding: 8px 18px;
-    background: linear-gradient(135deg, rgba(211, 84, 58, 0.08) 0%, rgba(30, 127, 125, 0.08) 100%);
+    background: linear-gradient(135deg, rgba(0, 122, 255, 0.08) 0%, rgba(26, 43, 73, 0.1) 100%);
     color: var(--primary);
     border-radius: 100px;
     font-size: 0.9rem;
     font-weight: 700;
     margin-bottom: 24px;
-    border: 1px solid rgba(211, 84, 58, 0.12);
+    border: 1px solid rgba(0, 122, 255, 0.12);
 }
 
 /* Hero Section */
@@ -2148,8 +2148,8 @@ h1, h2, h3 { font-weight: 800; color: var(--secondary); margin-bottom: 1rem; let
     align-items: center;
     justify-content: center;
     text-align: center;
-    background: radial-gradient(circle at 10% 20%, rgba(211, 84, 58, 0.05) 0%, transparent 45%),
-                radial-gradient(circle at 90% 80%, rgba(30, 127, 125, 0.04) 0%, transparent 45%);
+    background: radial-gradient(circle at 10% 20%, rgba(0, 122, 255, 0.05) 0%, transparent 45%),
+                radial-gradient(circle at 90% 80%, rgba(26, 43, 73, 0.06) 0%, transparent 45%);
 }
 .home-hero-content {
     max-width: 850px;
@@ -2185,7 +2185,7 @@ h1, h2, h3 { font-weight: 800; color: var(--secondary); margin-bottom: 1rem; let
     transform: translate(-50%, -50%);
     width: 600px;
     height: 300px;
-    background: radial-gradient(circle, rgba(211, 84, 58, 0.06) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(0, 122, 255, 0.06) 0%, transparent 70%);
     filter: blur(80px);
     pointer-events: none;
     z-index: 1;
@@ -2300,8 +2300,8 @@ h1, h2, h3 { font-weight: 800; color: var(--secondary); margin-bottom: 1rem; let
 }
 .service-compare-card:hover {
     transform: translateY(-8px);
-    box-shadow: 0 20px 45px rgba(22, 25, 46, 0.04), 0 0 0 1px rgba(211, 84, 58, 0.12);
-    border-color: rgba(211, 84, 58, 0.25);
+    box-shadow: 0 20px 45px rgba(26, 43, 73, 0.04), 0 0 0 1px rgba(0, 122, 255, 0.12);
+    border-color: rgba(0, 122, 255, 0.25);
 }
 .card-icon-large {
     font-size: 3.5rem;
@@ -2450,7 +2450,7 @@ h1, h2, h3 { font-weight: 800; color: var(--secondary); margin-bottom: 1rem; let
     padding-bottom: 40px;
 }
 .footer-cta-card {
-    background: linear-gradient(135deg, rgba(211, 84, 58, 0.1) 0%, rgba(30, 127, 125, 0.03) 100%);
+    background: linear-gradient(135deg, rgba(0, 122, 255, 0.1) 0%, rgba(26, 43, 73, 0.03) 100%);
     border-radius: var(--radius);
     padding: 60px;
     text-align: center;
@@ -2503,7 +2503,7 @@ h1, h2, h3 { font-weight: 800; color: var(--secondary); margin-bottom: 1rem; let
     letter-spacing: -0.02em;
 }
 .footer-brand span span {
-    background: linear-gradient(135deg, var(--primary) 0%, #E09F3E 100%);
+    background: linear-gradient(135deg, var(--primary) 0%, #00C6FF 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
