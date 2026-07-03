@@ -284,29 +284,20 @@
 
 .package-card:hover {
   transform: translateY(-12px);
-  box-shadow: var(--shadow-medium), 0 20px 40px rgba(99, 102, 241, 0.1);
-  border-color: rgba(99, 102, 241, 0.3);
+  box-shadow: var(--shadow-medium), 0 20px 40px rgba(0, 122, 255, 0.1);
+  border-color: rgba(0, 122, 255, 0.3);
 }
 
 .package-card.featured {
   border-color: var(--primary);
-  box-shadow: 0 20px 50px -10px rgba(99, 102, 241, 0.2);
+  box-shadow: 0 20px 50px -10px rgba(0, 122, 255, 0.2);
   transform: scale(1.05) translateY(-5px);
   z-index: 2;
   background: linear-gradient(180deg, var(--bg-card) 0%, var(--bg-secondary) 100%);
 }
-.package-card.featured::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 5px;
-  background: linear-gradient(90deg, var(--primary) 0%, #00c6ff 100%);
-}
 .package-card.featured:hover {
   transform: scale(1.05) translateY(-14px);
-  box-shadow: 0 30px 60px -15px rgba(99, 102, 241, 0.35);
+  box-shadow: 0 30px 60px -15px rgba(0, 122, 255, 0.35);
 }
 
 .package-badge {
@@ -321,7 +312,7 @@
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  box-shadow: 0 4px 10px rgba(99, 102, 241, 0.2);
+  box-shadow: 0 4px 10px rgba(0, 122, 255, 0.2);
 }
 
 .package-card h3 {
@@ -962,7 +953,7 @@ h1, h2, h3 { font-weight: 800; color: var(--secondary); margin-bottom: 1rem; let
 .module-progress-card:hover { 
     transform: translateY(-4px); 
     box-shadow: var(--shadow-medium);
-    border-color: rgba(99, 102, 241, 0.2);
+    border-color: rgba(0, 122, 255, 0.2);
 }
 
 .module-name-compact { 
@@ -1016,7 +1007,7 @@ h1, h2, h3 { font-weight: 800; color: var(--secondary); margin-bottom: 1rem; let
 .module-select-card:hover { 
     border-color: var(--primary); 
     transform: translateY(-8px); 
-    box-shadow: var(--shadow-medium), 0 16px 30px rgba(99, 102, 241, 0.1); 
+    box-shadow: var(--shadow-medium), 0 16px 30px rgba(0, 122, 255, 0.1); 
 }
 .module-select-card h3 { font-size: 1.3rem; margin-bottom: 14px; color: var(--secondary); font-weight: 800; letter-spacing: -0.02em; }
 .module-select-card p { font-size: 0.9rem; color: var(--text-soft); margin-bottom: 24px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.6; }
@@ -1395,7 +1386,7 @@ h1, h2, h3 { font-weight: 800; color: var(--secondary); margin-bottom: 1rem; let
 .status-item:last-child { margin-bottom: 0; }
 
 .action-box { margin-bottom: 20px; padding: 20px; border-radius: 16px; background: var(--bg-secondary); border: 1px solid var(--border-color); }
-.action-box.highlight { background: rgba(99, 102, 241, 0.05); border-color: rgba(99, 102, 241, 0.2); }
+.action-box.highlight { background: rgba(0, 122, 255, 0.05); border-color: rgba(0, 122, 255, 0.2); }
 .action-box.highlight-success { background: rgba(40, 167, 69, 0.05); border-color: rgba(40, 167, 69, 0.2); }
 .action-hint { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px; font-weight: 500; }
 
