@@ -4,19 +4,40 @@ const STORAGE_KEYS = {
   USER: 'zazele_user',
 };
 
-const isLocal = ['localhost', '127.0.0.1', '[::1]', '', '0.0.0.0'].includes(window.location.hostname) || 
-                window.location.hostname.startsWith('192.168.') || 
-                window.location.hostname.startsWith('10.') || 
-                /^172\.(1[6-9]|2[0-9]|3[0-1])\./.test(window.location.hostname) || 
-                window.location.hostname.endsWith('.local');
+const getApiBaseUrl = () => {
+  if (window.location.protocol === 'file:') {
+    return 'http://localhost:5000/api';
+  }
+  const isDevPort = ['8000', '8080', '5500', '3000'].includes(window.location.port);
+  const isLocalHost = ['localhost', '127.0.0.1', '[::1]', '0.0.0.0'].includes(window.location.hostname) ||
+                      window.location.hostname.startsWith('192.168.') ||
+                      window.location.hostname.startsWith('10.') ||
+                      /^172\.(1[6-9]|2[0-9]|3[0-1])\./.test(window.location.hostname) ||
+                      window.location.hostname.endsWith('.local');
+  if (isDevPort && isLocalHost) {
+    return `http://${window.location.hostname}:5000/api`;
+  }
+  return `${window.location.origin}/api`;
+};
 
-const API_BASE_URL = isLocal 
-  ? `http://${window.location.hostname || 'localhost'}:5000/api` 
-  : 'https://api.zazele.online/api';
+const getUploadBaseUrl = () => {
+  if (window.location.protocol === 'file:') {
+    return 'http://localhost:5000/uploads';
+  }
+  const isDevPort = ['8000', '8080', '5500', '3000'].includes(window.location.port);
+  const isLocalHost = ['localhost', '127.0.0.1', '[::1]', '0.0.0.0'].includes(window.location.hostname) ||
+                      window.location.hostname.startsWith('192.168.') ||
+                      window.location.hostname.startsWith('10.') ||
+                      /^172\.(1[6-9]|2[0-9]|3[0-1])\./.test(window.location.hostname) ||
+                      window.location.hostname.endsWith('.local');
+  if (isDevPort && isLocalHost) {
+    return `http://${window.location.hostname}:5000/uploads`;
+  }
+  return `${window.location.origin}/uploads`;
+};
 
-const UPLOAD_BASE_URL = isLocal
-  ? `http://${window.location.hostname || 'localhost'}:5000/uploads`
-  : 'https://api.zazele.online/uploads';
+const API_BASE_URL = getApiBaseUrl();
+const UPLOAD_BASE_URL = getUploadBaseUrl();
 
 // Auth API Calls
 const AuthAPI = {
