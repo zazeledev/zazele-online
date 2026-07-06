@@ -33,7 +33,12 @@ const corsOptions = {
     // Allow requests with no origin (like mobile apps or curl)
     if (!origin) return callback(null, true);
     
-    const isLocalhost = origin.includes('localhost') || origin.includes('127.0.0.1');
+    const isLocalhost = origin.includes('localhost') || 
+                        origin.includes('127.0.0.1') || 
+                        origin.includes('[::1]') ||
+                        origin.includes('192.168.') || 
+                        origin.includes('10.') || 
+                        /172\.(1[6-9]|2[0-9]|3[0-1])\./.test(origin);
     const isAllowedDomain = allowedOrigins.some(domain => domain && origin.startsWith(domain)) || 
                             origin.endsWith('.vercel.app');
     

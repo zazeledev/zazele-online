@@ -32,7 +32,7 @@ const puppeteer = require('puppeteer-core');
   });
 
   try {
-    const base = 'http://localhost:3000';
+    const base = 'http://localhost:3000/courses.html';
     await page.goto(base, { waitUntil: 'networkidle2' });
     // wait for events list
       // dump events list

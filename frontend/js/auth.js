@@ -25,6 +25,7 @@ function logoutUser() {
 function initLoginForm() {
   const form = document.getElementById('login-form');
   const errorDiv = document.getElementById('login-error');
+  if (!form) return;
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -48,6 +49,7 @@ function initLoginForm() {
 function initRegisterForm() {
   const form = document.getElementById('register-form');
   const errorDiv = document.getElementById('register-error');
+  if (!form) return;
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -79,6 +81,7 @@ function initRegisterForm() {
 function initFormTabs() {
   const tabButtons = document.querySelectorAll('.tab-btn');
   const forms = document.querySelectorAll('.form');
+  if (tabButtons.length === 0 || forms.length === 0) return;
 
   tabButtons.forEach((btn) => {
     btn.addEventListener('click', () => {

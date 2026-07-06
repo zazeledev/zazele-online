@@ -40,7 +40,7 @@ const puppeteer = require('puppeteer-core');
   });
 
   try {
-    const base = 'http://localhost:3000';
+    const base = 'http://localhost:3000/portal.html';
     log('Opening', base);
     await page.goto(base, { waitUntil: 'networkidle2' });
     await page.screenshot({ path: path.join(outDir, 'landing.png') });
@@ -49,7 +49,7 @@ const puppeteer = require('puppeteer-core');
     // Fill login
     const emailSel = '#login-email';
     await page.waitForSelector(emailSel);
-    await page.type(emailSel, 'admin@zazele.com', { delay: 30 });
+    await page.type(emailSel, 'admin@zazele.online', { delay: 30 });
     await page.type('#login-password', 'admin123', { delay: 30 });
     await page.click('#login-form button[type=submit]');
     // SPA may not navigate; wait for admin UI element to appear

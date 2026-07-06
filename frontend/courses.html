@@ -194,6 +194,23 @@
     </footer>
   </div>
 
+  <!-- Event Registration Modal -->
+  <div id="event-registration-modal" class="modal">
+    <div class="modal-content" style="max-width: 500px;">
+      <h3 id="event-reg-title" style="margin-bottom: 12px;">Event Registration</h3>
+      <form id="event-registration-form">
+        <input type="hidden" id="event-reg-id" value="">
+        <div class="form-group"><label for="event-reg-fullname">Full Name</label><input id="event-reg-fullname" name="fullname" required></div>
+        <div class="form-group"><label for="event-reg-email">Email</label><input id="event-reg-email" name="email" type="email" required></div>
+        <div class="form-group"><label for="event-reg-contact">Contact Number</label><input id="event-reg-contact" name="contact" type="tel" required></div>
+        <div style="display:flex; gap:12px; margin-top:12px;">
+          <button type="submit" class="btn btn-primary" style="flex:1;">Register</button>
+          <button type="button" id="close-event-reg-modal" class="btn btn-secondary" style="flex:1;">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <script src="js/api.js"></script>
   <script src="js/notifications.js"></script>
   <script src="js/auth.js"></script>
