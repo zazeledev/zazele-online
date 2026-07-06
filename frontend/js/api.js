@@ -17,7 +17,7 @@ const getApiBaseUrl = () => {
   if (isDevPort && isLocalHost) {
     return `http://${window.location.hostname}:5000/api`;
   }
-  return `${window.location.origin}/api`;
+  return 'https://api.zazele.online/api';
 };
 
 const getUploadBaseUrl = () => {
@@ -33,7 +33,7 @@ const getUploadBaseUrl = () => {
   if (isDevPort && isLocalHost) {
     return `http://${window.location.hostname}:5000/uploads`;
   }
-  return `${window.location.origin}/uploads`;
+  return 'https://api.zazele.online/uploads';
 };
 
 const API_BASE_URL = getApiBaseUrl();
