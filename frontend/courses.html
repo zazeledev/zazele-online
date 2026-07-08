@@ -1,11 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VYD2V05DGF"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-VYD2V05DGF');
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Accredited Courses - Zazele Online</title>
+  <title>Accredited Computer & IT Training Courses | Zazele Online</title>
+  <meta name="description" content="Kickstart your IT career with MICT SETA accredited computer literacy & Microsoft Office courses in South Africa. Register online to learn workplace digital skills.">
+  <link rel="icon" href="assets/logo.png" type="image/png">
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/mobile.css">
+  
+  <!-- Schema.org Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "EducationalOrganization",
+        "@id": "https://zazele.online/courses.html#edu-org",
+        "name": "Zazele Online Academy",
+        "url": "https://zazele.online/courses.html",
+        "parentOrganization": {
+          "@type": "Organization",
+          "name": "Zazele Online",
+          "url": "https://zazele.online"
+        },
+        "description": "MICT SETA accredited digital literacy and computer training provider in South Africa.",
+        "telephone": "+27-79-842-0873"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Are Zazele computer courses accredited in South Africa?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, our computer courses are accredited by the Media, Information and Communication Technologies Sector Education and Training Authority (MICT SETA) of South Africa."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What are the entry requirements for the digital literacy course?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "There are no strict entry requirements. Our foundational training is designed for absolute beginners to intermediate learners looking to master basic computer operations and workplace IT tools."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How does the Pay-As-You-Learn option work?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Students can register by paying R1,000 upfront, and then pay installments as they progress through the 7 modules of the e-Learner Platinum Certificate course."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <div id="app">
@@ -125,6 +187,29 @@
           </div>
         </div>
       </section>
+
+      <!-- FAQ Section -->
+      <section id="course-faq" class="faq-section app-container" style="margin-bottom: 80px; padding-top: 40px; border-top: 1px solid var(--border-color);">
+        <div class="section-header" style="margin-bottom: 40px;">
+          <div class="section-tag">FAQ</div>
+          <h2>Frequently Asked Questions</h2>
+          <p>Find answers to common questions about our accredited digital literacy and computer courses.</p>
+        </div>
+        <div class="faq-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+          <div class="faq-item app-card" style="padding: 30px; background: var(--bg-card);">
+            <h4 style="margin-bottom: 12px; color: var(--primary);">Are Zazele computer courses accredited in South Africa?</h4>
+            <p style="color: var(--text-soft); line-height: 1.6;">Yes, our computer courses are accredited by the Media, Information and Communication Technologies Sector Education and Training Authority (MICT SETA) of South Africa, ensuring industry standard recognition.</p>
+          </div>
+          <div class="faq-item app-card" style="padding: 30px; background: var(--bg-card);">
+            <h4 style="margin-bottom: 12px; color: var(--primary);">What are the entry requirements for the digital literacy course?</h4>
+            <p style="color: var(--text-soft); line-height: 1.6;">There are no strict entry requirements. Our foundational training is designed for absolute beginners to intermediate learners looking to master basic computer operations and workplace IT tools.</p>
+          </div>
+          <div class="faq-item app-card" style="padding: 30px; background: var(--bg-card);">
+            <h4 style="margin-bottom: 12px; color: var(--primary);">How does the Pay-As-You-Learn option work?</h4>
+            <p style="color: var(--text-soft); line-height: 1.6;">Students can register by paying R1,000 upfront, and then pay installments as they progress through the 7 modules of the e-Learner Platinum Certificate course, making learning highly affordable.</p>
+          </div>
+        </div>
+      </section>
     </main>
 
     <!-- GLOBAL SHAREABLE FOOTER -->
@@ -211,6 +296,7 @@
     </div>
   </div>
 
+  <script src="js/env.js"></script>
   <script src="js/api.js"></script>
   <script src="js/notifications.js"></script>
   <script src="js/auth.js"></script>

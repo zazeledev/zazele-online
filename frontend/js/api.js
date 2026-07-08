@@ -5,6 +5,9 @@ const STORAGE_KEYS = {
 };
 
 const getApiBaseUrl = () => {
+  if (typeof window !== 'undefined' && window.env && window.env.VITE_API_URL) {
+    return window.env.VITE_API_URL;
+  }
   if (window.location.protocol === 'file:') {
     return 'http://localhost:5000/api';
   }
@@ -21,6 +24,9 @@ const getApiBaseUrl = () => {
 };
 
 const getUploadBaseUrl = () => {
+  if (typeof window !== 'undefined' && window.env && window.env.VITE_UPLOAD_URL) {
+    return window.env.VITE_UPLOAD_URL;
+  }
   if (window.location.protocol === 'file:') {
     return 'http://localhost:5000/uploads';
   }

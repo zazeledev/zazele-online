@@ -1,12 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VYD2V05DGF"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-VYD2V05DGF');
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zazele Online - Digital Learning Platform</title>
+  <title>Zazele Online | IT Training & Web Development South Africa</title>
+  <meta name="description" content="Get accredited MICT SETA computer training courses or build custom, secure full-stack business websites & web applications with Zazele Online South Africa.">
   <link rel="icon" href="assets/logo.png" type="image/png">
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/mobile.css">
+  
+  <!-- Schema.org Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://zazele.online/#organization",
+        "name": "Zazele Online",
+        "url": "https://zazele.online",
+        "logo": "https://zazele.online/assets/logo.png",
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+27-79-842-0873",
+          "contactType": "customer service",
+          "areaServed": "ZA",
+          "availableLanguage": ["en"]
+        },
+        "sameAs": [
+          "https://www.linkedin.com/company/zazele-online"
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://zazele.online/#website",
+        "url": "https://zazele.online",
+        "name": "Zazele Online",
+        "publisher": {
+          "@id": "https://zazele.online/#organization"
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <div id="app">
@@ -256,6 +301,7 @@
   </footer>
   </div>
 
+  <script src="js/env.js"></script>
   <script src="js/api.js"></script>
   <script src="js/notifications.js"></script>
   <script src="js/auth.js"></script>

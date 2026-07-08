@@ -1,11 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-VYD2V05DGF"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-VYD2V05DGF');
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Services & Web Packages - Zazele Online</title>
+  <title>Custom Web Development & Website Design | Zazele Online</title>
+  <meta name="description" content="Professional website design and secure custom web development services for South African businesses, schools & NGOs. Get a responsive website custom-built for growth.">
+  <link rel="icon" href="assets/logo.png" type="image/png">
   <link rel="stylesheet" href="css/styles.css">
   <link rel="stylesheet" href="css/mobile.css">
+  
+  <!-- Schema.org Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "ProfessionalService",
+        "@id": "https://zazele.online/services.html#prof-service",
+        "name": "Zazele Web Development Services",
+        "url": "https://zazele.online/services.html",
+        "parentOrganization": {
+          "@type": "Organization",
+          "name": "Zazele Online",
+          "url": "https://zazele.online"
+        },
+        "description": "Custom full-stack website design and software development services in South Africa.",
+        "telephone": "+27-79-842-0873",
+        "priceRange": "ZAR"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What types of websites do you design and build?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "We build professional business websites, school and NGO portals, e-commerce stores, custom databases, booking apps, and bespoke full-stack applications."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can you integrate local payment options like Yoco or PayFast?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, we integrate South African payment processors like PayFast, Yoco, and PayGate to enable secure local transactions on e-commerce websites."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do you provide website maintenance and support?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes, we offer custom monthly support packages that include security monitoring, content updates, SEO tuning, and domain hosting management."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <div id="app">
@@ -288,6 +351,29 @@
           </div>
         </div>
       </section>
+
+      <!-- FAQ Section -->
+      <section id="services-faq" class="faq-section app-container" style="margin-bottom: 80px; padding-top: 40px; border-top: 1px solid var(--border-color);">
+        <div class="section-header" style="margin-bottom: 40px;">
+          <div class="section-tag">FAQ</div>
+          <h2>Frequently Asked Questions</h2>
+          <p>Find answers to common questions about our custom website design and development services.</p>
+        </div>
+        <div class="faq-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+          <div class="faq-item app-card" style="padding: 30px; background: var(--bg-card);">
+            <h4 style="margin-bottom: 12px; color: var(--primary);">What types of websites do you design and build?</h4>
+            <p style="color: var(--text-soft); line-height: 1.6;">We build high-performance business websites, NGO portals, school websites, e-commerce storefronts, and bespoke full-stack applications with databases tailored to your custom requirements.</p>
+          </div>
+          <div class="faq-item app-card" style="padding: 30px; background: var(--bg-card);">
+            <h4 style="margin-bottom: 12px; color: var(--primary);">Can you integrate South African payment gateways like Yoco or PayFast?</h4>
+            <p style="color: var(--text-soft); line-height: 1.6;">Yes, we specialize in integrating South African payment gateways such as PayFast, Yoco, and PayGate to ensure your online store can process local and international transactions securely.</p>
+          </div>
+          <div class="faq-item app-card" style="padding: 30px; background: var(--bg-card);">
+            <h4 style="margin-bottom: 12px; color: var(--primary);">Do you provide ongoing website maintenance and support?</h4>
+            <p style="color: var(--text-soft); line-height: 1.6;">Yes, we offer flexible website maintenance packages that include server monitoring, regular software updates, SEO tuning, and content updates to keep your web assets running optimally.</p>
+          </div>
+        </div>
+      </section>
     </main>
 
     <!-- GLOBAL SHAREABLE FOOTER -->
@@ -357,6 +443,7 @@
     </footer>
   </div>
 
+  <script src="js/env.js"></script>
   <script src="js/api.js"></script>
   <script src="js/notifications.js"></script>
   <script src="js/auth.js"></script>

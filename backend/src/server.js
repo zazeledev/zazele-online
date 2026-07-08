@@ -72,6 +72,14 @@ app.use((req, res, next) => {
 // Serve uploaded files
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
+// Dynamic environment configuration for frontend
+app.get('/js/env.js', (req, res) => {
+  res.setHeader('Content-Type', 'application/javascript');
+  const apiUrl = process.env.VITE_API_URL || 'https://api.zazele.online/api';
+  const uploadUrl = process.env.VITE_UPLOAD_URL || 'https://api.zazele.online/uploads';
+  res.send(`window.env = { VITE_API_URL: "${apiUrl}", VITE_UPLOAD_URL: "${uploadUrl}" };`);
+});
+
 // Serve frontend static files (if hosted on same server)
 app.use(express.static(path.join(__dirname, '../../frontend')));
 
