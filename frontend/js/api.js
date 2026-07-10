@@ -4,22 +4,183 @@ const STORAGE_KEYS = {
   USER: 'zazele_user',
 };
 
+// Local Host validation helper
+const isLocalHostAddress = (hostname) => {
+  return ['localhost', '127.0.0.1', '[::1]', '0.0.0.0'].includes(hostname) || 
+         hostname.startsWith('192.168.') ||
+         hostname.startsWith('10.') ||
+         /^172\.(1[6-9]|2[0-9]|3[0-1])\./.test(hostname) ||
+         hostname.endsWith('.local');
+};
+
 const getApiBaseUrl = () => {
+  // 1. Vercel runtime/bundler environment variables (build time replacement if it exists)
+  try {
+    if (typeof process !== 'undefined' && process.env && process.env.VITE_API_URL) {
+      return process.env.VITE_API_URL;
+    }
+  } catch (e) {}
+  try {
+    if (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_API_URL) {
+      return import.meta.env.VITE_API_URL;
+    }
+  } catch (e) {}
+
+  // 2. window.env (from env.js)
   if (typeof window !== 'undefined' && window.env && window.env.VITE_API_URL) {
-    return window.env.VITE_API_URL;
+    const hostname = window.location.hostname;
+    const isProdHost = hostname && !isLocalHostAddress(hostname);
+    const targetUrl = window.env.VITE_API_URL;
+    
+    // Safety guard: Prevent localhost URLs from ever being selected on production domain
+    if (isProdHost && (targetUrl.includes('localhost') || targetUrl.includes('127.0.0.1'))) {
+      console.warn('[API] Blocked local API URL on production domain. Falling back to production API.');
+      return 'https://api.zazele.online/api';
+    }
+    return targetUrl;
   }
+
+  // 3. Safe production fallback
   return 'https://api.zazele.online/api';
 };
 
 const getUploadBaseUrl = () => {
+  // 1. Vercel runtime/bundler environment variables
+  try {
+    if (typeof process !== 'undefined' && process.env && process.env.VITE_UPLOAD_URL) {
+      return process.env.VITE_UPLOAD_URL;
+    }
+  } catch (e) {}
+  try {
+    if (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_UPLOAD_URL) {
+      return import.meta.env.VITE_UPLOAD_URL;
+    }
+  } catch (e) {}
+
+  // 2. window.env (from env.js)
   if (typeof window !== 'undefined' && window.env && window.env.VITE_UPLOAD_URL) {
-    return window.env.VITE_UPLOAD_URL;
+    const hostname = window.location.hostname;
+    const isProdHost = hostname && !isLocalHostAddress(hostname);
+    const targetUrl = window.env.VITE_UPLOAD_URL;
+    
+    // Safety guard: Prevent localhost URLs from ever being selected on production domain
+    if (isProdHost && (targetUrl.includes('localhost') || targetUrl.includes('127.0.0.1'))) {
+      console.warn('[API] Blocked local upload URL on production domain. Falling back to production uploads.');
+      return 'https://api.zazele.online/uploads';
+    }
+    return targetUrl;
   }
+
+  // 3. Safe production fallback
   return 'https://api.zazele.online/uploads';
 };
 
 const API_BASE_URL = getApiBaseUrl();
 const UPLOAD_BASE_URL = getUploadBaseUrl();
+
+// Intercept global fetch to improve network error reporting (friendly offline message instead of raw Failed to fetch)
+const originalFetch = window.fetch;
+window.fetch = async function(...args) {
+  try {
+    return await originalFetch.apply(this, args);
+  } catch (error) {
+    if (error instanceof TypeError && (error.message.includes('Failed to fetch') || error.message.includes('fetch') || error.message.includes('NetworkError'))) {
+      throw new Error('Unable to connect to the learning server. Please check your internet connection and try again.');
+    }
+    throw error;
+  }
+};
+
+// UI Offline Banner Injection
+const showBackendOfflineBanner = () => {
+  if (document.getElementById('backend-offline-banner')) return;
+
+  const banner = document.createElement('div');
+  banner.id = 'backend-offline-banner';
+  
+  // Custom styles for high-fidelity Google-red premium offline alert
+  Object.assign(banner.style, {
+    position: 'fixed',
+    top: '0',
+    left: '0',
+    width: '100%',
+    backgroundColor: '#ea4335',
+    color: '#ffffff',
+    textAlign: 'center',
+    padding: '12px 24px',
+    fontSize: '14px',
+    fontWeight: '500',
+    zIndex: '100000',
+    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: '12px',
+    boxSizing: 'border-box'
+  });
+
+  banner.innerHTML = `
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink: 0;">
+      <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+      <line x1="12" y1="9" x2="12" y2="13"></line>
+      <line x1="12" y1="17" x2="12.01" y2="17"></line>
+    </svg>
+    <span><strong>System Offline:</strong> We are unable to connect to the learning servers. Please check your internet connection and try again.</span>
+    <button onclick="window.location.reload()" style="background: rgba(255,255,255,0.25); border: none; color: white; padding: 6px 16px; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 600; margin-left: 10px; transition: background 0.2s;">Retry</button>
+  `;
+
+  // Push container elements down if they exist
+  document.body.style.marginTop = '45px';
+  document.body.insertBefore(banner, document.body.firstChild);
+};
+
+// Startup health check & Deployment check utility
+const runStartupValidation = async () => {
+  const hostname = window.location.hostname || 'Local File';
+  const isLocal = isLocalHostAddress(hostname) || window.location.protocol === 'file:';
+  const environmentLabel = isLocal ? 'Development' : 'Production';
+  
+  // Log startup using requested format
+  if (API_BASE_URL.includes('localhost') || API_BASE_URL.includes('127.0.0.1')) {
+    console.log(`[API] Using Local API: ${API_BASE_URL}`);
+  } else {
+    console.log(`[API] Using Production API: ${API_BASE_URL}`);
+  }
+
+  let healthStatus = 'PENDING';
+  try {
+    const response = await originalFetch(`${API_BASE_URL}/health`);
+    if (response.ok) {
+      healthStatus = 'OK';
+    } else {
+      healthStatus = `UNHEALTHY (Status: ${response.status})`;
+      showBackendOfflineBanner();
+    }
+  } catch (error) {
+    healthStatus = 'UNAVAILABLE';
+    showBackendOfflineBanner();
+  }
+
+  // Print Deployment Check console report
+  console.log(`
+----------------------------------------
+Zazele Online Deployment Check
+----------------------------------------
+Environment : ${environmentLabel}
+Hostname    : ${hostname}
+API         : ${API_BASE_URL}
+Uploads     : ${UPLOAD_BASE_URL}
+Health      : ${healthStatus}
+----------------------------------------
+  `.trim());
+};
+
+// Start validation when DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', runStartupValidation);
+} else {
+  runStartupValidation();
+}
 
 // Auth API Calls
 const AuthAPI = {
