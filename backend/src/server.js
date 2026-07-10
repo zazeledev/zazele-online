@@ -75,8 +75,23 @@ app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 // Dynamic environment configuration for frontend
 app.get('/js/env.js', (req, res) => {
   res.setHeader('Content-Type', 'application/javascript');
-  const apiUrl = process.env.VITE_API_URL || 'https://api.zazele.online/api';
-  const uploadUrl = process.env.VITE_UPLOAD_URL || 'https://api.zazele.online/uploads';
+  
+  const host = req.get('host') || '';
+  const isProductionHost = host.includes('zazele.online');
+  
+  let apiUrl = process.env.VITE_API_URL || 'https://api.zazele.online/api';
+  let uploadUrl = process.env.VITE_UPLOAD_URL || 'https://api.zazele.online/uploads';
+  
+  // Guard: if requested on the production domain, never return localhost endpoints
+  if (isProductionHost) {
+    if (apiUrl.includes('localhost') || apiUrl.includes('127.0.0.1')) {
+      apiUrl = 'https://api.zazele.online/api';
+    }
+    if (uploadUrl.includes('localhost') || uploadUrl.includes('127.0.0.1')) {
+      uploadUrl = 'https://api.zazele.online/uploads';
+    }
+  }
+  
   res.send(`window.env = { VITE_API_URL: "${apiUrl}", VITE_UPLOAD_URL: "${uploadUrl}" };`);
 });
 
