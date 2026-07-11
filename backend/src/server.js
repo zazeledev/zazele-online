@@ -3,7 +3,12 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const helmet = require('helmet');
 const path = require('path');
+const fs = require('fs');
 require('dotenv').config();
+
+if (process.env.NODE_ENV === 'test' || process.env.MOCK_DB === 'true') {
+  require('./utils/mock-db');
+}
 
 const authRoutes = require('./routes/auth');
 const studentRoutes = require('./routes/student');
@@ -30,8 +35,8 @@ const corsOptions = {
       'https://www.zazele-online.vercel.app'
     ];
     
-    // Allow requests with no origin (like mobile apps or curl)
-    if (!origin) return callback(null, true);
+    // Allow requests with no origin (like mobile apps, curl, or test runners)
+    if (!origin || origin === 'null' || origin === 'undefined') return callback(null, true);
     
     const isLocalhost = origin.includes('localhost') || 
                         origin.includes('127.0.0.1') || 
@@ -56,6 +61,15 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Security check: Block public access to sensitive files (dotfiles, configs)
+app.use((req, res, next) => {
+  const filename = path.basename(req.path).toLowerCase();
+  if (filename === '.env' || filename === 'package.json' || filename === 'package-lock.json' || filename.startsWith('.')) {
+    return res.status(404).send('Not Found');
+  }
+  next();
+});
+
 // Request logging
 app.use((req, res, next) => {
   // Only log non-static requests in production to reduce noise
@@ -65,6 +79,16 @@ app.use((req, res, next) => {
       const duration = Date.now() - start;
       console.log(`${new Date().toISOString()} - ${req.method} ${req.url} - Status: ${res.statusCode} - ${duration}ms - Origin: ${req.get('Origin') || 'None'}`);
     });
+  }
+  next();
+});
+
+// Middleware to simulate database failure during QA test runs
+app.use((req, res, next) => {
+  if (req.headers['x-test-trigger-db-fail'] === 'true') {
+    global.mockDbFail = true;
+  } else {
+    global.mockDbFail = false;
   }
   next();
 });
@@ -155,8 +179,25 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+// QA Status Report endpoint
+app.get('/api/qa/status', (req, res) => {
+  const reportPath = path.join(__dirname, '../../tests/reports/report.json');
+  if (fs.existsSync(reportPath)) {
+    try {
+      const data = JSON.parse(fs.readFileSync(reportPath, 'utf8'));
+      return res.json(data);
+    } catch (e) {
+      return res.status(500).json({ error: 'Failed to parse report file' });
+    }
+  }
+  return res.status(404).json({ error: 'No QA report found. Please run tests first.' });
+});
+
 // Serve frontend for all other routes (SPA support)
 app.get('*', (req, res) => {
+  if (req.path.startsWith('/api')) {
+    return res.status(404).json({ error: 'API route not found' });
+  }
   res.sendFile(path.join(__dirname, '../../frontend/index.html'));
 });
 

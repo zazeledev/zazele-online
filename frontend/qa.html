@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zazele Online - QA Health Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #090d16;
+      --panel-bg: #111827;
+      --border-color: #1f2937;
+      --text-white: #f3f4f6;
+      --text-muted: #9ca3af;
+      --indigo: #6366f1;
+      --success: #10b981;
+      --danger: #f43f5e;
+      --warning: #f59e0b;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-white);
+      padding: 40px 20px;
+      line-height: 1.5;
+    }
+    .dashboard-container { max-width: 1200px; margin: 0 auto; }
+    
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    header h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #a5b4fc, #6366f1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    header .status-tag {
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .status-active { background-color: rgba(16, 185, 129, 0.15); color: var(--success); border: 1px solid rgba(16,185,129,0.3); }
+
+    .grid-vitals {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    .vital-card {
+      background-color: var(--panel-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      position: relative;
+      overflow: hidden;
+    }
+    .vital-card h3 { font-size: 0.85rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; letter-spacing: 0.5px; }
+    .vital-value { font-size: 1.8rem; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+    .indicator { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+    .indicator-success { background-color: var(--success); box-shadow: 0 0 10px var(--success); }
+    .indicator-danger { background-color: var(--danger); box-shadow: 0 0 10px var(--danger); }
+    .indicator-warning { background-color: var(--warning); box-shadow: 0 0 10px var(--warning); }
+    
+    .grid-reports {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+    @media(min-width: 992px) {
+      .grid-reports { grid-template-columns: 2fr 1fr; }
+    }
+    
+    .panel-card {
+      background-color: var(--panel-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .panel-card h2 { font-size: 1.3rem; font-weight: 600; margin-bottom: 20px; }
+    
+    .table-container { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; }
+    th { padding: 12px 16px; border-bottom: 2px solid var(--border-color); color: var(--text-muted); font-weight: 500; }
+    td { padding: 16px; border-bottom: 1px solid var(--border-color); vertical-align: middle; }
+    
+    .badge {
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      display: inline-block;
+    }
+    .badge-pass { background-color: rgba(16, 185, 129, 0.15); color: var(--success); }
+    .badge-fail { background-color: rgba(244, 63, 94, 0.15); color: var(--danger); }
+    
+    .meta-list { display: flex; flex-direction: column; gap: 16px; }
+    .meta-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    .meta-label { color: var(--text-muted); font-size: 0.9rem; }
+    .meta-val { font-size: 0.95rem; font-weight: 500; }
+    
+    .error-msg { font-size: 0.8rem; color: #fda4af; font-family: monospace; display: block; margin-top: 4px; }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <header>
+      <div>
+        <h1>QA Health Dashboard</h1>
+        <p style="color: var(--text-muted); margin-top: 4px; font-size: 0.95rem;">Zazele Online Validation & System Health Status</p>
+      </div>
+      <div class="status-tag status-active">Monitoring Active</div>
+    </header>
+    
+    <!-- System Vitals (Real-time checks) -->
+    <div class="grid-vitals">
+      <div class="vital-card">
+        <h3>Backend API Health</h3>
+        <div id="vital-backend" class="vital-value">
+          <span class="indicator indicator-warning"></span>
+          <span>Checking...</span>
+        </div>
+      </div>
+      <div class="vital-card">
+        <h3>Database Connectivity</h3>
+        <div id="vital-database" class="vital-value">
+          <span class="indicator indicator-warning"></span>
+          <span>Checking...</span>
+        </div>
+      </div>
+      <div class="vital-card">
+        <h3>Validation Environment</h3>
+        <div id="vital-env" class="vital-value">
+          <span style="font-size: 1.4rem;">Analyzing...</span>
+        </div>
+      </div>
+      <div class="vital-card">
+        <h3>API Latency</h3>
+        <div id="vital-latency" class="vital-value">
+          <span>-- ms</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Detailed Reports Section -->
+    <div class="grid-reports">
+      <div class="panel-card">
+        <h2>Latest QA Test Report Details</h2>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Test Specification</th>
+                <th>Test Suite</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="test-report-tbody">
+              <tr>
+                <td colspan="3" style="text-align: center; color: var(--text-muted); padding: 30px;">Loading QA report data...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+      <div class="panel-card">
+        <h2>Deployment Metadata</h2>
+        <div class="meta-list">
+          <div class="meta-item">
+            <span class="meta-label">Last Validated</span>
+            <span id="meta-timestamp" class="meta-val">--</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Deployment Environment</span>
+            <span id="meta-env" class="meta-val">--</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Tests Passed</span>
+            <span id="meta-passed" class="meta-val" style="color: var(--success); font-weight: 700;">--</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Tests Failed</span>
+            <span id="meta-failed" class="meta-val" style="color: var(--danger); font-weight: 700;">--</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">QA Core Version</span>
+            <span class="meta-val">v1.1.0</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/env.js"></script>
+  <script>
+    // Configuration fallback
+    const API_BASE = (window.env && window.env.VITE_API_URL) ? window.env.VITE_API_URL : 'https://api.zazele.online/api';
+
+    async function checkSystemHealth() {
+      const startTime = Date.now();
+      try {
+        const res = await fetch(`${API_BASE}/health`);
+        const duration = Date.now() - startTime;
+        
+        document.getElementById('vital-latency').innerText = `${duration} ms`;
+        
+        if (res.ok) {
+          const json = await res.json();
+          // Backend
+          document.getElementById('vital-backend').innerHTML = `
+            <span class="indicator indicator-success"></span>
+            <span>Online</span>
+          `;
+          // Database
+          if (json.database === 'connected') {
+            document.getElementById('vital-database').innerHTML = `
+              <span class="indicator indicator-success"></span>
+              <span>Connected</span>
+            `;
+          } else {
+            document.getElementById('vital-database').innerHTML = `
+              <span class="indicator indicator-danger"></span>
+              <span>Disconnected</span>
+            `;
+          }
+        } else {
+          throw new Error('Unhealthy status');
+        }
+      } catch (e) {
+        document.getElementById('vital-backend').innerHTML = `
+          <span class="indicator indicator-danger"></span>
+          <span>Offline</span>
+        `;
+        document.getElementById('vital-database').innerHTML = `
+          <span class="indicator indicator-danger"></span>
+          <span>Unavailable</span>
+        `;
+        document.getElementById('vital-latency').innerText = `-- ms`;
+      }
+    }
+
+    async function loadQAReport() {
+      try {
+        const res = await fetch(`${API_BASE}/qa/status`);
+        if (!res.ok) throw new Error('Report missing');
+        
+        const report = await res.json();
+        
+        // Populate Vitals & Meta
+        document.getElementById('vital-env').innerText = report.environment;
+        document.getElementById('meta-timestamp').innerText = new Date(report.timestamp).toLocaleString();
+        document.getElementById('meta-env').innerText = report.environment;
+        document.getElementById('meta-passed').innerText = report.passed;
+        document.getElementById('meta-failed').innerText = report.failed;
+        
+        // Populate Table
+        const tbody = document.getElementById('test-report-tbody');
+        tbody.innerHTML = '';
+        
+        for (const [suiteName, tests] of Object.entries(report.suites)) {
+          for (const test of tests) {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td>
+                <span style="font-weight: 500;">${test.name}</span>
+                ${test.message ? `<span class="error-msg">${test.message}</span>` : ''}
+              </td>
+              <td><span style="color: var(--text-muted); font-size: 0.85rem;">${suiteName.toUpperCase()}</span></td>
+              <td>
+                <span class="badge ${test.status === 'PASS' ? 'badge-pass' : 'badge-fail'}">${test.status}</span>
+              </td>
+            `;
+            tbody.appendChild(tr);
+          }
+        }
+      } catch (e) {
+        document.getElementById('test-report-tbody').innerHTML = `
+          <tr>
+            <td colspan="3" style="text-align: center; color: var(--danger); padding: 30px;">
+              No validation report found. Please run the QA suite locally (\`npm run test:all\`) or check endpoint.
+            </td>
+          </tr>
+        `;
+        document.getElementById('vital-env').innerText = 'Unknown';
+      }
+    }
+
+    // Run audit
+    checkSystemHealth();
+    loadQAReport();
+    
+    // Auto-refresh stats every 30 seconds
+    setInterval(checkSystemHealth, 30000);
+  </script>
+</body>
+</html>

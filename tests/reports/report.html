@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zazele Online QA Validation Report</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f19;
+      --card-bg: #151c2c;
+      --text: #f3f4f6;
+      --text-muted: #9ca3af;
+      --primary: #4f46e5;
+      --success: #10b981;
+      --danger: #ef4444;
+      --border: #1f2937;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      padding: 40px 20px;
+      line-height: 1.5;
+    }
+    .container { max-width: 1000px; margin: 0 auto; }
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    header h1 { font-size: 2.2rem; margin-bottom: 8px; font-weight: 700; background: linear-gradient(135deg, #a5b4fc, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    header .meta { color: var(--text-muted); font-size: 0.95rem; }
+    .overall-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+    .overall-status { font-size: 1.5rem; font-weight: 600; }
+    .overall-status.pass { color: var(--success); }
+    .overall-status.fail { color: var(--danger); }
+    .stat-box h4 { color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; margin-bottom: 6px; }
+    .stat-box p { font-size: 1.8rem; font-weight: 700; }
+    .suites-grid { display: grid; grid-template-columns: 1fr; gap: 30px; }
+    @media (min-width: 768px) {
+      .suites-grid { grid-template-columns: 1fr 1fr; }
+    }
+    .suite-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .suite-card.suite-pass { border-top: 4px solid var(--success); }
+    .suite-card.suite-fail { border-top: 4px solid var(--danger); }
+    .suite-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .suite-header h3 { font-size: 1.2rem; font-weight: 600; }
+    .badge {
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    .bg-success { background-color: rgba(16, 185, 129, 0.2); color: var(--success); }
+    .bg-danger { background-color: rgba(239, 68, 68, 0.2); color: var(--danger); }
+    .suite-stats { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px; }
+    .test-list { display: flex; flex-direction: column; gap: 12px; flex-grow: 1; }
+    .test-item {
+      padding: 10px 12px;
+      border-radius: 8px;
+      background-color: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.02);
+    }
+    .test-item.pass { border-left: 3px solid var(--success); }
+    .test-item.fail { border-left: 3px solid var(--danger); background-color: rgba(239, 68, 68, 0.03); }
+    .test-name { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; }
+    .test-item.pass .icon { color: var(--success); font-weight: bold; }
+    .test-item.fail .icon { color: var(--danger); font-weight: bold; }
+    .test-error {
+      margin-top: 6px;
+      padding: 8px;
+      background: rgba(0,0,0,0.3);
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.8rem;
+      color: #fca5a5;
+      word-break: break-all;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Zazele Online QA Report</h1>
+      <div class="meta">Ran at 7/11/2026, 9:56:35 PM | Environment: Test/Local-Mock</div>
+    </header>
+    
+    <div class="overall-card">
+      <div>
+        <div class="overall-status pass">
+          ✓ ALL TESTS PASSED
+        </div>
+      </div>
+      <div class="stat-box">
+        <h4>Passed</h4>
+        <p style="color: var(--success);">35</p>
+      </div>
+      <div class="stat-box">
+        <h4>Failed</h4>
+        <p style="color: var(--danger);">0</p>
+      </div>
+    </div>
+    
+    <div class="suites-grid">
+      
+      <div class="suite-card suite-pass">
+        <div class="suite-header">
+          <h3>SMOKE</h3>
+          <span class="badge bg-success">PASS</span>
+        </div>
+        <div class="suite-stats">15 Passed / 0 Failed</div>
+        <div class="test-list">
+          
+            <div class="test-item pass">
+              <div class="test-name">
+                <span class="icon">✓</span>
+                <span>Homepage loads</span>
+              </div>
+              
+            </div>
+          
+            <div class="test-item pass">
+              <div class="test-name">
+                <span class="icon">✓</span>
+                <span>Portal page loads</span>
+              </div>
+              
+            </div>
+          
+            <div class="test-item pass">
+              <div class="test-name">
+                <span class="icon">✓</span>
+                <span>API health endpoint responds</span>
+              </div>
+              
+            </div>
+          
+            <div class="test-item pass">
+              <div class="test-name">
+                <span class="icon">✓</span>
+                <span>MongoDB connection available</span>
+              </div>
+              
+            </div>
+          
+            <div class="test-item pass">
+              <div class="test-name">
+                <span class="icon">✓</span>
+                <span>Authentication endpoints exist</span>
+              </div>
+              
+            </div>
+          
+            <div class="test-item pass">
+              <div class="test-name">
+                <span class="icon">✓</span>
+                <span>Student login works</span>
+              </div>
+              
+            </div>
+          
+            <div class="test-item pass">
+              <div class="test-name">
+                <span class="icon">✓</span>
+                <span>Admin login works</span>
+              </div>
+              
+            </div>
+          
+            <div class="test-item pass">
+              <div class="test-name">
+                <span class="icon">✓</span>
+                <span>Dashboard JavaScript assets load</span>
+              </div>
+              
+            </div>
+          
+            <div class="test-item pass">
+              <div class="test-name">
+                <span class="icon">✓</span>
+                <span>Endpoint student/profile requires authentication</span>
+              </div>
+              
+            </div>
+          
+            <div class="test-item pass">
+              <div class="test-name">
+                <span class="icon">✓</span>
+                <span>Endpoint student/progress requires authentication</span>
+              </div>
+              
+            </div>
+          
+            <div class="test-item pass">
+              <div class="test-name">
+                <span class="icon">✓</span>
+                <span>Endpoint notifications requires authentication</span>
+              </div>
+              
+            </div>
+          
+            <div class="test-item pass">
+              <div class="test-name">
+                <span class="icon">✓</span>
+                <span>JWT Authentication works</span>
+              </div>
+              
+            </div>
+          
+            <div class="test-item pass">
+              <div class="test-name">
+                <span class="icon">✓</span>
+                <span>No localhost references in static JS</span>
+              </div>
+              
+            </div>
+          
+            <div class="test-item pass">
+              <div class="test-name">
+                <span class="icon">✓</span>
+                <span>SSL certificate valid for main site</span>
+              </div>
+              
+            </div>
+          
+            <div class="test-item pass">
+              <div class="test-name">
+                <span class="icon">✓</span>
+                <span>SSL certificate valid for backend api</span>
+              </div>
+              
+            </div>
+          
+        </div>
+      </div>
+    
+      <div class="suite-card suite-pass">
+        <div class="suite-header">
+          <h3>API</h3>
+          <span class="badge bg-success">PASS</span>
+        </div>
+        <div class="suite-stats">9 Passed / 0 Failed</div>
+        <div class="test-list">
+          
+            <div class="test-item pass">
+              <div class="test-name">
+                <span class="icon">✓</span>
+                <span>Auth: Register - Valid payload</span>
+              </div>
+              
+            </div>
+          
+            <div class="test-item pass">
+              <div class="test-name">
+                <span class="icon">✓</span>
+                <span>Auth: Register - Missing fields</span>
+              </div>
+              
+            </div>
+          
+            <div class="test-item pass">
+              <div class="test-name">
+                <span class="icon">✓</span>
+                <span>Auth: Login - Valid credentials</span>
+              </div>
+              
+            </div>
+          
+            <div class="test-item pass">
+              <div class="test-name">
+                <span class="icon">✓</span>
+                <span>Auth: Login - Missing credentials</span>
+              </div>
+              
+            </div>
+          
+            <div class="test-item pass">
+              <div class="test-name">
+                <span class="icon">✓</span>
+                <span>Auth: Login - Invalid password</span>
+              </div>
+              
+            </div>
+          
+            <div class="test-item pass">
+              <div class="test-name">
+                <span class="icon">✓</span>
+                <span>API Protection: Missing token</span>
+              </div>
+              
+            </div>
+          
+            <div class="test-item pass">
+              <div class="test-name">
+                <span class="icon">✓</span>
+                <span>API Protection: Invalid token format</span>
+              </div>
+              
+            </div>
+          
+            <div class="test-item pass">
+              <div class="test-name">
+                <span class="icon">✓</span>
+                <span>Student Profile: Valid token schema check</span>
+              </div>
+              
+            </div>
+          
+            <div class="test-item pass">
+              <div class="test-name">
+                <span class="icon">✓</span>
+                <span>Error Handling: DB failure triggers 500 server error</span>
+              </div>
+              
+            </div>
+          
+        </div>
+      </div>
+    
+      <div class="suite-card suite-pass">
+        <div class="suite-header">
+          <h3>SECURITY</h3>
+          <span class="badge bg-success">PASS</span>
+        </div>
+        <div class="suite-stats">7 Passed / 0 Failed</div>
+        <div class="test-list">
+          
+            <div class="test-item pass">
+              <div class="test-name">
+                <span class="icon">✓</span>
+                <span>Helmet middleware active</span>
+              </div>
+              
+            </div>
+          
+            <div class="test-item pass">
+              <div class="test-name">
+                <span class="icon">✓</span>
+                <span>CORS security headers configured correctly</span>
+              </div>
+              
+            </div>
+          
+            <div class="test-item pass">
+              <div class="test-name">
+                <span class="icon">✓</span>
+                <span>JWT Secret strong & loaded</span>
+              </div>
+              
+            </div>
+          
+            <div class="test-item pass">
+              <div class="test-name">
+                <span class="icon">✓</span>
+                <span>MongoDB URI configured</span>
+              </div>
+              
+            </div>
+          
+            <div class="test-item pass">
+              <div class="test-name">
+                <span class="icon">✓</span>
+                <span>Core backend env variables present</span>
+              </div>
+              
+            </div>
+          
+            <div class="test-item pass">
+              <div class="test-name">
+                <span class="icon">✓</span>
+                <span>Sensitive files not exposed</span>
+              </div>
+              
+            </div>
+          
+            <div class="test-item pass">
+              <div class="test-name">
+                <span class="icon">✓</span>
+                <span>.env listed in gitignore</span>
+              </div>
+              
+            </div>
+          
+        </div>
+      </div>
+    
+      <div class="suite-card suite-pass">
+        <div class="suite-header">
+          <h3>E2E</h3>
+          <span class="badge bg-success">PASS</span>
+        </div>
+        <div class="suite-stats">4 Passed / 0 Failed</div>
+        <div class="test-list">
+          
+            <div class="test-item pass">
+              <div class="test-name">
+                <span class="icon">✓</span>
+                <span>E2E: Student Login and Dashboard Loading</span>
+              </div>
+              
+            </div>
+          
+            <div class="test-item pass">
+              <div class="test-name">
+                <span class="icon">✓</span>
+                <span>E2E: Forgot Password Modal Toggle</span>
+              </div>
+              
+            </div>
+          
+            <div class="test-item pass">
+              <div class="test-name">
+                <span class="icon">✓</span>
+                <span>E2E: Admin Login and Section Navigation</span>
+              </div>
+              
+            </div>
+          
+            <div class="test-item pass">
+              <div class="test-name">
+                <span class="icon">✓</span>
+                <span>E2E: Authentication Logout</span>
+              </div>
+              
+            </div>
+          
+        </div>
+      </div>
+    
+    </div>
+  </div>
+</body>
+</html>

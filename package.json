@@ -1,6 +1,12 @@
 {
   "scripts": {
-    "build": "node scripts/build-env.js"
+    "build": "node scripts/build-env.js",
+    "smoke": "node tests/runner.js --suite=smoke",
+    "test:api": "node tests/runner.js --suite=api",
+    "test:e2e": "node tests/runner.js --suite=e2e",
+    "test:security": "node tests/runner.js --suite=security",
+    "test:all": "node tests/runner.js --suite=all",
+    "qa": "node tests/runner.js --suite=all --open"
   },
   "dependencies": {
     "puppeteer-core": "^24.38.0"

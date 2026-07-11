@@ -1,0 +1,191 @@
+{
+  "timestamp": "2026-07-11T19:56:35.490Z",
+  "environment": "Test/Local-Mock",
+  "passed": 35,
+  "failed": 0,
+  "suites": {
+    "smoke": [
+      {
+        "name": "Homepage loads",
+        "status": "PASS",
+        "message": ""
+      },
+      {
+        "name": "Portal page loads",
+        "status": "PASS",
+        "message": ""
+      },
+      {
+        "name": "API health endpoint responds",
+        "status": "PASS",
+        "message": ""
+      },
+      {
+        "name": "MongoDB connection available",
+        "status": "PASS",
+        "message": ""
+      },
+      {
+        "name": "Authentication endpoints exist",
+        "status": "PASS",
+        "message": ""
+      },
+      {
+        "name": "Student login works",
+        "status": "PASS",
+        "message": ""
+      },
+      {
+        "name": "Admin login works",
+        "status": "PASS",
+        "message": ""
+      },
+      {
+        "name": "Dashboard JavaScript assets load",
+        "status": "PASS",
+        "message": ""
+      },
+      {
+        "name": "Endpoint student/profile requires authentication",
+        "status": "PASS",
+        "message": ""
+      },
+      {
+        "name": "Endpoint student/progress requires authentication",
+        "status": "PASS",
+        "message": ""
+      },
+      {
+        "name": "Endpoint notifications requires authentication",
+        "status": "PASS",
+        "message": ""
+      },
+      {
+        "name": "JWT Authentication works",
+        "status": "PASS",
+        "message": ""
+      },
+      {
+        "name": "No localhost references in static JS",
+        "status": "PASS",
+        "message": ""
+      },
+      {
+        "name": "SSL certificate valid for main site",
+        "status": "PASS",
+        "message": ""
+      },
+      {
+        "name": "SSL certificate valid for backend api",
+        "status": "PASS",
+        "message": ""
+      }
+    ],
+    "api": [
+      {
+        "name": "Auth: Register - Valid payload",
+        "status": "PASS",
+        "message": ""
+      },
+      {
+        "name": "Auth: Register - Missing fields",
+        "status": "PASS",
+        "message": ""
+      },
+      {
+        "name": "Auth: Login - Valid credentials",
+        "status": "PASS",
+        "message": ""
+      },
+      {
+        "name": "Auth: Login - Missing credentials",
+        "status": "PASS",
+        "message": ""
+      },
+      {
+        "name": "Auth: Login - Invalid password",
+        "status": "PASS",
+        "message": ""
+      },
+      {
+        "name": "API Protection: Missing token",
+        "status": "PASS",
+        "message": ""
+      },
+      {
+        "name": "API Protection: Invalid token format",
+        "status": "PASS",
+        "message": ""
+      },
+      {
+        "name": "Student Profile: Valid token schema check",
+        "status": "PASS",
+        "message": ""
+      },
+      {
+        "name": "Error Handling: DB failure triggers 500 server error",
+        "status": "PASS",
+        "message": ""
+      }
+    ],
+    "security": [
+      {
+        "name": "Helmet middleware active",
+        "status": "PASS",
+        "message": ""
+      },
+      {
+        "name": "CORS security headers configured correctly",
+        "status": "PASS",
+        "message": ""
+      },
+      {
+        "name": "JWT Secret strong & loaded",
+        "status": "PASS",
+        "message": ""
+      },
+      {
+        "name": "MongoDB URI configured",
+        "status": "PASS",
+        "message": ""
+      },
+      {
+        "name": "Core backend env variables present",
+        "status": "PASS",
+        "message": ""
+      },
+      {
+        "name": "Sensitive files not exposed",
+        "status": "PASS",
+        "message": ""
+      },
+      {
+        "name": ".env listed in gitignore",
+        "status": "PASS",
+        "message": ""
+      }
+    ],
+    "e2e": [
+      {
+        "name": "E2E: Student Login and Dashboard Loading",
+        "status": "PASS",
+        "message": ""
+      },
+      {
+        "name": "E2E: Forgot Password Modal Toggle",
+        "status": "PASS",
+        "message": ""
+      },
+      {
+        "name": "E2E: Admin Login and Section Navigation",
+        "status": "PASS",
+        "message": ""
+      },
+      {
+        "name": "E2E: Authentication Logout",
+        "status": "PASS",
+        "message": ""
+      }
+    ]
+  }
+}
