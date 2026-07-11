@@ -19,9 +19,8 @@ The application is structured to decouple frontend assets from backend configura
 
 ### Endpoint Resolution Priority
 When the frontend initializes, it determines the API and Upload base URLs in the following order of precedence:
-1. **Vercel Build-time Environment Variables**: `process.env.VITE_API_URL` or `import.meta.env.VITE_API_URL` (if bundled/compiled).
-2. **Runtime Configuration (`window.env`)**: Generated dynamically during local development or at build time via `scripts/build-env.js` on Vercel.
-3. **Safe Production Fallback**: Defaults to `https://api.zazele.online/api` to prevent local values from ever loading in production.
+1. **Runtime Configuration (`window.env`)**: Loaded dynamically from `/frontend/js/env.js` (which is either dynamically resolved or generated at build time via `scripts/build-env.js` using build environment variables).
+2. **Safe Production Fallback**: Defaults to `https://api.zazele.online/api` to prevent local values from ever loading in production.
 
 ---
 

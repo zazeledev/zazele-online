@@ -14,19 +14,7 @@ const isLocalHostAddress = (hostname) => {
 };
 
 const getApiBaseUrl = () => {
-  // 1. Vercel runtime/bundler environment variables (build time replacement if it exists)
-  try {
-    if (typeof process !== 'undefined' && process.env && process.env.VITE_API_URL) {
-      return process.env.VITE_API_URL;
-    }
-  } catch (e) {}
-  try {
-    if (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_API_URL) {
-      return import.meta.env.VITE_API_URL;
-    }
-  } catch (e) {}
-
-  // 2. window.env (from env.js)
+  // 1. window.env (from env.js)
   if (typeof window !== 'undefined' && window.env && window.env.VITE_API_URL) {
     const hostname = window.location.hostname;
     const isProdHost = hostname && !isLocalHostAddress(hostname);
@@ -40,24 +28,12 @@ const getApiBaseUrl = () => {
     return targetUrl;
   }
 
-  // 3. Safe production fallback
+  // 2. Safe production fallback
   return 'https://api.zazele.online/api';
 };
 
 const getUploadBaseUrl = () => {
-  // 1. Vercel runtime/bundler environment variables
-  try {
-    if (typeof process !== 'undefined' && process.env && process.env.VITE_UPLOAD_URL) {
-      return process.env.VITE_UPLOAD_URL;
-    }
-  } catch (e) {}
-  try {
-    if (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_UPLOAD_URL) {
-      return import.meta.env.VITE_UPLOAD_URL;
-    }
-  } catch (e) {}
-
-  // 2. window.env (from env.js)
+  // 1. window.env (from env.js)
   if (typeof window !== 'undefined' && window.env && window.env.VITE_UPLOAD_URL) {
     const hostname = window.location.hostname;
     const isProdHost = hostname && !isLocalHostAddress(hostname);
@@ -71,7 +47,7 @@ const getUploadBaseUrl = () => {
     return targetUrl;
   }
 
-  // 3. Safe production fallback
+  // 2. Safe production fallback
   return 'https://api.zazele.online/uploads';
 };
 
