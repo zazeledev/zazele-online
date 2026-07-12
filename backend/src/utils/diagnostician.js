@@ -3,8 +3,8 @@ const path = require('path');
 const dns = require('dns');
 const tls = require('tls');
 const http = require('http');
+const https = require('https');
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
 
 // Helper to perform HTTP GET requests locally
 function localGet(port, urlPath) {
@@ -20,10 +20,10 @@ function localGet(port, urlPath) {
       res.on('data', chunk => data += chunk);
       res.on('end', () => {
         resolve({
-          status: 'PASS',
+          status: res.statusCode === 200 ? 'PASS' : 'FAIL',
           statusCode: res.statusCode,
           responseTimeMs: Date.now() - start,
-          message: ''
+          message: res.statusCode === 200 ? '' : `HTTP Error ${res.statusCode}`
         });
       });
     });
@@ -34,6 +34,38 @@ function localGet(port, urlPath) {
         statusCode: 0,
         responseTimeMs: Date.now() - start,
         message: err.message
+      });
+    });
+    req.end();
+  });
+}
+
+// Helper to perform public HTTPS GET calls
+function checkUrl(url) {
+  return new Promise((resolve) => {
+    const start = Date.now();
+    const client = url.startsWith('https') ? https : http;
+    const req = client.get(url, { timeout: 4000 }, (res) => {
+      let data = '';
+      res.on('data', chunk => data += chunk);
+      res.on('end', () => {
+        resolve({
+          status: res.statusCode === 200 ? 'PASS' : 'FAIL',
+          statusCode: res.statusCode,
+          responseTimeMs: Date.now() - start,
+          message: res.statusCode === 200 ? '' : `HTTP ${res.statusCode}`,
+          content: data
+        });
+      });
+    });
+
+    req.on('error', (err) => {
+      resolve({
+        status: 'FAIL',
+        statusCode: 0,
+        responseTimeMs: Date.now() - start,
+        message: err.message,
+        content: ''
       });
     });
     req.end();
@@ -109,14 +141,27 @@ async function runDiagnostics(port = 5000) {
     }
   };
 
-  // 1. Homepage & Portal Loading
-  const homeCheck = await localGet(port, '/');
-  addResult('smoke', 'Homepage loads', homeCheck.status, homeCheck.message, { responseTimeMs: homeCheck.responseTimeMs });
+  // Determine if running on live production server (cPanel/MongoDB Atlas)
+  const isProduction = process.env.NODE_ENV === 'production' || 
+                       (mongoose.connection.host && mongoose.connection.host.includes('mongodb.net')) ||
+                       !process.env.PORT || isNaN(process.env.PORT);
 
-  const portalCheck = await localGet(port, '/portal.html');
-  addResult('smoke', 'Portal loads', portalCheck.status, portalCheck.message, { responseTimeMs: portalCheck.responseTimeMs });
+  // 1. Homepage & Portal Loading Checks
+  if (isProduction) {
+    const homeCheck = await checkUrl('https://www.zazele.online/');
+    addResult('smoke', 'Homepage loads', homeCheck.status, homeCheck.message, { responseTimeMs: homeCheck.responseTimeMs });
 
-  // 2. Database Connection
+    const portalCheck = await checkUrl('https://www.zazele.online/portal.html');
+    addResult('smoke', 'Portal loads', portalCheck.status, portalCheck.message, { responseTimeMs: portalCheck.responseTimeMs });
+  } else {
+    const homeCheck = await localGet(port, '/');
+    addResult('smoke', 'Homepage loads', homeCheck.status, homeCheck.message, { responseTimeMs: homeCheck.responseTimeMs });
+
+    const portalCheck = await localGet(port, '/portal.html');
+    addResult('smoke', 'Portal loads', portalCheck.status, portalCheck.message, { responseTimeMs: portalCheck.responseTimeMs });
+  }
+
+  // 2. Database Connection Check
   const dbState = mongoose.connection.readyState;
   if (dbState === 1) {
     addResult('smoke', 'MongoDB', 'PASS', `Connected to database: ${mongoose.connection.name}`);
@@ -124,25 +169,25 @@ async function runDiagnostics(port = 5000) {
     addResult('smoke', 'MongoDB', 'FAIL', 'Database is disconnected or buffering');
   }
 
-  // 3. User Login Validations (Checks DB records directly)
+  // 3. Dynamic User Account Validations (Safe Mongoose lookups)
   if (dbState === 1) {
     try {
       const User = mongoose.models.User || mongoose.model('User');
       
-      // Test Student Account
-      const student = await User.findOne({ email: 'student@zazele.com' });
+      // Production-safe check: check if any student account exists
+      const student = await User.findOne({ role: 'student' });
       if (student) {
-        addResult('smoke', 'Student Account exists', 'PASS', 'Verified test student@zazele.com is in DB');
+        addResult('smoke', 'Student Account exists', 'PASS', 'Verified student accounts exist in database');
       } else {
-        addResult('smoke', 'Student Account exists', 'WARNING', 'student@zazele.com was not found in database');
+        addResult('smoke', 'Student Account exists', 'WARNING', 'No users with student role found in database');
       }
 
-      // Test Admin Account
-      const admin = await User.findOne({ email: 'admin@zazele.com' });
+      // Production-safe check: check if any admin account exists
+      const admin = await User.findOne({ role: 'admin' });
       if (admin) {
-        addResult('smoke', 'Admin Account exists', 'PASS', 'Verified admin@zazele.com is in DB');
+        addResult('smoke', 'Admin Account exists', 'PASS', 'Verified admin accounts exist in database');
       } else {
-        addResult('smoke', 'Admin Account exists', 'WARNING', 'admin@zazele.com was not found in database');
+        addResult('smoke', 'Admin Account exists', 'WARNING', 'No users with admin role found in database');
       }
     } catch (e) {
       addResult('smoke', 'Auth Accounts validation', 'FAIL', `Mongoose lookup error: ${e.message}`);
@@ -151,14 +196,22 @@ async function runDiagnostics(port = 5000) {
     addResult('smoke', 'Auth Accounts validation', 'FAIL', 'Skipped - MongoDB disconnected');
   }
 
-  // 4. API Endpoints
-  const healthCheck = await localGet(port, '/api/health');
-  addResult('api', 'Endpoint GET /api/health', healthCheck.status, healthCheck.message, { responseTimeMs: healthCheck.responseTimeMs });
+  // 4. API Endpoints Check
+  if (isProduction) {
+    const healthCheck = await checkUrl('https://api.zazele.online/api/health');
+    addResult('api', 'Endpoint GET /api/health', healthCheck.status, healthCheck.message, { responseTimeMs: healthCheck.responseTimeMs });
 
-  const coursesCheck = await localGet(port, '/api/courses/modules');
-  addResult('api', 'Endpoint GET /api/courses/modules', coursesCheck.status, coursesCheck.message, { responseTimeMs: coursesCheck.responseTimeMs });
+    const coursesCheck = await checkUrl('https://api.zazele.online/api/courses/modules');
+    addResult('api', 'Endpoint GET /api/courses/modules', coursesCheck.status, coursesCheck.message, { responseTimeMs: coursesCheck.responseTimeMs });
+  } else {
+    const healthCheck = await localGet(port, '/api/health');
+    addResult('api', 'Endpoint GET /api/health', healthCheck.status, healthCheck.message, { responseTimeMs: healthCheck.responseTimeMs });
 
-  // 5. Uploads Folder Write Permission
+    const coursesCheck = await localGet(port, '/api/courses/modules');
+    addResult('api', 'Endpoint GET /api/courses/modules', coursesCheck.status, coursesCheck.message, { responseTimeMs: coursesCheck.responseTimeMs });
+  }
+
+  // 5. Uploads Folder Write Permission Check
   const uploadsPath = path.resolve(__dirname, '../uploads');
   try {
     if (!fs.existsSync(uploadsPath)) {
@@ -172,7 +225,7 @@ async function runDiagnostics(port = 5000) {
     addResult('smoke', 'Uploads directory writable', 'FAIL', e.message);
   }
 
-  // 6. SSL Checks (Live checks)
+  // 6. SSL Check validations
   const mainSsl = await checkSsl('www.zazele.online');
   if (mainSsl.valid) {
     addResult('smoke', 'SSL certificate valid for main site', 'PASS', `${mainSsl.daysRemaining} days remaining`);
@@ -189,33 +242,52 @@ async function runDiagnostics(port = 5000) {
 
   // 7. Security Ignored Configuration Check
   const envPath = path.resolve(__dirname, '../../../.env');
-  if (fs.existsSync(envPath)) {
-    addResult('security', 'Sensitive files (.env)', 'PASS', 'Local configuration file exists');
+  const hasEnvFile = fs.existsSync(envPath);
+  const hasEnvVars = !!(process.env.MONGODB_URI && process.env.JWT_SECRET);
+  
+  if (hasEnvVars) {
+    addResult('security', 'Sensitive files (.env)', 'PASS', hasEnvFile ? 'Local .env file configuration loaded' : 'Process environment variables securely configured');
   } else {
-    addResult('security', 'Sensitive files (.env)', 'WARNING', '.env file was not found at project root');
+    addResult('security', 'Sensitive files (.env)', 'FAIL', 'Missing MONGODB_URI or JWT_SECRET configuration parameters');
   }
 
-  // 8. Localhost variables check inside scripts
-  const jsDir = path.resolve(__dirname, '../../../frontend/js');
-  if (fs.existsSync(jsDir)) {
-    try {
-      const files = fs.readdirSync(jsDir).filter(f => f.endsWith('.js') && f !== 'env.js');
-      let foundLocalhost = false;
-      for (const file of files) {
-        const content = fs.readFileSync(path.join(jsDir, file), 'utf8');
-        if (content.includes('http://localhost:') || content.includes('http://127.0.0.1:')) {
-          foundLocalhost = true;
-          addResult('security', `No localhost references in static JS (js/${file})`, 'FAIL', 'Found hardcoded local address connection port');
-        }
+  // 8. Localhost references in static scripts check
+  if (isProduction) {
+    // On production server (cPanel), check the live deployed frontend JS file from Vercel instead of local filesystem
+    const apiJsCheck = await checkUrl('https://www.zazele.online/js/api.js');
+    if (apiJsCheck.status === 'PASS') {
+      const content = apiJsCheck.content || '';
+      // Refined check matches absolute connections e.g. http://localhost:5000, not guard check conditions
+      if (/http:\/\/localhost:\d+/i.test(content) || /http:\/\/127\.0\.0\.1:\d+/i.test(content)) {
+        addResult('security', 'No localhost references in static JS', 'FAIL', 'Found hardcoded local address connection port inside api.js');
+      } else {
+        addResult('security', 'No localhost references in static JS', 'PASS', 'Verified no local address connection ports are deployed');
       }
-      if (!foundLocalhost) {
-        addResult('security', 'No localhost references in static JS', 'PASS');
-      }
-    } catch (e) {
-      addResult('security', 'No localhost references in static JS', 'WARNING', e.message);
+    } else {
+      addResult('security', 'No localhost references in static JS', 'WARNING', 'Failed to retrieve api.js from main site to scan');
     }
   } else {
-    addResult('security', 'No localhost references in static JS', 'WARNING', 'Static JS directory not resolved');
+    const jsDir = path.resolve(__dirname, '../../../frontend/js');
+    if (fs.existsSync(jsDir)) {
+      try {
+        const files = fs.readdirSync(jsDir).filter(f => f.endsWith('.js') && f !== 'env.js');
+        let foundLocalhost = false;
+        for (const file of files) {
+          const content = fs.readFileSync(path.join(jsDir, file), 'utf8');
+          if (/http:\/\/localhost:\d+/i.test(content) || /http:\/\/127\.0\.0\.1:\d+/i.test(content)) {
+            foundLocalhost = true;
+            addResult('security', `No localhost references in static JS (js/${file})`, 'FAIL', 'Found hardcoded local address connection port');
+          }
+        }
+        if (!foundLocalhost) {
+          addResult('security', 'No localhost references in static JS', 'PASS');
+        }
+      } catch (e) {
+        addResult('security', 'No localhost references in static JS', 'WARNING', e.message);
+      }
+    } else {
+      addResult('security', 'No localhost references in static JS', 'WARNING', 'Static JS directory not resolved');
+    }
   }
 
   return report;
