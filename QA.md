@@ -73,9 +73,31 @@ The testing framework and Operations Center are structured to enable pre-deploym
 * **Endpoint**: `POST /api/qa/diagnose`
 * **Response**: Triggers an on-the-fly server-side diagnostic suite (pings homepage, validates database collections, SSLs, static script localhost check) and returns the fresh validation payload.
 
+### 4. QA Configuration Details
+* **Endpoint**: `GET /api/qa/config`
+* **Response**: Serves the array of configured active API endpoints matching path, methods, and expected HTTP statuses.
+
 ---
 
-## 3. Operations Center Usage
+## 3. Endpoint Expectation Engine
+
+Rather than treating every non-200 HTTP code as a failed validation, the Operations Center is HTTP-aware and checks actual responses against expectations configured inside `backend/config/qa-endpoints.js`:
+
+* **Login Endpoint (`POST /api/auth/login`)**:
+  - Expected: `[200, 400]`
+  - A `400 Bad Request` occurs when validation correctly blocks an empty/missing request payload. This is flagged as a `PASS` (e.g. authentication rules are active).
+* **Register Endpoint (`POST /api/auth/register`)**:
+  - Expected: `[400]`
+  - The check sends an empty payload to avoid polluting production DB users, and verifies the route is active by expecting validation to reject the fields.
+* **Authenticated Endpoints (`/api/student/profile`, etc.)**:
+  - Expected: `[200, 401]`
+  - If no JWT session token is present, a `401 Unauthorized` response is expected and flagged as a `PASS` (e.g. security block correctly enforced).
+
+*Note: Since expected validation (400) and authentication block (401/403) responses are correct system outcomes, they do NOT impact or reduce the overall readiness score.*
+
+---
+
+## 4. Operations Center Usage
 
 ### Run Full System Diagnosis
 1. Navigate to `https://www.zazele.online/qa.html`.
@@ -96,7 +118,7 @@ The **Browser Diagnostics** terminal panel at the bottom right intercepts log ev
 * Console warnings (`console.warn`) and errors (`console.error`).
 * Intercepted network request failures (404, 500 status codes).
 
-## 4. Production Deployment Checklist
+## 5. Production Deployment Checklist
 
 Always complete this mandatory verification sequence prior to declaring a deployment successful:
 
@@ -109,7 +131,7 @@ Always complete this mandatory verification sequence prior to declaring a deploy
 
 ---
 
-## 5. Troubleshooting and Recovery Guide
+## 6. Troubleshooting and Recovery Guide
 
 ### 1. Dashboard displays "Backend Offline"
 * **Likely Cause**: The backend Node app crashed, or cPanel CORS configurations reject request headers.

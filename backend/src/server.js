@@ -372,6 +372,16 @@ function getLatestReport() {
   return null;
 }
 
+// QA Configuration Endpoint
+app.get('/api/qa/config', (req, res) => {
+  try {
+    const config = require('../config/qa-endpoints');
+    res.json(config);
+  } catch (e) {
+    res.status(500).json({ error: 'Failed to load endpoints configuration' });
+  }
+});
+
 // QA Status Report endpoints
 app.get('/api/qa/status', (req, res) => {
   const report = getLatestReport();
