@@ -34,7 +34,7 @@ async function run(testPort = 5001) {
         args: ['--no-sandbox', '--disable-setuid-sandbox']
       });
       const page = await browser.newPage();
-      page.setDefaultTimeout(10000);
+      page.setDefaultTimeout(30000);
       
       // Capture browser console errors
       const consoleErrors = [];

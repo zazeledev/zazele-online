@@ -11,6 +11,10 @@ function generateReports(results) {
   const jsonPath = path.join(reportsDir, 'report.json');
   fs.writeFileSync(jsonPath, JSON.stringify(results, null, 2), 'utf8');
 
+  // Write JSON report to frontend directory for live Vercel deployments
+  const frontendReportPath = path.resolve(__dirname, '../../frontend/report.json');
+  fs.writeFileSync(frontendReportPath, JSON.stringify(results, null, 2), 'utf8');
+
   // 2. Markdown Report
   const mdPath = path.join(reportsDir, 'report.md');
   const mdContent = compileMarkdown(results);

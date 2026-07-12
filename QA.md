@@ -1,113 +1,128 @@
-# Zazele Online - Quality Assurance (QA) and Deployment Validation System
+# Zazele Online - Production Operations Center & QA System Manual
 
-This manual explains the design, operation, extensions, and usage of the automated QA and testing framework built for Zazele Online.
+This manual explains the design, modular architecture, APIs, and recovery procedures of the Zazele Online Production Operations Center and QA framework.
 
 ---
 
 ## 1. System Architecture
 
-The testing framework is structured to enable thorough pre-deployment and post-deployment validation across the entire application stack:
+The testing framework and Operations Center are structured to enable pre-deployment verification and real-time live monitoring:
 
 ```
-tests/
-  smoke/          # Phase 1: High-level availability checks, SSL, asset resolving
-  api/            # Phase 3: Route, status code, validation & schema checks
-  e2e/            # Phase 2: Puppeteer browser automation (runs locally/offline)
-  security/       # Phase 5: Middleware security audit, ignored config verification
-  reports/        # Phase 7: Compiled JSON, HTML, and Markdown test results
-  utils/          # Phase 9: Test server controls and dynamic env.js stubs
-  runner.js       # Phase 8: Unified test orchestrator
-```
-
-### Mock Database Layer (`/backend/src/utils/mock-db.js`)
-To run browser E2E and API tests autonomously (without needing an active database connection or configuring Atlas IP whitelists in restricted environments like CI), the framework stubs `mongoose` models when running in a `test` environment. It provides pre-seeded in-memory models (`User`, `Module`, `Lesson`, `Event`, etc.) and handles full mock schema validation and bcrypt password hashing.
-
----
-
-## 2. CLI Command Reference
-
-Execute tests from the project root using standard `npm` scripts:
-
-| Command | Description |
-| :--- | :--- |
-| `npm run smoke` | Executes Phase 1 smoke tests (loads pages, validates SSL, pings health API). |
-| `npm run test:api` | Executes Phase 3 API tests (validates request payloads, schemas, protection). |
-| `npm run test:e2e` | Executes Phase 2 E2E browser automation (Student/Admin logins, logouts, sections). |
-| `npm run test:security` | Executes Phase 5 security audit (Helmet, CORS checks, gitignore compliance). |
-| `npm run test:all` | Sequentially runs smoke, api, security, and E2E suites. |
-| `npm run qa` | Runs all suites and automatically opens the visual HTML report dashboard. |
-
-*Options:*
-- To run a specific suite: `node tests/runner.js --suite=<smoke|api|e2e|security>`
-- To open the browser report automatically: Add the `--open` flag (e.g., `node tests/runner.js --suite=smoke --open`)
-
----
-
-## 3. Extending the Framework (Adding Tests)
-
-### Adding a Smoke Test
-Add a new check inside the `run` function in `tests/smoke/smoke.test.js`:
-```javascript
-addTest('My Custom Smoke Check', async () => {
-  const res = await httpGet(`${localBase}/my-page.html`);
-  if (res.statusCode !== 200) throw new Error('Failed to load page');
-});
-```
-
-### Adding an API Test
-Add an endpoint test inside `tests/api/api.test.js`:
-```javascript
-await runTest('My Route: Payload check', async () => {
-  const res = await httpReq('POST', `${localBase}/api/my-route`, { data: 'test' });
-  if (res.statusCode !== 201) throw new Error(`Unexpected status ${res.statusCode}`);
-});
-```
-
-### Adding an E2E Browser Test
-Add a Puppeteer E2E block inside `tests/e2e/e2e.test.js`:
-```javascript
-await runE2ETest('E2E: Check Custom Action', async (page) => {
-  await page.goto(`${localBase}/my-feature.html`);
-  await page.click('#action-button');
-  await page.waitForSelector('#success-message');
-});
+├── .agents/
+│   └── AGENTS.md               # IDE rules enforcing production guard rails
+├── backend/src/
+│   ├── utils/
+│   │   ├── mock-db.js          # In-memory mongoose database query stubs for offline testing
+│   │   └── diagnostician.js    # Pure JS server-side validation checker
+│   └── server.js               # Express application with health & QA status endpoints
+├── frontend/
+│   ├── dashboard/              # Modular Operations Center frontend logic
+│   │   ├── utils.js            # Common HTTP request trackers & alert highlighters
+│   │   ├── health.js           # CPU, RAM, Disk, database metadata updater
+│   │   ├── api-tests.js        # Multi-endpoint AJAX validator
+│   │   ├── deployment.js       # Version synchronization and environment checking
+│   │   ├── browser.js          # Dynamic client console log and fetch interceptor
+│   │   ├── reports.js          # Export mechanisms (JSON, Markdown, HTML, CSV)
+│   │   └── monitor.js          # Dashboard polling orchestrator & diagnoses trigger
+│   ├── qa.html                 # Visual Operations Center dashboard
+│   └── report.json             # Static validation report deployed to Vercel
+└── tests/
+    ├── smoke/                  # Phase 1: High-level availability, SSL, local URLs checks
+    ├── api/                    # Phase 3: Auth, validation schema & db failures checks
+    ├── security/               # Phase 5: Helmet, CORS, gitignore audits
+    ├── e2e/                    # Phase 2: Puppeteer E2E browser automation (Student, Admin)
+    └── runner.js               # Unified runner executing all test suites
 ```
 
 ---
 
-## 4. Reports & Visual QA Dashboard
+## 2. API Endpoints Reference
 
-- **Markdown Report (`tests/reports/report.md`)**: A fast, text-based check summary perfect for CI log reviews.
-- **HTML Report (`tests/reports/report.html`)**: A premium dark-mode styled file with animated metrics cards.
-- **Visual QA Dashboard (`frontend/qa.html`)**: Available when running the backend locally at `http://localhost:5000/qa.html` (or `http://localhost:5001/qa.html` during test execution). It queries the live status of the backend API, the database, and loads the results of the latest test run via the backend endpoint `/api/qa/status`.
+### 1. System Health Report
+* **Endpoint**: `GET /api/health`
+* **Response**: Contains status, CPU, RAM, disk space, uploads directory permissions, database metadata (ping time, collections list, reconnect counts, last connection), JWT, and git details.
+* **Payload Structure**:
+  ```json
+  {
+    "status": "ok",
+    "database": "connected",
+    "databaseDetails": {
+      "status": "connected",
+      "name": "zazele",
+      "collections": ["users", "modules", "lessons", "events", "notifications"],
+      "pingTimeMs": 2,
+      "reconnectAttempts": 0,
+      "lastConnection": "2026-07-12T11:44:17.000Z"
+    },
+    "uploads": { "status": "healthy", "path": "/backend/uploads" },
+    "jwt": { "status": "configured", "strength": "strong" },
+    "environment": "production",
+    "version": "1.1.0",
+    "gitCommit": "068b43b",
+    "branch": "main",
+    "uptime": 1245.5
+  }
+  ```
+
+### 2. QA Diagnostic Report
+* **Endpoint**: `GET /api/qa/latest`
+* **Response**: Returns the latest compiled JSON validation report (cached from the last local run or manual diagnostic trigger).
+
+### 3. Run Live Diagnosis
+* **Endpoint**: `POST /api/qa/diagnose`
+* **Response**: Triggers an on-the-fly server-side diagnostic suite (pings homepage, validates database collections, SSLs, static script localhost check) and returns the fresh validation payload.
 
 ---
 
-## 5. Pre-Deployment Validation Checklist
+## 3. Operations Center Usage
 
-Always complete this checklist before deploying to Vercel/cPanel:
+### Run Full System Diagnosis
+1. Navigate to `https://www.zazele.online/qa.html`.
+2. Click **Run Full System Diagnosis**.
+3. The dashboard makes a POST request to `/api/qa/diagnose` which executes the diagnostician suite and refreshes the validation tables, vitals gauges, and overall readiness score immediately.
 
-1. [ ] **Run all tests locally**: Verify they pass with `npm run test:all` or `npm run qa`.
-2. [ ] **Verify Production Fallbacks**: Confirm there are no hardcoded `localhost` references left in files under `/frontend/js`.
-3. [ ] **Check Env Variables**: Ensure any new variables are listed in `/backend/.env.example` and configured inside the Vercel Dashboard / cPanel Setup Node.js app environment settings.
-4. [ ] **Ignore Secrets**: Double-check that `.env` or temporary SSL certificate files are not committed to Git (`git status`).
+### Export Report Logs
+* From the **Export Report...** dropdown at the top right, select your desired format:
+  - **Export JSON**: Downloads the raw validation results configuration file.
+  - **Export Markdown**: Downloads a formatted GFM document with status tables.
+  - **Export HTML**: Downloads a single-page standalone styled summary.
+  - **Export CSV**: Downloads a flat comma-separated list of test suites, test names, status, and messages.
+
+### Browser Diagnostic Monitoring
+The **Browser Diagnostics** terminal panel at the bottom right intercepts log events dynamically:
+* Uncaught script exceptions.
+* Unhandled promise rejections.
+* Console warnings (`console.warn`) and errors (`console.error`).
+* Intercepted network request failures (404, 500 status codes).
+
+## 4. Production Deployment Checklist
+
+Always complete this mandatory verification sequence prior to declaring a deployment successful:
+
+1. **Verify Vercel Pipeline**: Ensure the frontend deployment builds with code `Success` on the Vercel Dashboard.
+2. **Execute cPanel Build**: Launch Node.js app within cPanel and check that all dependencies are updated.
+3. **Open Operations Center**: Load `https://www.zazele.online/qa.html` to run automatic vitals sanity scans.
+4. **Enforce Zero Localhost Policy**: Confirm that the **Configuration Verification** panel reports `PASS` for localhost leaks, private IP detections, and mixed content threats.
+5. **Run Production Diagnosis**: Click the **Run Full Production Diagnosis** button and verify that the gate verdict displays **🟢 PRODUCTION READY** with a score of `100%`.
+6. **Verify User login**: Check that student login and admin login endpoints resolve cleanly.
 
 ---
 
-## 6. Recovery Procedures
+## 5. Troubleshooting and Recovery Guide
 
-### What to do if the Backend health check reports `UNAVAILABLE` or `UNHEALTHY`
+### 1. Dashboard displays "Backend Offline"
+* **Likely Cause**: The backend Node app crashed, or cPanel CORS configurations reject request headers.
+* **Recovery**: Log in to cPanel Node.js Selector, restart the application, and review stderr logs for runtime errors. Confirm `FRONTEND_URL` matched origin keys.
 
-1. **Verify Node App Status in cPanel**:
-   - Navigate to **cPanel** -> **Setup Node.js App**.
-   - Verify the application status is **Running**. Click **Restart** if needed.
-2. **Review cPanel logs**:
-   - Access cPanel File Manager and look for the `stderr.log` inside your node application root directory.
-   - Look for common errors like database connection timeouts, syntax errors, or unhandled exceptions.
-3. **Database Network Connection Issue**:
-   - If the log indicates connection failure to MongoDB Atlas:
-     - Go to MongoDB Atlas Console.
-     - Go to **Network Access**.
-     - Verify that the IP address of the cPanel hosting server is whitelisted. If the cPanel server IP has changed or is blocked, add it back to the whitelist.
-4. **CORS Restrictions**:
-   - If frontend fetch operations are blocked with CORS errors, verify that `FRONTEND_URL` is set to `https://www.zazele.online` in the cPanel environment variables list.
+### 2. Synchronization Warning (`OUT OF SYNC`)
+* **Likely Cause**: Frontend code was pushed, but the backend source code has not yet been synced on the cPanel server.
+* **Recovery**: Package the latest `/backend` folder from the main branch and deploy it to cPanel. Restart the Node application to refresh version strings.
+
+### 3. Mongoose reconnect attempts incrementing
+* **Likely Cause**: Database credentials inside `.env` are invalid, or Atlas MongoDB whitelists have blocked the server's IP address.
+* **Recovery**: Copy your server's outbound IP address from cPanel and whitelist it inside MongoDB Atlas under Network Access. Double check `MONGODB_URI` connection strings.
+
+### 4. Critical Configuration Error screen triggers
+* **Likely Cause**: You loaded the dashboard on the live domain, but `window.env` contains a local host parameter (`http://localhost`).
+* **Recovery**: Navigate to Vercel environment settings, remove any hardcoded localhost entries for `VITE_API_URL` or `VITE_UPLOAD_URL`, and trigger a clean redeploy.

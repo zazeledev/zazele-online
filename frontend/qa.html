@@ -3,174 +3,455 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zazele Online - QA Health Dashboard</title>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <title>Zazele Online - Production Operations Center</title>
+  
+  <!-- Font Imports -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+  
   <style>
     :root {
-      --bg-dark: #090d16;
+      --bg-color: #0b0f19;
       --panel-bg: #111827;
-      --border-color: #1f2937;
-      --text-white: #f3f4f6;
+      --panel-border: #1f2937;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --text-main: #f3f4f6;
       --text-muted: #9ca3af;
-      --indigo: #6366f1;
+      --text-soft: #6b7280;
+      
+      --primary: #6366f1;
+      --primary-glow: rgba(99, 102, 241, 0.15);
       --success: #10b981;
-      --danger: #f43f5e;
       --warning: #f59e0b;
+      --danger: #f43f5e;
+      --info: #38bdf8;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
-      font-family: 'Outfit', sans-serif;
-      background-color: var(--bg-dark);
-      color: var(--text-white);
-      padding: 40px 20px;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      padding: 30px 20px;
       line-height: 1.5;
     }
-    .dashboard-container { max-width: 1200px; margin: 0 auto; }
-    
+
+    .dashboard-container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* Header styling */
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 40px;
+      margin-bottom: 30px;
       padding-bottom: 24px;
       border-bottom: 1px solid var(--border-color);
+      flex-wrap: wrap;
+      gap: 20px;
     }
-    header h1 {
+    
+    .header-title h1 {
+      font-family: 'Outfit', sans-serif;
       font-size: 2.2rem;
       font-weight: 700;
       background: linear-gradient(135deg, #a5b4fc, #6366f1);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      letter-spacing: -0.5px;
     }
-    header .status-tag {
+
+    .header-actions {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    /* Button and select styling */
+    .btn {
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+      outline: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      border: 1px solid var(--primary);
+      color: #fff;
+      box-shadow: 0 4px 12px var(--primary-glow);
+    }
+    .btn-primary:hover {
+      background-color: #4f46e5;
+      box-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
+    }
+
+    .select-export {
+      background-color: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      color: var(--text-main);
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      cursor: pointer;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .select-export:hover {
+      border-color: var(--primary);
+    }
+
+    /* Overall Health Score Card */
+    .score-card {
+      background-color: rgba(99, 102, 241, 0.05);
+      border: 1px solid rgba(99, 102, 241, 0.15);
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+    .score-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #a5b4fc;
+    }
+    .score-value {
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: #fff;
+      font-family: 'Outfit', sans-serif;
+    }
+    .status-tag {
       padding: 6px 14px;
       border-radius: 20px;
       font-size: 0.85rem;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.5px;
+      border: 1px solid transparent;
     }
-    .status-active { background-color: rgba(16, 185, 129, 0.15); color: var(--success); border: 1px solid rgba(16,185,129,0.3); }
+    .status-active { background-color: rgba(16, 185, 129, 0.15); color: var(--success); border-color: rgba(16,185,129,0.3); }
+    .status-warning { background-color: rgba(245, 158, 11, 0.15); color: var(--warning); border-color: rgba(245,158,11,0.3); }
+    .status-danger { background-color: rgba(244, 63, 79, 0.15); color: var(--danger); border-color: rgba(244,63,79,0.3); }
 
+    /* Progress Bar */
+    .health-bar-container {
+      width: 100%;
+      height: 8px;
+      background-color: rgba(255,255,255,0.05);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+    .health-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--primary), var(--success));
+      border-radius: 4px;
+      transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Grid Sections */
     .grid-vitals {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 20px;
-      margin-bottom: 40px;
+      margin-bottom: 25px;
     }
     .vital-card {
       background-color: var(--panel-bg);
-      border: 1px solid var(--border-color);
+      border: 1px solid var(--panel-border);
       border-radius: 12px;
-      padding: 24px;
+      padding: 20px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      position: relative;
-      overflow: hidden;
+      transition: border-color 0.2s;
     }
-    .vital-card h3 { font-size: 0.85rem; font-weight: 600; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; letter-spacing: 0.5px; }
-    .vital-value { font-size: 1.8rem; font-weight: 700; display: flex; align-items: center; gap: 10px; }
-    .indicator { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+    .vital-card:hover {
+      border-color: rgba(255,255,255,0.12);
+    }
+    .vital-card h3 {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      letter-spacing: 0.5px;
+    }
+    .vital-value {
+      font-size: 1.4rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    /* Vitals Indicator Dots */
+    .indicator {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+    }
     .indicator-success { background-color: var(--success); box-shadow: 0 0 10px var(--success); }
     .indicator-danger { background-color: var(--danger); box-shadow: 0 0 10px var(--danger); }
     .indicator-warning { background-color: var(--warning); box-shadow: 0 0 10px var(--warning); }
-    
-    .grid-reports {
+
+    /* Dashboard Panels */
+    .grid-panels {
       display: grid;
       grid-template-columns: 1fr;
       gap: 30px;
+      margin-bottom: 30px;
     }
     @media(min-width: 992px) {
-      .grid-reports { grid-template-columns: 2fr 1fr; }
+      .grid-panels { grid-template-columns: 2fr 1fr; }
     }
-    
+
     .panel-card {
       background-color: var(--panel-bg);
-      border: 1px solid var(--border-color);
+      border: 1px solid var(--panel-border);
       border-radius: 12px;
       padding: 24px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
-    .panel-card h2 { font-size: 1.3rem; font-weight: 600; margin-bottom: 20px; }
-    
+    .panel-card h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Tables */
     .table-container { overflow-x: auto; }
     table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; }
-    th { padding: 12px 16px; border-bottom: 2px solid var(--border-color); color: var(--text-muted); font-weight: 500; }
-    td { padding: 16px; border-bottom: 1px solid var(--border-color); vertical-align: middle; }
-    
+    th { padding: 12px 16px; border-bottom: 2px solid var(--panel-border); color: var(--text-muted); font-weight: 500; }
+    td { padding: 14px 16px; border-bottom: 1px solid var(--panel-border); vertical-align: middle; }
+
+    /* Badges */
     .badge {
       padding: 4px 10px;
       border-radius: 6px;
       font-size: 0.75rem;
       font-weight: 600;
       display: inline-block;
+      text-transform: uppercase;
     }
     .badge-pass { background-color: rgba(16, 185, 129, 0.15); color: var(--success); }
     .badge-fail { background-color: rgba(244, 63, 94, 0.15); color: var(--danger); }
-    
-    .meta-list { display: flex; flex-direction: column; gap: 16px; }
+    .badge-warning { background-color: rgba(245, 158, 11, 0.15); color: var(--warning); }
+
+    /* Sidebar info */
+    .meta-list { display: flex; flex-direction: column; gap: 14px; }
     .meta-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-bottom: 12px;
-      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--panel-border);
     }
-    .meta-label { color: var(--text-muted); font-size: 0.9rem; }
-    .meta-val { font-size: 0.95rem; font-weight: 500; }
-    
-    .error-msg { font-size: 0.8rem; color: #fda4af; font-family: monospace; display: block; margin-top: 4px; }
+    .meta-label { color: var(--text-muted); font-size: 0.85rem; }
+    .meta-val { font-size: 0.9rem; font-weight: 500; }
+
+    /* Alerts and failures */
+    .alert-failure {
+      border-color: rgba(244, 63, 94, 0.3) !important;
+      background-color: rgba(244, 63, 94, 0.02) !important;
+    }
+    .border-fail { border-color: rgba(244, 63, 94, 0.3) !important; }
+    .border-warning { border-color: rgba(245, 158, 11, 0.3) !important; }
+
+    /* Browser console console log panel */
+    .console-panel {
+      background-color: #030712;
+      border: 1px solid var(--panel-border);
+      border-radius: 8px;
+      height: 250px;
+      overflow-y: auto;
+      margin-top: 10px;
+    }
+
+    /* Timeline checkpoint */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 15px;
+    }
+    .timeline-step {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .timeline-circle {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 2px solid var(--text-soft);
+      position: relative;
+    }
+    .timeline-circle::after {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 24px;
+      background-color: var(--panel-border);
+      top: 14px;
+      left: 5px;
+    }
+    .timeline-step:last-child .timeline-circle::after {
+      display: none;
+    }
+    .step-complete .timeline-circle {
+      border-color: var(--success);
+      background-color: var(--success);
+    }
+    .step-complete .timeline-text {
+      color: var(--text-main);
+      font-weight: 500;
+    }
+    .step-pending .timeline-text {
+      color: var(--text-soft);
+    }
+
+    /* Endpoint validation grid */
+    .api-grid-panel {
+      margin-top: 30px;
+    }
   </style>
 </head>
 <body>
   <div class="dashboard-container">
-    <header>
-      <div>
-        <h1>QA Health Dashboard</h1>
-        <p style="color: var(--text-muted); margin-top: 4px; font-size: 0.95rem;">Zazele Online Validation & System Health Status</p>
-      </div>
-      <div class="status-tag status-active">Monitoring Active</div>
-    </header>
     
-    <!-- System Vitals (Real-time checks) -->
+    <!-- Top Header Navigation -->
+    <header>
+      <div class="header-title">
+        <h1>Production Operations Center</h1>
+        <p style="color: var(--text-muted); margin-top: 4px; font-size: 0.95rem;">Live Verification & System Health Metrics</p>
+      </div>
+      <div class="header-actions">
+        <select id="export-report-select" class="select-export">
+          <option value="">Export Report...</option>
+          <option value="json">Export JSON</option>
+          <option value="markdown">Export Markdown</option>
+          <option value="html">Export HTML</option>
+          <option value="csv">Export CSV</option>
+        </select>
+        <button id="btn-diagnose" class="btn btn-primary">
+          <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+          Run Full Production Diagnosis
+        </button>
+      </div>
+    </header>
+
+    <!-- Release Gate Verdict Alert Panel -->
+    <div class="vital-card" id="gate-verdict-card" style="margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; padding: 24px; border: 1px solid var(--panel-border);">
+      <div>
+        <div style="font-size: 0.8rem; text-transform: uppercase; color: var(--text-muted); font-weight: 600; letter-spacing: 0.5px;">Gate Release Verdict</div>
+        <div id="gate-verdict-title" style="font-size: 1.8rem; font-weight: 800; margin-top: 6px; font-family: 'Outfit', sans-serif;">Analyzing...</div>
+        <div id="gate-verdict-subtitle" style="font-size: 0.9rem; color: var(--text-muted); margin-top: 4px;">Checking system logs and score status details.</div>
+      </div>
+    </div>
+
+    <!-- Overall System Vitals Summary Card -->
+    <div class="score-card" id="card-server-score">
+      <div>
+        <div class="score-title">Overall System Readiness Score</div>
+        <div style="display: flex; align-items: center; gap: 15px; margin-top: 10px;">
+          <span id="score-value" class="score-value">0%</span>
+          <span id="score-status-tag" class="status-tag status-warning">Analyzing...</span>
+        </div>
+        <div class="health-bar-container">
+          <div id="health-bar-fill" class="health-bar-fill"></div>
+        </div>
+      </div>
+      <div style="text-align: right;">
+        <span style="font-size: 0.85rem; color: var(--text-muted);">Process Uptime</span>
+        <div id="vital-uptime" style="font-size: 1.5rem; font-weight: 700; margin-top: 4px;">--:--:--</div>
+      </div>
+    </div>
+    
+    <!-- Live System Vitals Row -->
     <div class="grid-vitals">
-      <div class="vital-card">
-        <h3>Backend API Health</h3>
+      <div class="vital-card" id="card-server">
+        <h3>Server Status</h3>
         <div id="vital-backend" class="vital-value">
-          <span class="indicator indicator-warning"></span>
-          <span>Checking...</span>
+          <span id="indicator-server" class="indicator indicator-warning"></span>
+          <span id="text-server">Checking...</span>
         </div>
       </div>
-      <div class="vital-card">
-        <h3>Database Connectivity</h3>
+      <div class="vital-card" id="card-database">
+        <h3>Database Status</h3>
         <div id="vital-database" class="vital-value">
-          <span class="indicator indicator-warning"></span>
-          <span>Checking...</span>
+          <span id="indicator-db" class="indicator indicator-warning"></span>
+          <span id="text-db">Checking...</span>
+        </div>
+      </div>
+      <div class="vital-card" id="card-uploads">
+        <h3>Uploads Folder</h3>
+        <div id="vital-uploads" class="vital-value">
+          <span id="indicator-uploads" class="indicator indicator-warning"></span>
+          <span id="text-uploads">Analyzing...</span>
         </div>
       </div>
       <div class="vital-card">
-        <h3>Validation Environment</h3>
-        <div id="vital-env" class="vital-value">
-          <span style="font-size: 1.4rem;">Analyzing...</span>
-        </div>
-      </div>
-      <div class="vital-card">
-        <h3>API Latency</h3>
+        <h3>Network Latency</h3>
         <div id="vital-latency" class="vital-value">
           <span>-- ms</span>
         </div>
       </div>
     </div>
+
+    <!-- Live Performance Stats Row -->
+    <div class="grid-vitals">
+      <div class="vital-card">
+        <h3>CPU Usage</h3>
+        <div id="vital-cpu" class="vital-value">--%</div>
+      </div>
+      <div class="vital-card">
+        <h3>Node Memory Usage</h3>
+        <div id="vital-ram" class="vital-value" style="font-size: 1.1rem; line-height: 1.4;">-- MB / -- MB</div>
+      </div>
+      <div class="vital-card">
+        <h3>System Disk Space</h3>
+        <div id="vital-disk" class="vital-value" style="font-size: 1.1rem;">-- GB / -- GB</div>
+      </div>
+    </div>
     
-    <!-- Detailed Reports Section -->
-    <div class="grid-reports">
+    <!-- Major Details Panels -->
+    <div class="grid-panels">
+      
+      <!-- Table: Validation Results -->
       <div class="panel-card">
-        <h2>Latest QA Test Report Details</h2>
+        <h2>Latest QA Validation Summary</h2>
         <div class="table-container">
           <table>
             <thead>
               <tr>
-                <th>Test Specification</th>
-                <th>Test Suite</th>
+                <th>Test Specification Check</th>
+                <th>Suite</th>
                 <th>Status</th>
               </tr>
             </thead>
@@ -181,136 +462,213 @@
             </tbody>
           </table>
         </div>
+        
+        <!-- Live API endpoint validation table -->
+        <div class="api-grid-panel">
+          <h2 style="border-top: 1px solid var(--panel-border); padding-top: 30px; margin-top: 10px;">Endpoint Active Verification</h2>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>API Endpoint Path</th>
+                  <th>Status</th>
+                  <th>HTTP Code</th>
+                  <th>Latency</th>
+                  <th>Diagnostics Error Message</th>
+                </tr>
+              </thead>
+              <tbody id="api-validation-tbody">
+                <tr>
+                  <td colspan="5" style="text-align: center; color: var(--text-muted); padding: 20px;">Monitoring API validation...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Failure Assistant troubleshooting pane -->
+        <div class="api-grid-panel">
+          <h2 style="border-top: 1px solid var(--panel-border); padding-top: 30px; margin-top: 10px;">Production Failure Assistant</h2>
+          <div id="failure-assistant-container" style="margin-top: 15px;">
+            <div style="color: var(--text-soft); font-style: italic; text-align: center; padding: 15px;">Analyzing validation runs...</div>
+          </div>
+        </div>
+
+        <!-- Deployment History table -->
+        <div class="api-grid-panel">
+          <h2 style="border-top: 1px solid var(--panel-border); padding-top: 30px; margin-top: 10px;">Diagnostic History Logs</h2>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Diagnostic Time</th>
+                  <th>Git Commit</th>
+                  <th>Version</th>
+                  <th>Readiness</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="deployment-history-tbody">
+                <tr>
+                  <td colspan="5" style="text-align: center; color: var(--text-soft); padding: 20px;">Loading historical diagnostic logs...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
       </div>
       
-      <div class="panel-card">
-        <h2>Deployment Metadata</h2>
-        <div class="meta-list">
-          <div class="meta-item">
-            <span class="meta-label">Last Validated</span>
-            <span id="meta-timestamp" class="meta-val">--</span>
+      <!-- Right Sidebar Panel: Vitals metadata, database details, environment and browser console logs -->
+      <div style="display: flex; flex-direction: column; gap: 30px;">
+        
+        <!-- Deployment Status metadata -->
+        <div class="panel-card" id="card-sync">
+          <h2>Deployment Verification</h2>
+          <div class="meta-list">
+            <div class="meta-item">
+              <span class="meta-label">Sync Status</span>
+              <span id="sync-status" class="meta-val">Verifying...</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Frontend Version</span>
+              <span id="fe-version" class="meta-val">--</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Backend Version</span>
+              <span id="be-version" class="meta-val">--</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Deploy Environment</span>
+              <span id="deploy-env" class="meta-val">--</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Git Branch</span>
+              <span id="deploy-git-branch" class="meta-val">--</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Git Commit</span>
+              <span id="deploy-git-commit" class="meta-val" style="font-family: monospace;">--</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Latest Build Date</span>
+              <span id="build-timestamp" class="meta-val" style="font-size: 0.8rem;">--</span>
+            </div>
           </div>
-          <div class="meta-item">
-            <span class="meta-label">Deployment Environment</span>
-            <span id="meta-env" class="meta-val">--</span>
+        </div>
+
+        <!-- Mongoose Metadata details -->
+        <div class="panel-card">
+          <h2>Database Details</h2>
+          <div class="meta-list">
+            <div class="meta-item">
+              <span class="meta-label">Database Name</span>
+              <span id="db-name" class="meta-val">--</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Ping Latency</span>
+              <span id="db-ping" class="meta-val">--</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Reconnect Attempts</span>
+              <span id="db-reconnections" class="meta-val">--</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Last Connected</span>
+              <span id="db-last-connected" class="meta-val" style="font-size: 0.8rem;">--</span>
+            </div>
+            <div class="meta-item" style="flex-direction: column; align-items: flex-start; gap: 8px;">
+              <span class="meta-label">Database Collections</span>
+              <span id="db-collections" class="meta-val" style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; word-break: break-all;">--</span>
+            </div>
           </div>
-          <div class="meta-item">
-            <span class="meta-label">Tests Passed</span>
-            <span id="meta-passed" class="meta-val" style="color: var(--success); font-weight: 700;">--</span>
+        </div>
+
+        <!-- System environment items check validation container -->
+        <div class="panel-card">
+          <h2>Environment Verification</h2>
+          <div id="env-validation-container">
+            <div style="color: var(--text-soft); font-style: italic; text-align: center; padding: 15px;">Resolving environment variables...</div>
           </div>
-          <div class="meta-item">
-            <span class="meta-label">Tests Failed</span>
-            <span id="meta-failed" class="meta-val" style="color: var(--danger); font-weight: 700;">--</span>
+        </div>
+
+        <!-- Deployment Timeline checkpoint progress -->
+        <div class="panel-card">
+          <h2>Deployment Verification Steps</h2>
+          <div class="timeline">
+            <div class="timeline-step step-pending" id="step-deploy-started">
+              <div class="timeline-circle"></div>
+              <span class="timeline-text">Deployment Pipeline Initiated</span>
+            </div>
+            <div class="timeline-step step-pending" id="step-backend-started">
+              <div class="timeline-circle"></div>
+              <span class="timeline-text">Express Backend Active</span>
+            </div>
+            <div class="timeline-step step-pending" id="step-db-connected">
+              <div class="timeline-circle"></div>
+              <span class="timeline-text">MongoDB Handshake Complete</span>
+            </div>
+            <div class="timeline-step step-pending" id="step-smoke-passed">
+              <div class="timeline-circle"></div>
+              <span class="timeline-text">Local QA Suites Passed</span>
+            </div>
+            <div class="timeline-step step-pending" id="step-diagnostics-complete">
+              <div class="timeline-circle"></div>
+              <span class="timeline-text">Latest Diagnosis Complete</span>
+            </div>
           </div>
-          <div class="meta-item">
-            <span class="meta-label">QA Core Version</span>
-            <span class="meta-val">v1.1.0</span>
+        </div>
+
+        <!-- Dynamic Browser Diagnostic logs console panel -->
+        <div class="panel-card">
+          <h2>Browser Diagnostics</h2>
+          <div class="console-panel" id="browser-logs-container">
+            <div style="color: var(--text-soft); font-style: italic; text-align: center; padding: 20px;">Monitoring browser diagnostic events...</div>
+          </div>
+        </div>
+
+        <!-- Latest report metadata details -->
+        <div class="panel-card">
+          <h2>Latest Validation Run Metadata</h2>
+          <div class="meta-list">
+            <div class="meta-item">
+              <span class="meta-label">Run Environment</span>
+              <span id="meta-env" class="meta-val">--</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Validation Date</span>
+              <span id="meta-timestamp" class="meta-val" style="font-size: 0.8rem;">--</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Tests Passed</span>
+              <span id="meta-passed" class="meta-val" style="color: var(--success); font-weight: bold;">0</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Tests Failed</span>
+              <span id="meta-failed" class="meta-val" style="color: var(--danger); font-weight: bold;">0</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">Warnings</span>
+              <span id="meta-warnings" class="meta-val" style="color: var(--warning); font-weight: bold;">0</span>
+            </div>
           </div>
         </div>
       </div>
+      
     </div>
   </div>
 
+  <!-- Environment & API files -->
   <script src="js/env.js"></script>
-  <script>
-    // Configuration fallback
-    const API_BASE = (window.env && window.env.VITE_API_URL) ? window.env.VITE_API_URL : 'https://api.zazele.online/api';
-
-    async function checkSystemHealth() {
-      const startTime = Date.now();
-      try {
-        const res = await fetch(`${API_BASE}/health`);
-        const duration = Date.now() - startTime;
-        
-        document.getElementById('vital-latency').innerText = `${duration} ms`;
-        
-        if (res.ok) {
-          const json = await res.json();
-          // Backend
-          document.getElementById('vital-backend').innerHTML = `
-            <span class="indicator indicator-success"></span>
-            <span>Online</span>
-          `;
-          // Database
-          if (json.database === 'connected') {
-            document.getElementById('vital-database').innerHTML = `
-              <span class="indicator indicator-success"></span>
-              <span>Connected</span>
-            `;
-          } else {
-            document.getElementById('vital-database').innerHTML = `
-              <span class="indicator indicator-danger"></span>
-              <span>Disconnected</span>
-            `;
-          }
-        } else {
-          throw new Error('Unhealthy status');
-        }
-      } catch (e) {
-        document.getElementById('vital-backend').innerHTML = `
-          <span class="indicator indicator-danger"></span>
-          <span>Offline</span>
-        `;
-        document.getElementById('vital-database').innerHTML = `
-          <span class="indicator indicator-danger"></span>
-          <span>Unavailable</span>
-        `;
-        document.getElementById('vital-latency').innerText = `-- ms`;
-      }
-    }
-
-    async function loadQAReport() {
-      try {
-        const res = await fetch(`${API_BASE}/qa/status`);
-        if (!res.ok) throw new Error('Report missing');
-        
-        const report = await res.json();
-        
-        // Populate Vitals & Meta
-        document.getElementById('vital-env').innerText = report.environment;
-        document.getElementById('meta-timestamp').innerText = new Date(report.timestamp).toLocaleString();
-        document.getElementById('meta-env').innerText = report.environment;
-        document.getElementById('meta-passed').innerText = report.passed;
-        document.getElementById('meta-failed').innerText = report.failed;
-        
-        // Populate Table
-        const tbody = document.getElementById('test-report-tbody');
-        tbody.innerHTML = '';
-        
-        for (const [suiteName, tests] of Object.entries(report.suites)) {
-          for (const test of tests) {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-              <td>
-                <span style="font-weight: 500;">${test.name}</span>
-                ${test.message ? `<span class="error-msg">${test.message}</span>` : ''}
-              </td>
-              <td><span style="color: var(--text-muted); font-size: 0.85rem;">${suiteName.toUpperCase()}</span></td>
-              <td>
-                <span class="badge ${test.status === 'PASS' ? 'badge-pass' : 'badge-fail'}">${test.status}</span>
-              </td>
-            `;
-            tbody.appendChild(tr);
-          }
-        }
-      } catch (e) {
-        document.getElementById('test-report-tbody').innerHTML = `
-          <tr>
-            <td colspan="3" style="text-align: center; color: var(--danger); padding: 30px;">
-              No validation report found. Please run the QA suite locally (\`npm run test:all\`) or check endpoint.
-            </td>
-          </tr>
-        `;
-        document.getElementById('vital-env').innerText = 'Unknown';
-      }
-    }
-
-    // Run audit
-    checkSystemHealth();
-    loadQAReport();
-    
-    // Auto-refresh stats every 30 seconds
-    setInterval(checkSystemHealth, 30000);
-  </script>
+  
+  <!-- Modular Dashboard scripts -->
+  <script src="dashboard/utils.js"></script>
+  <script src="dashboard/failure-assistant.js"></script>
+  <script src="dashboard/health.js"></script>
+  <script src="dashboard/api-tests.js"></script>
+  <script src="dashboard/deployment.js"></script>
+  <script src="dashboard/browser.js"></script>
+  <script src="dashboard/reports.js"></script>
+  <script src="dashboard/monitor.js"></script>
 </body>
 </html>
