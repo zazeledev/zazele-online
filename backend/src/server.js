@@ -25,7 +25,7 @@ const PORT = process.env.PORT || 5000;
 app.use(helmet());
 const corsOptions = {
   origin: function (origin, callback) {
-    const allowedOrigins = [
+    const rawOrigins = [
       process.env.FRONTEND_URL, 
       'https://zazele.online', 
       'https://www.zazele.online',
@@ -35,29 +35,41 @@ const corsOptions = {
       'https://www.zazele-online.vercel.app'
     ];
     
+    // Normalize allowed origins by stripping trailing slashes
+    const allowedOrigins = rawOrigins.filter(Boolean).map(d => d.replace(/\/$/, ''));
+    
     // Allow requests with no origin (like mobile apps, curl, or test runners)
     if (!origin || origin === 'null' || origin === 'undefined') return callback(null, true);
     
-    const isLocalhost = origin.includes('localhost') || 
-                        origin.includes('127.0.0.1') || 
-                        origin.includes('[::1]') ||
-                        origin.includes('192.168.') || 
-                        origin.includes('10.') || 
-                        /172\.(1[6-9]|2[0-9]|3[0-1])\./.test(origin);
-    const isAllowedDomain = allowedOrigins.some(domain => domain && origin.startsWith(domain)) || 
-                            origin.endsWith('.vercel.app');
+    const cleanOrigin = origin.replace(/\/$/, '');
+    
+    const isLocalhost = cleanOrigin.includes('localhost') || 
+                        cleanOrigin.includes('127.0.0.1') || 
+                        cleanOrigin.includes('[::1]') ||
+                        cleanOrigin.includes('192.168.') || 
+                        cleanOrigin.includes('10.') || 
+                        /172\.(1[6-9]|2[0-9]|3[0-1])\./.test(cleanOrigin);
+                        
+    const isAllowedDomain = allowedOrigins.some(domain => cleanOrigin === domain || cleanOrigin.startsWith(domain)) || 
+                            cleanOrigin.endsWith('.zazele.online') ||
+                            cleanOrigin.endsWith('zazele.online') ||
+                            cleanOrigin.endsWith('.vercel.app');
     
     if (isLocalhost || isAllowedDomain) {
       callback(null, true);
     } else {
       console.warn(`[Security] Blocked CORS request from origin: ${origin}`);
-      callback(new Error('Not allowed by CORS'));
+      callback(null, false);
     }
   },
   credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin', 'x-test-trigger-db-fail'],
   optionsSuccessStatus: 200
 };
+
 app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

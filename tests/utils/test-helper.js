@@ -38,12 +38,31 @@ window.env = {
       }
     });
 
-    serverProcess.stdout.on('data', (data) => {
-      const msg = data.toString();
-      if (msg.includes('backend running on http://localhost')) {
-        console.log(`[QA Helper] Backend test server responded active.`);
-        resolve(serverProcess);
+    let isResolved = false;
+    const checkServerReady = () => {
+      const req = http.get(`http://localhost:${port}/api/health`, (res) => {
+        if (!isResolved) {
+          isResolved = true;
+          console.log(`[QA Helper] Backend test server responded active.`);
+          resolve(serverProcess);
+        }
+      });
+      req.on('error', () => {
+        // Not ready yet
+      });
+      req.setTimeout(500, () => req.destroy());
+    };
+
+    const pollInterval = setInterval(() => {
+      if (isResolved) {
+        clearInterval(pollInterval);
+      } else {
+        checkServerReady();
       }
+    }, 200);
+
+    serverProcess.stdout.on('data', (data) => {
+      checkServerReady();
     });
 
     serverProcess.stderr.on('data', (data) => {
@@ -51,15 +70,20 @@ window.env = {
     });
 
     serverProcess.on('error', (err) => {
+      clearInterval(pollInterval);
       console.error('[QA Helper] Failed to start backend server:', err);
       restoreEnvFile();
       reject(err);
     });
 
-    // Fallback: Resolve if server takes too long but is likely up
+    // Fallback timeout if server takes too long
     setTimeout(() => {
-      resolve(serverProcess);
-    }, 4000);
+      if (!isResolved) {
+        isResolved = true;
+        clearInterval(pollInterval);
+        resolve(serverProcess);
+      }
+    }, 10000);
   });
 }
 
