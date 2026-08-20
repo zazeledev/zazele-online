@@ -185,9 +185,10 @@ function renderModulePanels(moduleData, moduleId, token, moduleProgress) {
 
   // 1. Content Panel
   let contentHTML = lessons
-    .map((lesson) => {
+    .map((lesson, index) => {
       const isLocked = !lesson.isUnlocked;
       const isCompleted = lesson.isCompleted;
+      const isLastLesson = index === lessons.length - 1;
       const youtubeId = lesson.youtubeURL ? extractYoutubeId(lesson.youtubeURL) : null;
       const unlockDate = lesson.nextUnlockDate ? new Date(lesson.nextUnlockDate).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' }) : null;
 
@@ -225,7 +226,11 @@ function renderModulePanels(moduleData, moduleId, token, moduleProgress) {
               ` : `
                 <div style="display:flex; align-items:center; gap:12px;">
                    <span class="status-pill success">✓ Completed</span>
-                   <button class="btn btn-secondary btn-small" onclick="handleSkipToNext('${moduleId}', '${lesson._id}')">Next Lesson →</button>
+                   ${isLastLesson && !assignmentSubmitted ? `
+                     <button class="btn btn-primary btn-small" onclick="handleTakeAssignment('${moduleId}')">Start Assignment →</button>
+                   ` : `
+                     <button class="btn btn-secondary btn-small" onclick="handleSkipToNext('${moduleId}', '${lesson._id}')">Next Lesson →</button>
+                   `}
                 </div>
               `}
             </div>
@@ -244,7 +249,7 @@ function renderModulePanels(moduleData, moduleId, token, moduleProgress) {
     fullyDoneShown[moduleId] = true;
     showModuleCompletion(moduleId, token, assignmentPassed ? 'passed' : 'failed', contentHTML);
   }
-  // Otherwise show lessons with a button at the bottom if submitted
+  // Otherwise show lessons with a button at the bottom
   else {
     let finalHTML = contentHTML;
     if (assignmentSubmitted) {
@@ -253,6 +258,15 @@ function renderModulePanels(moduleData, moduleId, token, moduleProgress) {
            <h3 style="color:var(--success);">✓ Module Assignment ${assignmentPassed ? 'Passed' : 'Submitted'}</h3>
            <p style="margin-bottom:20px;">You've finished this module. You can move to the next one or review any lesson.</p>
            <button class="btn btn-success" onclick="handleNextModuleNavigation('${moduleId}')">Go to Next Module →</button>
+         </div>
+       `;
+    } else if (allLessonsCompleted) {
+       finalHTML += `
+         <div style="margin-top:40px; text-align:center; padding:32px; background:var(--bg-secondary); border-radius:12px; border: 2px solid var(--primary);">
+           <div style="font-size: 2.5rem; margin-bottom: 10px;">🎓</div>
+           <h3 style="color:var(--primary); margin-bottom: 8px;">All Lessons Completed!</h3>
+           <p style="margin-bottom:20px; color:var(--text-soft);">You've completed all lessons in this module. Take the final assignment to unlock the next module.</p>
+           <button class="btn btn-primary btn-large" onclick="handleTakeAssignment('${moduleId}')">Start Final Assignment →</button>
          </div>
        `;
     }
@@ -306,7 +320,7 @@ function renderModulePanels(moduleData, moduleId, token, moduleProgress) {
 }
 
 // Show module completion UI
-async function showModuleCompletion(moduleId, token, isFullyCompleted, lessonsHTML) {
+async function showModuleCompletion(moduleId, token, completionType, lessonsHTML) {
   try {
     const progressList = await StudentAPI.getProgressDashboard(token);
     const currentModuleIndex = progressList.findIndex(m => m.moduleId === moduleId);
@@ -315,16 +329,16 @@ async function showModuleCompletion(moduleId, token, isFullyCompleted, lessonsHT
 
     let completionHTML = '';
     
-    if (!isFullyCompleted) {
+    if (completionType === 'lessons-done' || completionType === false) {
       completionHTML = `
         <div class="module-completion-card">
-          <span class="completion-icon">🎉</span>
-          <h2>Lessons Completed!</h2>
+          <span class="completion-icon">🎓</span>
+          <h2>All Lessons Completed!</h2>
           <p>You have finished all lessons for <strong>${currentModule.moduleName}</strong>.</p>
-          <p style="margin-top: 10px; font-size: 1.1rem; opacity: 0.9;">To unlock the next module, you must now pass the <strong>Module Assessment</strong>.</p>
+          <p style="margin-top: 10px; font-size: 1.1rem; opacity: 0.9;">To officially complete this module and unlock the next module, you must now pass the <strong>Module Assessment</strong>.</p>
           
-          <div style="display: flex; gap: 16px; justify-content: center; margin-top: 32px;">
-            <button class="btn btn-primary btn-large" onclick="document.getElementById('tab-btn-assessment').click()">
+          <div style="display: flex; gap: 16px; justify-content: center; margin-top: 32px; flex-wrap: wrap;">
+            <button class="btn btn-primary btn-large" onclick="handleTakeAssignment('${moduleId}')">
               Start Assessment Now →
             </button>
             <button class="btn btn-secondary btn-large" onclick="openModuleViewer('${moduleId}')">
@@ -333,7 +347,7 @@ async function showModuleCompletion(moduleId, token, isFullyCompleted, lessonsHT
           </div>
         </div>
       `;
-    } else {
+    } else if (completionType === 'passed' || completionType === true) {
       completionHTML = `
         <div class="module-completion-card" style="background: linear-gradient(135deg, #1A2B49 0%, #007AFF 100%);">
           <span class="completion-icon">🏆</span>
@@ -362,6 +376,25 @@ async function showModuleCompletion(moduleId, token, isFullyCompleted, lessonsHT
                 Return to Dashboard
               </button>
             `}
+          </div>
+        </div>
+      `;
+    } else {
+      // Failed / retake needed
+      completionHTML = `
+        <div class="module-completion-card" style="background: linear-gradient(135deg, #2D3748 0%, #4A5568 100%);">
+          <span class="completion-icon">📝</span>
+          <h2>Assessment Submitted</h2>
+          <p>You have completed the assessment for <strong>${currentModule.moduleName}</strong>.</p>
+          <p style="margin-top: 10px; font-size: 1.05rem; opacity: 0.95;">An 80% score is required to pass and unlock the next module. You can retake the assessment to improve your score.</p>
+          
+          <div style="display: flex; gap: 16px; justify-content: center; margin-top: 32px; flex-wrap: wrap;">
+            <button class="btn btn-primary btn-large" onclick="handleTakeAssignment('${moduleId}')">
+              Retake Assessment →
+            </button>
+            <button class="btn btn-secondary btn-large" onclick="openModuleViewer('${moduleId}')">
+              Review Lessons
+            </button>
           </div>
         </div>
       `;
@@ -512,7 +545,11 @@ async function handleSkipToNext(moduleId, lessonId) {
     await StudentAPI.skipToNextLesson(moduleId, lessonId, token);
     await openModuleViewer(moduleId); // Refresh
   } catch (error) {
-    alert(error.message);
+    if (error.message && (error.message.includes('No next lesson') || error.message.includes('next lesson'))) {
+      handleTakeAssignment(moduleId);
+    } else {
+      alert(error.message);
+    }
   }
 }
 
