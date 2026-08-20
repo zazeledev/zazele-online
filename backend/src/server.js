@@ -147,6 +147,8 @@ global.mongoReconnectAttempts = 0;
 global.mongoLastConnectedTime = null;
 let isConnected = false;
 
+let reconnectTimeout = null;
+
 function connectWithRetry() {
   global.mongoReconnectAttempts++;
   console.log(`[${new Date().toISOString()}] Attempting MongoDB connection (Attempt #${global.mongoReconnectAttempts})...`);
@@ -161,13 +163,24 @@ function connectWithRetry() {
       console.error(`[${new Date().toISOString()}] ❌ MongoDB connection error:`, err.message);
       isConnected = false;
       console.log('Retrying in 5 seconds...');
-      setTimeout(connectWithRetry, 5000);
+      if (!reconnectTimeout) {
+        reconnectTimeout = setTimeout(() => {
+          reconnectTimeout = null;
+          connectWithRetry();
+        }, 5000);
+      }
     });
 }
 
 mongoose.connection.on('disconnected', () => {
   isConnected = false;
   console.warn(`[${new Date().toISOString()}] ⚠️ MongoDB disconnected! Attempting to reconnect...`);
+  if (!reconnectTimeout) {
+    reconnectTimeout = setTimeout(() => {
+      reconnectTimeout = null;
+      connectWithRetry();
+    }, 5000);
+  }
 });
 
 mongoose.connection.on('error', (err) => {
