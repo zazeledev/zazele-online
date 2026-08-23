@@ -112,7 +112,7 @@ async function loadAndDisplayModules(token) {
               <p>${isFuture ? 'Coming soon to the platform.' : (isLocked ? 'Complete the previous module to unlock this one.' : 'Access all lessons and resources.')}</p>
             </div>
             <button class="btn btn-primary btn-small" ${isLocked || isFuture ? 'disabled' : ''}>
-              ${isLocked ? '🔒 Locked' : (isFuture ? 'Coming Soon' : 'View Lessons')}
+              ${isLocked ? 'Locked' : (isFuture ? 'Coming Soon' : 'View Lessons')}
             </button>
           </div>
         `;
@@ -208,7 +208,7 @@ function renderModulePanels(moduleData, moduleId, token, moduleProgress) {
             ${isLocked ? `
               <div class="video-overlay">
                 <div class="overlay-content">
-                  <div class="lock-icon">🔒</div>
+                  <div class="lock-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></div>
                   <p style="font-weight:700; font-size:1.1rem; margin:0;">Locked Lesson</p>
                   <p style="font-size:0.85rem; opacity:0.8; margin:0;">Complete previous lessons to unlock</p>
                   ${unlockDate ? `<div class="unlock-date">Estimated Unlock: ${unlockDate}</div>` : ''}
@@ -225,7 +225,7 @@ function renderModulePanels(moduleData, moduleId, token, moduleProgress) {
                 <button class="btn btn-primary" onclick="handleLessonCompletion('${moduleId}', '${lesson._id}')">Mark Lesson Complete</button>
               ` : `
                 <div style="display:flex; align-items:center; gap:12px;">
-                   <span class="status-pill success">✓ Completed</span>
+                   <span class="status-pill success">Completed</span>
                    ${isLastLesson && !assignmentSubmitted ? `
                      <button class="btn btn-primary btn-small" onclick="handleTakeAssignment('${moduleId}')">Start Assignment →</button>
                    ` : `
@@ -255,7 +255,7 @@ function renderModulePanels(moduleData, moduleId, token, moduleProgress) {
     if (assignmentSubmitted) {
        finalHTML += `
          <div style="margin-top:40px; text-align:center; padding:32px; background:var(--bg-secondary); border-radius:12px;">
-           <h3 style="color:var(--success);">✓ Module Assignment ${assignmentPassed ? 'Passed' : 'Submitted'}</h3>
+           <h3 style="color:var(--success);">Module Assignment ${assignmentPassed ? 'Passed' : 'Submitted'}</h3>
            <p style="margin-bottom:20px;">You've finished this module. You can move to the next one or review any lesson.</p>
            <button class="btn btn-success" onclick="handleNextModuleNavigation('${moduleId}')">Go to Next Module →</button>
          </div>
@@ -263,7 +263,7 @@ function renderModulePanels(moduleData, moduleId, token, moduleProgress) {
     } else if (allLessonsCompleted) {
        finalHTML += `
          <div style="margin-top:40px; text-align:center; padding:32px; background:var(--bg-secondary); border-radius:12px; border: 2px solid var(--primary);">
-           <div style="font-size: 2.5rem; margin-bottom: 10px;">🎓</div>
+           <div class="icon-box" style="margin: 0 auto 16px auto;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg></div>
            <h3 style="color:var(--primary); margin-bottom: 8px;">All Lessons Completed!</h3>
            <p style="margin-bottom:20px; color:var(--text-soft);">You've completed all lessons in this module. Take the final assignment to unlock the next module.</p>
            <button class="btn btn-primary btn-large" onclick="handleTakeAssignment('${moduleId}')">Start Final Assignment →</button>
@@ -284,7 +284,11 @@ function renderModulePanels(moduleData, moduleId, token, moduleProgress) {
       
       ${assignmentSubmitted ? `
          <div class="assessment-ready-card" style="background: ${assignmentPassed ? '#E3FCEF' : '#FFF4E5'}; border-color: ${assignmentPassed ? 'var(--success)' : '#FF991F'};">
-          <div style="font-size: 3rem; margin-bottom: 15px;">${assignmentPassed ? '🏆' : '📝'}</div>
+          <div class="icon-box" style="margin: 0 auto 16px auto; ${assignmentPassed ? 'background: #d1fae5; color: #059669;' : 'background: #fef3c7; color: #d97706;'}">
+            ${assignmentPassed 
+              ? '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>'
+              : '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>'}
+          </div>
           <h3>Assignment ${assignmentPassed ? 'Passed!' : 'Submitted'}</h3>
           <p style="color: ${assignmentPassed ? '#006644' : '#854603'}; margin-bottom: 20px;">
             ${assignmentPassed 
@@ -298,7 +302,7 @@ function renderModulePanels(moduleData, moduleId, token, moduleProgress) {
         </div>
       ` : (allLessonsCompleted ? `
         <div class="assessment-ready-card">
-          <div style="font-size: 3rem; margin-bottom: 15px;">🎓</div>
+          <div class="icon-box" style="margin: 0 auto 16px auto;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg></div>
           <h3>Ready for Assessment</h3>
           <p style="color: #006644; margin-bottom: 20px;">You've completed all lessons! You can now take the final assignment to unlock the next module.</p>
           <button class="btn btn-primary btn-large" style="width: 100%;" onclick="handleTakeAssignment('${moduleId}')">
@@ -332,7 +336,7 @@ async function showModuleCompletion(moduleId, token, completionType, lessonsHTML
     if (completionType === 'lessons-done' || completionType === false) {
       completionHTML = `
         <div class="module-completion-card">
-          <span class="completion-icon">🎓</span>
+          <div class="icon-box" style="margin: 0 auto 20px auto;"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg></div>
           <h2>All Lessons Completed!</h2>
           <p>You have finished all lessons for <strong>${currentModule.moduleName}</strong>.</p>
           <p style="margin-top: 10px; font-size: 1.1rem; opacity: 0.9;">To officially complete this module and unlock the next module, you must now pass the <strong>Module Assessment</strong>.</p>
@@ -350,7 +354,7 @@ async function showModuleCompletion(moduleId, token, completionType, lessonsHTML
     } else if (completionType === 'passed' || completionType === true) {
       completionHTML = `
         <div class="module-completion-card" style="background: linear-gradient(135deg, #1A2B49 0%, #007AFF 100%);">
-          <span class="completion-icon">🏆</span>
+          <div class="icon-box" style="margin: 0 auto 20px auto; background: rgba(255,255,255,0.15); color: #fff;"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg></div>
           <h2>Module Mastered!</h2>
           <p>Congratulations! You have successfully completed <strong>${currentModule.moduleName}</strong> and passed the assessment.</p>
           
@@ -360,7 +364,7 @@ async function showModuleCompletion(moduleId, token, completionType, lessonsHTML
               ${progressList.map(m => `
                 <div class="mini-module-item ${m.isCompleted ? 'completed' : ''}">
                   <span class="dot"></span>
-                  <span>${m.moduleName} ${m.isCompleted ? '✓' : ''}</span>
+                  <span>${m.moduleName} ${m.isCompleted ? '(Completed)' : ''}</span>
                 </div>
               `).join('')}
             </div>
@@ -383,7 +387,7 @@ async function showModuleCompletion(moduleId, token, completionType, lessonsHTML
       // Failed / retake needed
       completionHTML = `
         <div class="module-completion-card" style="background: linear-gradient(135deg, #2D3748 0%, #4A5568 100%);">
-          <span class="completion-icon">📝</span>
+          <div class="icon-box" style="margin: 0 auto 20px auto; background: rgba(255,255,255,0.15); color: #fff;"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg></div>
           <h2>Assessment Submitted</h2>
           <p>You have completed the assessment for <strong>${currentModule.moduleName}</strong>.</p>
           <p style="margin-top: 10px; font-size: 1.05rem; opacity: 0.95;">An 80% score is required to pass and unlock the next module. You can retake the assessment to improve your score.</p>

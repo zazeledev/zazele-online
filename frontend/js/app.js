@@ -64,12 +64,15 @@ async function initUpcomingEvents() {
     const events = await window.EventAPI.getUpcomingEvents();
     if (events && events.length > 0) {
       container.style.display = 'block';
+      const calendarSvg = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:-2px; margin-right:4px;"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>`;
+      const clockSvg = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:-2px; margin-right:4px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>`;
+      
       list.innerHTML = events.map(event => `
         <div class="event-card">
           <h4>${event.name}</h4>
           <div class="event-meta">
-            <span>📅 ${new Date(event.date).toLocaleDateString()}</span>
-            <span>🕒 ${event.time}</span>
+            <span>${calendarSvg}${new Date(event.date).toLocaleDateString()}</span>
+            <span>${clockSvg}${event.time}</span>
           </div>
           <p class="event-desc">${event.description}</p>
           <button class="btn btn-primary btn-small register-event-btn" data-id="${event._id}" data-name="${event.name}">Register Now</button>
@@ -87,58 +90,49 @@ async function initUpcomingEvents() {
           }
           idEl.value = btn.dataset.id;
           titleEl.textContent = `Register for ${btn.dataset.name}`;
-          // Ensure modal is visible (some modals use inline display:none in HTML)
-          try { regModal.style.display = 'flex'; } catch (e) {}
           regModal.classList.add('active');
+          regModal.style.display = 'flex';
+          regModal.setAttribute('aria-hidden', 'false');
         });
       });
     }
   } catch (error) {
-    console.error('Error loading upcoming events:', error);
+    console.error('Failed to load events:', error);
   }
+}
 
-  // Modal logic
-  if (closeBtn) {
+// Global Modal Handlers
+function initModals() {
+  const regModal = document.getElementById('event-registration-modal');
+  const closeBtn = document.getElementById('close-event-reg-modal');
+  const regForm = document.getElementById('event-registration-form');
+
+  if (closeBtn && regModal) {
     closeBtn.addEventListener('click', () => {
-      if (regModal) {
-        regModal.classList.remove('active');
-        try { regModal.style.display = 'none'; } catch (e) {}
-      }
+      regModal.classList.remove('active');
+      regModal.style.display = 'none';
+      regModal.setAttribute('aria-hidden', 'true');
     });
   }
 
-  window.addEventListener('click', (e) => {
-    if (e.target === regModal) {
-      regModal.classList.remove('active');
-      try { regModal.style.display = 'none'; } catch (e) {}
-    }
-  });
-
+  // Handle Event Form Submission
   if (regForm) {
     regForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const submitBtn = regForm.querySelector('button[type="submit"]');
-      const originalText = submitBtn.textContent;
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Registering...';
+      const eventId = document.getElementById('event-reg-id').value;
+      const name = document.getElementById('event-reg-name').value;
+      const email = document.getElementById('event-reg-email').value;
+      const phone = document.getElementById('event-reg-phone').value;
 
       try {
-        const data = {
-          eventId: document.getElementById('event-reg-id').value,
-          fullName: document.getElementById('event-reg-fullname').value,
-          email: document.getElementById('event-reg-email').value,
-          contactNumber: document.getElementById('event-reg-contact').value,
-        };
-
-        await window.EventAPI.register(data);
-        alert('Registration successful! We will email you the MS Teams link shortly.');
+        await window.EventAPI.register({ eventId, fullName: name, email, contactNumber: phone });
+        alert('Registration successful! Check your email for confirmation.');
+        regModal.classList.remove('active');
+        regModal.style.display = 'none';
+        regModal.setAttribute('aria-hidden', 'true');
         regForm.reset();
-        if (regModal) { regModal.classList.remove('active'); try { regModal.style.display = 'none'; } catch (e) {} }
-      } catch (error) {
-        alert(error.message || 'Registration failed');
-      } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = originalText;
+      } catch (err) {
+        alert(`Registration failed: ${err.message}`);
       }
     });
   }
@@ -146,7 +140,7 @@ async function initUpcomingEvents() {
 
 // Theme Toggle Logic (Dark Mode)
 function initThemeToggle() {
-  const themeToggles = document.querySelectorAll('.btn-theme-toggle, #landing-theme-toggle, #webdev-theme-toggle, #home-theme-toggle');
+  const themeToggles = document.querySelectorAll('.btn-theme-toggle, #landing-theme-toggle, #webdev-theme-toggle, #home-theme-toggle, .theme-toggle');
   
   // Check for saved theme preference
   const savedTheme = localStorage.getItem('zazele_theme');
@@ -170,22 +164,19 @@ function initThemeToggle() {
   });
 
   function updateToggleIcons(isDark) {
-    const icon = isDark ? '☀️' : '🌙';
     const text = isDark ? 'Light Mode' : 'Dark Mode';
     
     themeToggles.forEach(t => {
-      // Update icon span if exists
       const iconSpan = t.querySelector('.theme-icon');
       if (iconSpan) {
-        iconSpan.textContent = icon;
-        // Update text node if it's a profile menu button
+        iconSpan.innerHTML = isDark 
+          ? `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:-2px;"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="2" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`
+          : `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block; vertical-align:-2px;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`;
+        
         if (t.classList.contains('btn-theme-toggle')) {
            const textNode = Array.from(t.childNodes).find(n => n.nodeType === Node.TEXT_NODE && n.textContent.trim().length > 0);
            if (textNode) textNode.textContent = ` ${text}`;
         }
-      } else {
-        // Fallback for simple toggles
-        t.textContent = icon;
       }
     });
   }
@@ -193,19 +184,22 @@ function initThemeToggle() {
 
 // Password Visibility Toggle Logic
 function initPasswordToggles() {
+  const eyeOpenSvg = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>`;
+  const eyeClosedSvg = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>`;
+
   document.addEventListener('click', (e) => {
-    if (e.target.classList.contains('toggle-password')) {
-      const icon = e.target;
-      const targetId = icon.getAttribute('data-target');
+    const toggle = e.target.closest('.toggle-password');
+    if (toggle) {
+      const targetId = toggle.getAttribute('data-target');
       const input = document.getElementById(targetId);
       
       if (input) {
         if (input.type === 'password') {
           input.type = 'text';
-          icon.textContent = '🙈'; // Switch to closed eye
+          toggle.innerHTML = eyeClosedSvg;
         } else {
           input.type = 'password';
-          icon.textContent = '👁️'; // Switch back to open eye
+          toggle.innerHTML = eyeOpenSvg;
         }
       }
     }

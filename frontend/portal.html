@@ -36,11 +36,11 @@
           </div>
           <ul>
             <li><a href="index.html" class="nav-link-home">Home</a></li>
-            <li><a href="about.html" class="nav-link-about">About</a></li>
             <li><a href="services.html" class="nav-link-services">Services</a></li>
             <li><a href="courses.html" class="nav-link-courses">Courses</a></li>
+            <li><a href="about.html" class="nav-link-about">About</a></li>
             <li><a href="contact.html" class="nav-link-contact">Contact</a></li>
-            <li><a href="portal.html#login" class="btn btn-secondary btn-small nav-link-portal active">Student Portal</a></li>
+            <li><a href="portal.html#login" class="btn btn-pill btn-pill-secondary btn-small nav-link-portal active">Student Portal</a></li>
           </ul>
         </nav>
 
@@ -48,8 +48,10 @@
         <div class="user-nav" id="header-user-nav" style="display: none; align-items: center; gap: 16px; margin-left: auto; margin-right: 16px;">
           <!-- Student Notifications -->
           <div class="notification-wrapper" id="student-notification-wrapper" style="display: none;">
-            <button class="notification-btn" id="student-notification-btn">
-              <span class="icon">🔔</span>
+            <button class="notification-btn" id="student-notification-btn" aria-label="Student Notifications">
+              <span class="icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+              </span>
               <span class="notification-badge" id="student-unread-count" style="display: none;">0</span>
             </button>
             <div class="notification-dropdown" id="student-notification-dropdown">
@@ -65,8 +67,10 @@
 
           <!-- Admin Notifications -->
           <div class="notification-wrapper" id="admin-notification-wrapper" style="display: none;">
-            <button class="notification-btn" id="admin-notification-btn">
-              <span class="icon">🔔</span>
+            <button class="notification-btn" id="admin-notification-btn" aria-label="Admin Notifications">
+              <span class="icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+              </span>
               <span class="notification-badge" id="admin-unread-count" style="display: none;">0</span>
             </button>
             <div class="notification-dropdown" id="admin-notification-dropdown">
@@ -97,7 +101,10 @@
         </div>
 
         <div class="header-actions">
-          <button class="theme-toggle btn-theme-toggle" title="Toggle Dark Mode">🌙</button>
+          <button class="btn-theme-toggle" title="Toggle Theme" aria-label="Toggle Theme">
+            <svg class="theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+            <svg class="theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          </button>
           <button class="mobile-menu-toggle" aria-label="Toggle Menu" id="mobile-menu-toggle">
             <span></span>
             <span></span>
@@ -133,7 +140,7 @@
                   <label for="login-password">Password</label>
                   <div class="password-wrapper">
                     <input type="password" id="login-password" required>
-                    <span class="toggle-password" data-target="login-password">👁️</span>
+                    <span class="toggle-password" data-target="login-password"></span>
                   </div>
                 </div>
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-top: 12px; margin-bottom:12px;">
@@ -185,7 +192,7 @@
                   <label for="register-password">Password</label>
                   <div class="password-wrapper">
                     <input type="password" id="register-password" required>
-                    <span class="toggle-password" data-target="register-password">👁️</span>
+                    <span class="toggle-password" data-target="register-password"></span>
                   </div>
                 </div>
                 <div class="form-group"><label for="register-id-doc">ID Document</label><input type="file" id="register-id-doc" accept="image/*,.pdf"></div>
@@ -221,14 +228,14 @@
               <div style="margin-bottom: 24px;">
                 <h3 style="font-size: 1.2rem; color: var(--primary); margin-bottom: 8px;">Together We Will Explore</h3>
                 <p style="color: var(--text-soft); margin-bottom: 16px;">This MICT SETA accredited program takes you through seven essential units of digital mastery:</p>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; color: var(--text-soft); font-size: 0.9rem;">
-                  <div style="display: flex; align-items: center; gap: 8px;"><span>✓</span> IT Basics</div>
-                  <div style="display: flex; align-items: center; gap: 8px;"><span>✓</span> File & Folder Management</div>
-                  <div style="display: flex; align-items: center; gap: 8px;"><span>✓</span> Word Processing</div>
-                  <div style="display: flex; align-items: center; gap: 8px;"><span>✓</span> Spreadsheets</div>
-                  <div style="display: flex; align-items: center; gap: 8px;"><span>✓</span> Presentations</div>
-                  <div style="display: flex; align-items: center; gap: 8px;"><span>✓</span> Web & Email</div>
-                  <div style="display: flex; align-items: center; gap: 8px;"><span>✓</span> Drawing & Design</div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; color: var(--text-soft); font-size: 0.9rem;">
+                  <div style="display: flex; align-items: center; gap: 8px;"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 16px; height: 16px; min-width: 16px;"><polyline points="20 6 9 17 4 12"></polyline></svg> IT Basics</div>
+                  <div style="display: flex; align-items: center; gap: 8px;"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 16px; height: 16px; min-width: 16px;"><polyline points="20 6 9 17 4 12"></polyline></svg> File Management</div>
+                  <div style="display: flex; align-items: center; gap: 8px;"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 16px; height: 16px; min-width: 16px;"><polyline points="20 6 9 17 4 12"></polyline></svg> Word Processing</div>
+                  <div style="display: flex; align-items: center; gap: 8px;"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 16px; height: 16px; min-width: 16px;"><polyline points="20 6 9 17 4 12"></polyline></svg> Spreadsheets</div>
+                  <div style="display: flex; align-items: center; gap: 8px;"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 16px; height: 16px; min-width: 16px;"><polyline points="20 6 9 17 4 12"></polyline></svg> Presentations</div>
+                  <div style="display: flex; align-items: center; gap: 8px;"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 16px; height: 16px; min-width: 16px;"><polyline points="20 6 9 17 4 12"></polyline></svg> Web & Email</div>
+                  <div style="display: flex; align-items: center; gap: 8px;"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 16px; height: 16px; min-width: 16px;"><polyline points="20 6 9 17 4 12"></polyline></svg> Drawing & Design</div>
                 </div>
               </div>
             </div>
@@ -303,7 +310,9 @@
       <p id="profile-contact" style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 16px;">-</p>
       <div style="display:flex; flex-direction: column; gap:8px;">
         <button class="btn btn-secondary btn-small btn-theme-toggle" style="justify-content: flex-start; gap: 10px;">
-          <span class="theme-icon">🌙</span> Dark Mode
+          <svg class="theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" width="16" height="16"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line></svg>
+          <svg class="theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" width="16" height="16"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          Toggle Theme
         </button>
         <button id="edit-profile-btn" class="btn btn-secondary btn-small">Update Profile</button>
         <button id="profile-logout-btn" class="btn btn-danger btn-small">Logout</button>
@@ -793,7 +802,11 @@
       </form>
 
       <div id="fp-success-msg" style="display: none; text-align: center; padding: 12px 0;">
-        <div style="font-size: 4rem; color: #28a745; margin-bottom: 16px;">✓</div>
+        <div style="display: flex; justify-content: center; margin-bottom: 16px;">
+          <div class="icon-box" style="width: 56px; height: 56px; background: rgba(0, 122, 255, 0.1); color: var(--primary);">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          </div>
+        </div>
         <h4 style="margin-bottom: 8px; font-size: 1.3rem;">Password Reset Successful</h4>
         <p style="font-size: 1rem; color: #666; margin-bottom: 24px;">You can now login with your new password.</p>
         <button id="fp-done-btn" class="btn btn-primary" style="width: 100%; padding: 12px; font-size: 1rem; font-weight: 600;">Back to Login</button>

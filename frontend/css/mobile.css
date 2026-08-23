@@ -484,12 +484,64 @@
   .packages-grid {
     grid-template-columns: repeat(2, 1fr) !important;
   }
+
+  /* Metrics Strip & Feature Grids Mobile */
+  .metrics-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 20px !important;
+  }
+
+  .metric-item {
+    border-left: none !important;
+    padding-left: 0 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 12px;
+  }
+
+  .feature-grid-3 {
+    grid-template-columns: 1fr !important;
+    gap: 20px !important;
+  }
+
+  .steps-grid-4 {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 16px !important;
+  }
+
+  .home-hero-content h1 {
+    font-size: 2.5rem !important;
+  }
+
+  .cta-banner-content h2 {
+    font-size: 2.2rem !important;
+  }
 }
 
 @media (max-width: 650px) {
   .packages-grid {
     grid-template-columns: 1fr !important;
   }
+
+  .metrics-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .steps-grid-4 {
+    grid-template-columns: 1fr !important;
+  }
+
+  .home-hero-content h1 {
+    font-size: 2.1rem !important;
+  }
+
+  .home-hero-lead {
+    font-size: 1.05rem !important;
+  }
+
+  .section-header h2 {
+    font-size: 2rem !important;
+  }
 }
+
 
 

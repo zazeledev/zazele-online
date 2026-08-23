@@ -240,7 +240,7 @@ function startTimer() {
 
     // Warning at 5 minutes
     if (timeRemaining === 300) {
-      alert('⏰ You have 5 minutes remaining!');
+      alert('Warning: You have 5 minutes remaining!');
     }
 
     // Auto-submit at 0
@@ -276,7 +276,7 @@ function displayResults(result, totalQuestions) {
   container.innerHTML = `
     <div class="assignment-results">
       <div class="results-header ${passed ? 'passed' : 'failed'}">
-        <h2>${passed ? '✓ ASSIGNMENT PASSED!' : '✗ Assignment Not Passed'}</h2>
+        <h2>${passed ? 'Assignment Passed!' : 'Assignment Not Passed'}</h2>
         <p class="result-message">
           ${passed 
             ? `Congratulations! You have successfully mastered this module.`
