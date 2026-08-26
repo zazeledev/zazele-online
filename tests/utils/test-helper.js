@@ -2,6 +2,11 @@ const { spawn } = require('child_process');
 const fs = require('fs');
 const path = require('path');
 const http = require('http');
+const dns = require('dns');
+
+if (dns.setDefaultResultOrder) {
+  dns.setDefaultResultOrder('ipv4first');
+}
 
 let serverProcess = null;
 const envJsPath = path.resolve(__dirname, '../../frontend/js/env.js');

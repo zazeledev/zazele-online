@@ -242,6 +242,48 @@ async function run(testPort = 5001) {
     if (!res.valid) throw new Error(`SSL check failed: ${res.error || 'Invalid Certificate'}`);
   });
 
+  // 13. Vercel Clean URLs configuration exists and is valid
+  addTest('Vercel cleanUrls configuration exists', async () => {
+    const vercelJsonPath = path.resolve(__dirname, '../../vercel.json');
+    if (!fs.existsSync(vercelJsonPath)) throw new Error('Root vercel.json does not exist');
+    const vercelConfig = JSON.parse(fs.readFileSync(vercelJsonPath, 'utf8'));
+    if (vercelConfig.cleanUrls !== true) throw new Error('vercel.json must specify cleanUrls: true');
+  });
+
+  // 14. Clean URL routing endpoints return 200
+  const cleanRoutes = [
+    { route: '/services', contentCheck: 'Custom Website' },
+    { route: '/courses', contentCheck: 'Computer Training' },
+    { route: '/about', contentCheck: 'About Zazele' },
+    { route: '/contact', contentCheck: 'Contact Information' },
+    { route: '/portal', contentCheck: 'portal-form-box' }
+  ];
+
+  cleanRoutes.forEach(({ route, contentCheck }) => {
+    addTest(`Clean URL route ${route} serves valid page`, async () => {
+      const res = await httpGet(`${localBase}${route}`);
+      if (res.statusCode !== 200) throw new Error(`HTTP Status ${res.statusCode} for ${route}`);
+      if (!res.body.includes('<!DOCTYPE html>')) throw new Error(`Not valid HTML response for ${route}`);
+      if (!res.body.includes(contentCheck)) throw new Error(`Expected content not found in ${route}`);
+    });
+  });
+
+  // 15. Static assets load with status 200
+  const staticAssets = ['/css/styles.css', '/css/mobile.css', '/js/api.js', '/assets/logo.png'];
+  staticAssets.forEach(asset => {
+    addTest(`Static asset ${asset} loads directly`, async () => {
+      const res = await httpGet(`${localBase}${asset}`);
+      if (res.statusCode !== 200) throw new Error(`HTTP Status ${res.statusCode} for ${asset}`);
+    });
+  });
+
+  // 16. API routes are not rewritten to HTML
+  addTest('API routes are not rewritten to HTML', async () => {
+    const res = await httpGet(`${localBase}/api/health`);
+    if (res.statusCode !== 200) throw new Error(`HTTP Status ${res.statusCode}`);
+    if (res.body.includes('<!DOCTYPE html>')) throw new Error('API route /api/health was unexpectedly rewritten to HTML');
+  });
+
   // Executing Smoke Tests
   const results = [];
   for (const test of tests) {

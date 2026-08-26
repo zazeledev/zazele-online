@@ -466,10 +466,17 @@ app.post('/api/qa/diagnose', async (req, res) => {
   }
 });
 
-// Serve frontend for all other routes (SPA support)
+// Serve frontend for all other routes (Clean URLs & fallback support)
 app.get('*', (req, res) => {
   if (req.path.startsWith('/api')) {
     return res.status(404).json({ error: 'API route not found' });
+  }
+  const cleanPath = req.path.replace(/^\//, '').replace(/\/$/, '');
+  if (cleanPath) {
+    const potentialHtml = path.join(__dirname, '../../frontend', `${cleanPath}.html`);
+    if (fs.existsSync(potentialHtml)) {
+      return res.sendFile(potentialHtml);
+    }
   }
   res.sendFile(path.join(__dirname, '../../frontend/index.html'));
 });

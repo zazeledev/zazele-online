@@ -119,7 +119,7 @@ function navigateToPage(user) {
   // Prevent brand logo from taking user to landing page while logged in
   const schoolBrandLinks = document.querySelectorAll('.school-brand');
   schoolBrandLinks.forEach(link => {
-    link.href = 'portal.html';
+    link.href = '/portal';
   });
   
   if (userNav) {
@@ -184,7 +184,7 @@ function initLogoutButtons() {
   const performLogout = () => {
     logoutUser();
     resetForms();
-    window.location.href = 'portal.html';
+    window.location.href = '/portal';
   };
 
   if (logoutBtn) logoutBtn.addEventListener('click', performLogout);
@@ -209,8 +209,9 @@ function initAuth() {
   console.log('Auth initialized:', { hasToken: !!token, hasUser: !!user, userRole: user?.role });
 
   if (token && user) {
-    // Only run navigation redirection if we are on portal.html
-    if (window.location.pathname.endsWith('portal.html') || window.location.pathname === '/' || window.location.pathname.endsWith('/')) {
+    // Only run navigation redirection if we are on portal.html or /portal
+    const path = window.location.pathname.toLowerCase();
+    if (path.endsWith('portal.html') || path === '/portal' || path.endsWith('/portal') || path === '/' || path.endsWith('/')) {
       navigateToPage(user);
     }
   } else {

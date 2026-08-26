@@ -1,14 +1,14 @@
 # Zazele Online - QA Deployment Validation Report
 
-**Timestamp:** 8/23/2026, 2:01:42 PM  
+**Timestamp:** 8/26/2026, 5:17:46 PM  
 **Environment:** `Test/Local-Mock`  
-**Overall Status:** 🟢 PASS (35 passed, 0 failed)
+**Overall Status:** 🟢 PASS (46 passed, 0 failed)
 
 ## Metrics Summary
 
 | Test Suite | Passed | Failed | Status |
 | :--- | :---: | :---: | :---: |
-| SMOKE | 15 | 0 | 🟢 PASS |
+| SMOKE | 26 | 0 | 🟢 PASS |
 | API | 9 | 0 | 🟢 PASS |
 | SECURITY | 7 | 0 | 🟢 PASS |
 | E2E | 4 | 0 | 🟢 PASS |
@@ -32,6 +32,17 @@
 - **🟢 [PASS]** No localhost references in static JS
 - **🟢 [PASS]** SSL certificate valid for main site
 - **🟢 [PASS]** SSL certificate valid for backend api
+- **🟢 [PASS]** Vercel cleanUrls configuration exists
+- **🟢 [PASS]** Clean URL route /services serves valid page
+- **🟢 [PASS]** Clean URL route /courses serves valid page
+- **🟢 [PASS]** Clean URL route /about serves valid page
+- **🟢 [PASS]** Clean URL route /contact serves valid page
+- **🟢 [PASS]** Clean URL route /portal serves valid page
+- **🟢 [PASS]** Static asset /css/styles.css loads directly
+- **🟢 [PASS]** Static asset /css/mobile.css loads directly
+- **🟢 [PASS]** Static asset /js/api.js loads directly
+- **🟢 [PASS]** Static asset /assets/logo.png loads directly
+- **🟢 [PASS]** API routes are not rewritten to HTML
 
 ### Suite: API
 

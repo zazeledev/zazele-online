@@ -1,7 +1,7 @@
 {
-  "timestamp": "2026-08-23T12:01:42.466Z",
+  "timestamp": "2026-08-26T15:17:46.654Z",
   "environment": "Test/Local-Mock",
-  "passed": 35,
+  "passed": 46,
   "failed": 0,
   "suites": {
     "smoke": [
@@ -77,6 +77,61 @@
       },
       {
         "name": "SSL certificate valid for backend api",
+        "status": "PASS",
+        "message": ""
+      },
+      {
+        "name": "Vercel cleanUrls configuration exists",
+        "status": "PASS",
+        "message": ""
+      },
+      {
+        "name": "Clean URL route /services serves valid page",
+        "status": "PASS",
+        "message": ""
+      },
+      {
+        "name": "Clean URL route /courses serves valid page",
+        "status": "PASS",
+        "message": ""
+      },
+      {
+        "name": "Clean URL route /about serves valid page",
+        "status": "PASS",
+        "message": ""
+      },
+      {
+        "name": "Clean URL route /contact serves valid page",
+        "status": "PASS",
+        "message": ""
+      },
+      {
+        "name": "Clean URL route /portal serves valid page",
+        "status": "PASS",
+        "message": ""
+      },
+      {
+        "name": "Static asset /css/styles.css loads directly",
+        "status": "PASS",
+        "message": ""
+      },
+      {
+        "name": "Static asset /css/mobile.css loads directly",
+        "status": "PASS",
+        "message": ""
+      },
+      {
+        "name": "Static asset /js/api.js loads directly",
+        "status": "PASS",
+        "message": ""
+      },
+      {
+        "name": "Static asset /assets/logo.png loads directly",
+        "status": "PASS",
+        "message": ""
+      },
+      {
+        "name": "API routes are not rewritten to HTML",
         "status": "PASS",
         "message": ""
       }
