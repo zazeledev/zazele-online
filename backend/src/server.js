@@ -155,7 +155,7 @@ async function initPostgres() {
   }
 }
 
-if (process.env.PGDATABASE || process.env.DB_NAME || process.env.DATABASE_URL) {
+if (process.env.NODE_ENV !== 'test' && (process.env.PGDATABASE || process.env.DB_NAME || process.env.DATABASE_URL)) {
   initPostgres();
 }
 
