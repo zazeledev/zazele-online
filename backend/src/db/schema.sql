@@ -1,7 +1,20 @@
 -- Zazele Online PostgreSQL Database Schema
 -- Centralized database for Afrihost cPanel
 
-CREATE TABLE IF NOT EXISTS users (
+DROP TABLE IF EXISTS profile_update_requests CASCADE;
+DROP TABLE IF EXISTS support_requests CASCADE;
+DROP TABLE IF EXISTS notifications CASCADE;
+DROP TABLE IF EXISTS event_registrations CASCADE;
+DROP TABLE IF EXISTS events CASCADE;
+DROP TABLE IF EXISTS assignment_questions CASCADE;
+DROP TABLE IF EXISTS assignments CASCADE;
+DROP TABLE IF EXISTS completed_lessons CASCADE;
+DROP TABLE IF EXISTS student_progress CASCADE;
+DROP TABLE IF EXISTS lessons CASCADE;
+DROP TABLE IF EXISTS modules CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
+
+CREATE TABLE users (
     _id VARCHAR(64) PRIMARY KEY,
     full_name TEXT NOT NULL,
     email TEXT UNIQUE NOT NULL,
@@ -23,7 +36,7 @@ CREATE TABLE IF NOT EXISTS users (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
-CREATE TABLE IF NOT EXISTS modules (
+CREATE TABLE modules (
     _id VARCHAR(64) PRIMARY KEY,
     title TEXT NOT NULL,
     description TEXT DEFAULT '',
@@ -32,7 +45,7 @@ CREATE TABLE IF NOT EXISTS modules (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
-CREATE TABLE IF NOT EXISTS lessons (
+CREATE TABLE lessons (
     _id VARCHAR(64) PRIMARY KEY,
     module_id VARCHAR(64) NOT NULL REFERENCES modules(_id) ON DELETE CASCADE,
     title TEXT NOT NULL,
@@ -44,7 +57,7 @@ CREATE TABLE IF NOT EXISTS lessons (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
-CREATE TABLE IF NOT EXISTS student_progress (
+CREATE TABLE student_progress (
     _id VARCHAR(64) PRIMARY KEY,
     student_id VARCHAR(64) NOT NULL REFERENCES users(_id) ON DELETE CASCADE,
     module_id VARCHAR(64) NOT NULL REFERENCES modules(_id) ON DELETE CASCADE,
@@ -57,7 +70,7 @@ CREATE TABLE IF NOT EXISTS student_progress (
     CONSTRAINT uq_student_module UNIQUE (student_id, module_id)
 );
 
-CREATE TABLE IF NOT EXISTS assignments (
+CREATE TABLE assignments (
     _id VARCHAR(64) PRIMARY KEY,
     module_id VARCHAR(64) NOT NULL REFERENCES modules(_id) ON DELETE CASCADE,
     student_id VARCHAR(64) NOT NULL REFERENCES users(_id) ON DELETE CASCADE,
@@ -75,7 +88,7 @@ CREATE TABLE IF NOT EXISTS assignments (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
-CREATE TABLE IF NOT EXISTS assignment_questions (
+CREATE TABLE assignment_questions (
     _id VARCHAR(64) PRIMARY KEY,
     module_id VARCHAR(64) NOT NULL REFERENCES modules(_id) ON DELETE CASCADE,
     question_number INTEGER NOT NULL,
@@ -87,7 +100,7 @@ CREATE TABLE IF NOT EXISTS assignment_questions (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
-CREATE TABLE IF NOT EXISTS events (
+CREATE TABLE events (
     _id VARCHAR(64) PRIMARY KEY,
     name TEXT NOT NULL,
     description TEXT NOT NULL,
@@ -98,7 +111,7 @@ CREATE TABLE IF NOT EXISTS events (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
-CREATE TABLE IF NOT EXISTS event_registrations (
+CREATE TABLE event_registrations (
     _id VARCHAR(64) PRIMARY KEY,
     event_id VARCHAR(64) NOT NULL REFERENCES events(_id) ON DELETE CASCADE,
     full_name TEXT NOT NULL,
@@ -108,7 +121,7 @@ CREATE TABLE IF NOT EXISTS event_registrations (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
-CREATE TABLE IF NOT EXISTS notifications (
+CREATE TABLE notifications (
     _id VARCHAR(64) PRIMARY KEY,
     recipient VARCHAR(64) NOT NULL REFERENCES users(_id) ON DELETE CASCADE,
     sender VARCHAR(64) REFERENCES users(_id) ON DELETE SET NULL,
@@ -119,7 +132,7 @@ CREATE TABLE IF NOT EXISTS notifications (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
-CREATE TABLE IF NOT EXISTS support_requests (
+CREATE TABLE support_requests (
     _id VARCHAR(64) PRIMARY KEY,
     student_id VARCHAR(64) NOT NULL REFERENCES users(_id) ON DELETE CASCADE,
     module_id VARCHAR(64) NOT NULL REFERENCES modules(_id) ON DELETE CASCADE,
@@ -131,7 +144,7 @@ CREATE TABLE IF NOT EXISTS support_requests (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
-CREATE TABLE IF NOT EXISTS profile_update_requests (
+CREATE TABLE profile_update_requests (
     _id VARCHAR(64) PRIMARY KEY,
     student_id VARCHAR(64) NOT NULL REFERENCES users(_id) ON DELETE CASCADE,
     requested_changes JSONB NOT NULL,

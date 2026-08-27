@@ -38,6 +38,7 @@ async function migrate() {
   // 1. Users
   console.log('[3/12] Migrating Users...');
   const users = readJson('users.json');
+  const userIds = new Set(users.map(u => u._id));
   for (const u of users) {
     await db.query(`
       INSERT INTO users (
@@ -81,6 +82,7 @@ async function migrate() {
   // 2. Modules
   console.log('[4/12] Migrating Modules...');
   const modules = readJson('modules.json');
+  const moduleIds = new Set(modules.map(m => m._id));
   for (const m of modules) {
     await db.query(`
       INSERT INTO modules (_id, title, description, code, order_num, created_at)
@@ -104,6 +106,7 @@ async function migrate() {
   console.log('[5/12] Migrating Lessons...');
   const lessons = readJson('lessons.json');
   for (const l of lessons) {
+    if (!moduleIds.has(l.moduleId)) continue;
     await db.query(`
       INSERT INTO lessons (_id, module_id, title, youtube_url, description, notes_path, quiz, order_num, created_at)
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
@@ -130,7 +133,9 @@ async function migrate() {
   // 4. Student Progress
   console.log('[6/12] Migrating Student Progress records...');
   const progresses = readJson('studentprogresses.json');
+  let progressCount = 0;
   for (const p of progresses) {
+    if (!userIds.has(p.studentId) || !moduleIds.has(p.moduleId)) continue;
     await db.query(`
       INSERT INTO student_progress (
         _id, student_id, module_id, current_lesson_order,
@@ -153,13 +158,16 @@ async function migrate() {
       p.createdAt || new Date(),
       p.updatedAt || new Date()
     ]);
+    progressCount++;
   }
-  console.log(`✅ Migrated ${progresses.length} student progress records.\n`);
+  console.log(`✅ Migrated ${progressCount} active student progress records.\n`);
 
   // 5. Assignments
   console.log('[7/12] Migrating Assignments...');
   const assignments = readJson('assignments.json');
+  let assignmentCount = 0;
   for (const a of assignments) {
+    if (!userIds.has(a.studentId) || !moduleIds.has(a.moduleId)) continue;
     await db.query(`
       INSERT INTO assignments (
         _id, module_id, student_id, score, total_questions,
@@ -190,13 +198,15 @@ async function migrate() {
       a.status || 'not-started',
       a.createdAt || new Date()
     ]);
+    assignmentCount++;
   }
-  console.log(`✅ Migrated ${assignments.length} assignments.\n`);
+  console.log(`✅ Migrated ${assignmentCount} assignments.\n`);
 
   // 6. Assignment Questions
   console.log('[8/12] Migrating Assignment Questions...');
   const questions = readJson('assignmentquestions.json');
   for (const q of questions) {
+    if (!moduleIds.has(q.moduleId)) continue;
     await db.query(`
       INSERT INTO assignment_questions (
         _id, module_id, question_number, question,
@@ -225,6 +235,7 @@ async function migrate() {
   // 7. Events
   console.log('[9/12] Migrating Events...');
   const events = readJson('events.json');
+  const eventIds = new Set(events.map(e => e._id));
   for (const e of events) {
     await db.query(`
       INSERT INTO events (_id, name, description, date, time, teams_link, archived, created_at)
@@ -250,6 +261,7 @@ async function migrate() {
   console.log('[10/12] Migrating Event Registrations...');
   const registrations = readJson('eventregistrations.json');
   for (const r of registrations) {
+    if (!eventIds.has(r.eventId)) continue;
     await db.query(`
       INSERT INTO event_registrations (_id, event_id, full_name, email, contact_number, link_sent, created_at)
       VALUES ($1, $2, $3, $4, $5, $6, $7)
@@ -271,7 +283,10 @@ async function migrate() {
   // 9. Notifications
   console.log('[11/12] Migrating Notifications...');
   const notifications = readJson('notifications.json');
+  let notificationCount = 0;
   for (const n of notifications) {
+    if (!userIds.has(n.recipient)) continue;
+    const senderId = (n.sender && userIds.has(n.sender)) ? n.sender : null;
     await db.query(`
       INSERT INTO notifications (_id, recipient, sender, message, type, link, is_read, created_at)
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
@@ -281,15 +296,16 @@ async function migrate() {
     `, [
       n._id,
       n.recipient,
-      n.sender || null,
+      senderId,
       n.message || '',
       n.type || 'general',
       n.link || null,
       !!n.isRead,
       n.createdAt || new Date()
     ]);
+    notificationCount++;
   }
-  console.log(`✅ Migrated ${notifications.length} notifications.\n`);
+  console.log(`✅ Migrated ${notificationCount} notifications.\n`);
 
   // 10. Verification
   console.log('[12/12] Verifying Record Counts in PostgreSQL...');
@@ -311,12 +327,12 @@ async function migrate() {
   console.log(`  Users:                ${counts[0].rows[0].count} / ${users.length}`);
   console.log(`  Modules:              ${counts[1].rows[0].count} / ${modules.length}`);
   console.log(`  Lessons:              ${counts[2].rows[0].count} / ${lessons.length}`);
-  console.log(`  Student Progress:     ${counts[3].rows[0].count} / ${progresses.length}`);
-  console.log(`  Assignments:          ${counts[4].rows[0].count} / ${assignments.length}`);
+  console.log(`  Student Progress:     ${counts[3].rows[0].count} / ${progressCount}`);
+  console.log(`  Assignments:          ${counts[4].rows[0].count} / ${assignmentCount}`);
   console.log(`  Assignment Questions: ${counts[5].rows[0].count} / ${questions.length}`);
   console.log(`  Events:               ${counts[6].rows[0].count} / ${events.length}`);
   console.log(`  Event Registrations:  ${counts[7].rows[0].count} / ${registrations.length}`);
-  console.log(`  Notifications:        ${counts[8].rows[0].count} / ${notifications.length}`);
+  console.log(`  Notifications:        ${counts[8].rows[0].count} / ${notificationCount}`);
   console.log('--------------------------------------------------\n');
   console.log('🎉 MIGRATION COMPLETED SUCCESSFULLY!');
   process.exit(0);

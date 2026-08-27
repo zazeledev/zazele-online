@@ -1,7 +1,20 @@
 -- Zazele Online PostgreSQL Database Schema
 -- Centralized database for Afrihost cPanel
 
-CREATE TABLE IF NOT EXISTS users (
+DROP TABLE IF EXISTS profile_update_requests CASCADE;
+DROP TABLE IF EXISTS support_requests CASCADE;
+DROP TABLE IF EXISTS notifications CASCADE;
+DROP TABLE IF EXISTS event_registrations CASCADE;
+DROP TABLE IF EXISTS events CASCADE;
+DROP TABLE IF EXISTS assignment_questions CASCADE;
+DROP TABLE IF EXISTS assignments CASCADE;
+DROP TABLE IF EXISTS completed_lessons CASCADE;
+DROP TABLE IF EXISTS student_progress CASCADE;
+DROP TABLE IF EXISTS lessons CASCADE;
+DROP TABLE IF EXISTS modules CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
+
+CREATE TABLE users (
     _id VARCHAR(64) PRIMARY KEY,
     full_name TEXT NOT NULL,
     email TEXT UNIQUE NOT NULL,
@@ -23,7 +36,7 @@ CREATE TABLE IF NOT EXISTS users (
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
-CREATE TABLE IF NOT EXISTS modules (
+CREATE TABLE modules (
     _id VARCHAR(64) PRIMARY KEY,
     title TEXT NOT NULL,
     description TEXT DEFAULT '',
@@ -32,7 +45,7 @@ CREATE TABLE IF NOT EXISTS modules (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
-CREATE TABLE IF NOT EXISTS lessons (
+CREATE TABLE lessons (
     _id VARCHAR(64) PRIMARY KEY,
     module_id VARCHAR(64) NOT NULL REFERENCES modules(_id) ON DELETE CASCADE,
     title TEXT NOT NULL,
@@ -44,7 +57,7 @@ CREATE TABLE IF NOT EXISTS lessons (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
-CREATE TABLE IF NOT EXISTS student_progress (
+CREATE TABLE student_progress (
     _id VARCHAR(64) PRIMARY KEY,
     student_id VARCHAR(64) NOT NULL REFERENCES users(_id) ON DELETE CASCADE,
     module_id VARCHAR(64) NOT NULL REFERENCES modules(_id) ON DELETE CASCADE,
@@ -57,7 +70,7 @@ CREATE TABLE IF NOT EXISTS student_progress (
     CONSTRAINT uq_student_module UNIQUE (student_id, module_id)
 );
 
-CREATE TABLE IF NOT EXISTS assignments (
+CREATE TABLE assignments (
     _id VARCHAR(64) PRIMARY KEY,
     module_id VARCHAR(64) NOT NULL REFERENCES modules(_id) ON DELETE CASCADE,
     student_id VARCHAR(64) NOT NULL REFERENCES users(_id) ON DELETE CASCADE,
@@ -75,7 +88,7 @@ CREATE TABLE IF NOT EXISTS assignments (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
-CREATE TABLE IF NOT EXISTS assignment_questions (
+CREATE TABLE assignment_questions (
     _id VARCHAR(64) PRIMARY KEY,
     module_id VARCHAR(64) NOT NULL REFERENCES modules(_id) ON DELETE CASCADE,
     question_number INTEGER NOT NULL,
@@ -87,7 +100,7 @@ CREATE TABLE IF NOT EXISTS assignment_questions (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
-CREATE TABLE IF NOT EXISTS events (
+CREATE TABLE events (
     _id VARCHAR(64) PRIMARY KEY,
     name TEXT NOT NULL,
     description TEXT NOT NULL,
@@ -98,7 +111,7 @@ CREATE TABLE IF NOT EXISTS events (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
-CREATE TABLE IF NOT EXISTS event_registrations (
+CREATE TABLE event_registrations (
     _id VARCHAR(64) PRIMARY KEY,
     event_id VARCHAR(64) NOT NULL REFERENCES events(_id) ON DELETE CASCADE,
     full_name TEXT NOT NULL,
@@ -108,7 +121,7 @@ CREATE TABLE IF NOT EXISTS event_registrations (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
-CREATE TABLE IF NOT EXISTS notifications (
+CREATE TABLE notifications (
     _id VARCHAR(64) PRIMARY KEY,
     recipient VARCHAR(64) NOT NULL REFERENCES users(_id) ON DELETE CASCADE,
     sender VARCHAR(64) REFERENCES users(_id) ON DELETE SET NULL,
@@ -119,7 +132,7 @@ CREATE TABLE IF NOT EXISTS notifications (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
-CREATE TABLE IF NOT EXISTS support_requests (
+CREATE TABLE support_requests (
     _id VARCHAR(64) PRIMARY KEY,
     student_id VARCHAR(64) NOT NULL REFERENCES users(_id) ON DELETE CASCADE,
     module_id VARCHAR(64) NOT NULL REFERENCES modules(_id) ON DELETE CASCADE,
@@ -131,7 +144,7 @@ CREATE TABLE IF NOT EXISTS support_requests (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
-CREATE TABLE IF NOT EXISTS profile_update_requests (
+CREATE TABLE profile_update_requests (
     _id VARCHAR(64) PRIMARY KEY,
     student_id VARCHAR(64) NOT NULL REFERENCES users(_id) ON DELETE CASCADE,
     requested_changes JSONB NOT NULL,
@@ -211,9 +224,6 @@ INSERT INTO lessons (_id, module_id, title, youtube_url, description, notes_path
 INSERT INTO lessons (_id, module_id, title, youtube_url, description, notes_path, quiz, order_num, created_at) VALUES ('6a7c5e2785e0de5771639ff4', '6a2d660e3c26ac04a78d8308', 'Printing and Page Setup', 'https://www.youtube.com/watch?v=SpbYHoS65Mg', 'Printing and Page Setup', NULL, NULL, 8, '2026-08-12T11:51:03.493Z') ON CONFLICT (_id) DO NOTHING;
 INSERT INTO lessons (_id, module_id, title, youtube_url, description, notes_path, quiz, order_num, created_at) VALUES ('6a84531785e0de577163a449', '6a8452f685e0de577163a431', 'Why Digital Drawing Matters', 'https://www.youtube.com/watch?v=hz5jdmwYH6Y', 'Why Digital Drawing Matters', NULL, NULL, 1, '2026-08-18T12:41:59.038Z') ON CONFLICT (_id) DO NOTHING;
 INSERT INTO lessons (_id, module_id, title, youtube_url, description, notes_path, quiz, order_num, created_at) VALUES ('6a8ea7250c4d289c8d9ec4fa', '6a8452f685e0de577163a431', 'Paint Basics', 'https://www.youtube.com/watch?v=P9OFjFpouW0', 'Paint Basics', NULL, NULL, 2, '2026-08-26T08:43:17.534Z') ON CONFLICT (_id) DO NOTHING;
-INSERT INTO student_progress (_id, student_id, module_id, current_lesson_order, started_first_lesson_date, enrollment_date, completed_lessons, created_at, updated_at) VALUES ('69a84637afaba411fde79957', '69a5b15f6c74ab9bc1aa5c41', '69a5b3884c3ac66e63aa196e', 1, NULL, '2026-03-04T14:48:23.775Z', '[]'::jsonb, '2026-03-04T14:48:23.777Z', '2026-03-04T14:48:23.777Z') ON CONFLICT (_id) DO NOTHING;
-INSERT INTO student_progress (_id, student_id, module_id, current_lesson_order, started_first_lesson_date, enrollment_date, completed_lessons, created_at, updated_at) VALUES ('69ab2b07a087f41d129a9c48', '69ab2aaaa087f41d129a9c3d', '69a5b3884c3ac66e63aa196e', 2, '2026-03-06T19:29:54.931Z', '2026-03-06T19:27:38.106Z', '[{"lessonId":"69a5b38c49a54edb69d22880","order":1,"completedAt":"2026-03-06T19:29:54.932Z","timeSpent":0,"_id":"69ab2b32a087f41d129a9c54"}]'::jsonb, '2026-03-06T19:29:11.063Z', '2026-03-06T19:29:54.942Z') ON CONFLICT (_id) DO NOTHING;
-INSERT INTO student_progress (_id, student_id, module_id, current_lesson_order, started_first_lesson_date, enrollment_date, completed_lessons, created_at, updated_at) VALUES ('69ab6392be6976f4f166122b', '69a80f8540cf3cf0919a3aa1', '69a5b3884c3ac66e63aa196e', 1, NULL, '2026-03-04T10:55:01.981Z', '[]'::jsonb, '2026-03-06T23:30:26.781Z', '2026-03-06T23:30:26.781Z') ON CONFLICT (_id) DO NOTHING;
 INSERT INTO student_progress (_id, student_id, module_id, current_lesson_order, started_first_lesson_date, enrollment_date, completed_lessons, created_at, updated_at) VALUES ('69ad73e5aaea755878fe9c46', '69ac3e94b8f95ca598f96c4c', '69a5b3884c3ac66e63aa196e', 11, '2026-03-08T16:53:14.281Z', '2026-03-07T15:04:52.048Z', '[{"lessonId":"69a5b38c49a54edb69d22880","order":1,"completedAt":"2026-03-08T16:53:14.286Z","timeSpent":0,"_id":"69ada97aaaea755878fea789"},{"lessonId":"69a5b38c49a54edb69d22881","order":2,"completedAt":"2026-03-08T16:53:19.537Z","timeSpent":0,"_id":"69ada97faaea755878fea7aa"},{"lessonId":"69a5b38c49a54edb69d22882","order":3,"completedAt":"2026-03-08T16:53:24.458Z","timeSpent":0,"_id":"69ada984aaea755878fea7d1"},{"lessonId":"69a5b38c49a54edb69d22883","order":4,"completedAt":"2026-03-08T16:53:30.109Z","timeSpent":0,"_id":"69ada98aaaea755878fea7f6"},{"lessonId":"69a5b38c49a54edb69d22884","order":5,"completedAt":"2026-03-08T16:53:35.632Z","timeSpent":0,"_id":"69ada98faaea755878fea81d"},{"lessonId":"69a5b38c49a54edb69d22885","order":6,"completedAt":"2026-03-08T16:53:45.641Z","timeSpent":0,"_id":"69ada999aaea755878fea846"},{"lessonId":"69a5b38d49a54edb69d22886","order":7,"completedAt":"2026-03-08T16:53:53.323Z","timeSpent":0,"_id":"69ada9a1aaea755878fea875"},{"lessonId":"69a5b38d49a54edb69d22887","order":8,"completedAt":"2026-03-08T16:54:03.834Z","timeSpent":0,"_id":"69ada9abaaea755878fea8a6"},{"lessonId":"69a5b38d49a54edb69d22888","order":9,"completedAt":"2026-03-08T16:54:12.073Z","timeSpent":0,"_id":"69ada9b4aaea755878fea8d9"},{"lessonId":"69a5b38d49a54edb69d22889","order":10,"completedAt":"2026-03-08T16:54:20.761Z","timeSpent":0,"_id":"69ada9bcaaea755878fea908"}]'::jsonb, '2026-03-08T13:04:37.013Z', '2026-03-08T16:54:20.768Z') ON CONFLICT (_id) DO NOTHING;
 INSERT INTO student_progress (_id, student_id, module_id, current_lesson_order, started_first_lesson_date, enrollment_date, completed_lessons, created_at, updated_at) VALUES ('69ada9cdaaea755878fea945', '69ac3e94b8f95ca598f96c4c', '69a6d7f3258e2632ad6e3719', 8, '2026-03-09T11:06:58.561Z', '2026-03-07T15:04:52.048Z', '[{"lessonId":"69acc4dab8f95ca598f9768d","order":1,"completedAt":"2026-03-09T11:06:58.562Z","timeSpent":0,"_id":"69aea9d2aaea755878fecc30"},{"lessonId":"69ad76b9aaea755878fe9d85","order":2,"completedAt":"2026-03-22T09:21:56.103Z","timeSpent":0,"_id":"69bfb4b4456d9fffaa203b18"},{"lessonId":"69aea915aaea755878fecb62","order":3,"completedAt":"2026-03-22T09:22:04.097Z","timeSpent":0,"_id":"69bfb4bc456d9fffaa203b83"},{"lessonId":"69b14b4daaea755878fee6c3","order":4,"completedAt":"2026-03-22T09:22:13.336Z","timeSpent":0,"_id":"69bfb4c5456d9fffaa203bf0"},{"lessonId":"69b68998456d9fffaa1ff1a3","order":5,"completedAt":"2026-03-22T09:22:25.271Z","timeSpent":0,"_id":"69bfb4d1456d9fffaa203c63"},{"lessonId":"69b94e6d456d9fffaa201c5c","order":6,"completedAt":"2026-03-22T09:22:31.754Z","timeSpent":0,"_id":"69bfb4d7456d9fffaa203cd4"},{"lessonId":"69bbe185456d9fffaa202ef6","order":7,"completedAt":"2026-03-22T09:22:42.494Z","timeSpent":0,"_id":"69bfb4e2456d9fffaa203d49"}]'::jsonb, '2026-03-08T16:54:37.043Z', '2026-03-22T09:22:42.497Z') ON CONFLICT (_id) DO NOTHING;
 INSERT INTO student_progress (_id, student_id, module_id, current_lesson_order, started_first_lesson_date, enrollment_date, completed_lessons, created_at, updated_at) VALUES ('69b0004eaaea755878fedccc', '69afff4daaea755878fedb93', '69a5b3884c3ac66e63aa196e', 1, NULL, '2026-03-10T11:23:57.870Z', '[]'::jsonb, '2026-03-10T11:28:14.112Z', '2026-03-10T11:28:14.112Z') ON CONFLICT (_id) DO NOTHING;
@@ -1283,16 +1293,6 @@ INSERT INTO assignment_questions (_id, module_id, question_number, question, opt
 INSERT INTO assignment_questions (_id, module_id, question_number, question, options, correct_answer, section, lesson_reference, created_at) VALUES ('6a870b23189401ddc8a35b63', '6a2d660e3c26ac04a78d8308', 208, 'Excel revision question: What does Ctrl+O usually do?', '{"a":"Applies AutoFit","b":"Closes Excel permanently","c":"Opens an existing workbook","d":"Creates a chart"}'::jsonb, 'c', 'Create, Open & Save Workbooks (5.2)', 'Lesson 2', '2026-08-20T14:11:47.416Z') ON CONFLICT (_id) DO NOTHING;
 INSERT INTO events (_id, name, description, date, time, teams_link, archived, created_at) VALUES ('6a4b70e3e58252352bf9c43f', 'Test Intro Webinar', 'This is a test event inserted by automation.', '2026-07-07T08:00:00.000Z', '10:00', 'https://teams.microsoft.com/l/meetup-join/sample-link', false, '2026-07-06T09:09:55.924Z') ON CONFLICT (_id) DO NOTHING;
 INSERT INTO event_registrations (_id, event_id, full_name, email, contact_number, link_sent, created_at) VALUES ('6a4b7161dbd73b8b8eea5322', '6a4b70e3e58252352bf9c43f', 'Automated Tester', 'autotest@example.com', '+27100000001', false, '2026-07-06T09:12:01.995Z') ON CONFLICT (_id) DO NOTHING;
-INSERT INTO notifications (_id, recipient, sender, message, type, link, is_read, created_at) VALUES ('69ab50fea087f41d129aa249', '69a80f8540cf3cf0919a3aa1', '69a96d5384ab6a2ee1ed4042', 'Your support request status has been updated to completed.', 'support_confirmed', '#support-page', true, '2026-03-06T22:11:10.655Z') ON CONFLICT (_id) DO NOTHING;
-INSERT INTO notifications (_id, recipient, sender, message, type, link, is_read, created_at) VALUES ('69ab54b9be6976f4f1660fcf', '69ab2aaaa087f41d129a9c3d', '69a96d5384ab6a2ee1ed4042', 'Congratulations! You have been marked as COMPLETED for your course. Check your profile for details.', 'general', NULL, false, '2026-03-06T22:27:05.415Z') ON CONFLICT (_id) DO NOTHING;
-INSERT INTO notifications (_id, recipient, sender, message, type, link, is_read, created_at) VALUES ('69ab55c6be6976f4f166102b', '69a5afc06c74ab9bc1aa5c3b', '69ab5181a087f41d129aa297', 'New profile update request from student', 'general', '#admin-profile-updates', false, '2026-03-06T22:31:34.989Z') ON CONFLICT (_id) DO NOTHING;
-INSERT INTO notifications (_id, recipient, sender, message, type, link, is_read, created_at) VALUES ('69ab55c6be6976f4f166102c', '69a96d5384ab6a2ee1ed4042', '69ab5181a087f41d129aa297', 'New profile update request from student', 'general', '#admin-profile-updates', true, '2026-03-06T22:31:34.989Z') ON CONFLICT (_id) DO NOTHING;
-INSERT INTO notifications (_id, recipient, sender, message, type, link, is_read, created_at) VALUES ('69ab55e4be6976f4f166104c', '69a5afc06c74ab9bc1aa5c3b', '69ab5181a087f41d129aa297', 'New support request from student', 'support_request', '#admin-support-sessions', false, '2026-03-06T22:32:04.453Z') ON CONFLICT (_id) DO NOTHING;
-INSERT INTO notifications (_id, recipient, sender, message, type, link, is_read, created_at) VALUES ('69ab55e4be6976f4f166104d', '69a96d5384ab6a2ee1ed4042', '69ab5181a087f41d129aa297', 'New support request from student', 'support_request', '#admin-support-sessions', true, '2026-03-06T22:32:04.453Z') ON CONFLICT (_id) DO NOTHING;
-INSERT INTO notifications (_id, recipient, sender, message, type, link, is_read, created_at) VALUES ('69ab55e7be6976f4f1661050', '69a5afc06c74ab9bc1aa5c3b', '69ab5181a087f41d129aa297', 'New support request from student', 'support_request', '#admin-support-sessions', false, '2026-03-06T22:32:07.313Z') ON CONFLICT (_id) DO NOTHING;
-INSERT INTO notifications (_id, recipient, sender, message, type, link, is_read, created_at) VALUES ('69ab55e7be6976f4f1661051', '69a96d5384ab6a2ee1ed4042', '69ab5181a087f41d129aa297', 'New support request from student', 'support_request', '#admin-support-sessions', true, '2026-03-06T22:32:07.314Z') ON CONFLICT (_id) DO NOTHING;
-INSERT INTO notifications (_id, recipient, sender, message, type, link, is_read, created_at) VALUES ('69ab5df6be6976f4f1661143', '69ab5181a087f41d129aa297', '69a96d5384ab6a2ee1ed4042', 'Your support request for Module 1: Introduction to Computers has been updated to scheduled.', 'support_confirmed', '#support-session?moduleId=69a5b3884c3ac66e63aa196e', false, '2026-03-06T23:06:30.922Z') ON CONFLICT (_id) DO NOTHING;
-INSERT INTO notifications (_id, recipient, sender, message, type, link, is_read, created_at) VALUES ('69ab5f53be6976f4f1661161', '69ab5181a087f41d129aa297', '69a96d5384ab6a2ee1ed4042', 'Your profile update request has been rejected.', 'general', '#profile-page', true, '2026-03-06T23:12:19.870Z') ON CONFLICT (_id) DO NOTHING;
 INSERT INTO notifications (_id, recipient, sender, message, type, link, is_read, created_at) VALUES ('69af0553aaea755878fed796', '69ac22dcb8f95ca598f96a94', '69af0513aaea755878fed790', 'New student registered: Nonhlanhla . Awaiting approval.', 'general', '#admin-users', true, '2026-03-09T17:37:23.097Z') ON CONFLICT (_id) DO NOTHING;
 INSERT INTO notifications (_id, recipient, sender, message, type, link, is_read, created_at) VALUES ('69af0553aaea755878fed797', '69ac2848b8f95ca598f96b66', '69af0513aaea755878fed790', 'New student registered: Nonhlanhla . Awaiting approval.', 'general', '#admin-users', true, '2026-03-09T17:37:23.098Z') ON CONFLICT (_id) DO NOTHING;
 INSERT INTO notifications (_id, recipient, sender, message, type, link, is_read, created_at) VALUES ('69affb3baaea755878fedb47', '69af0513aaea755878fed790', '69ac2848b8f95ca598f96b66', 'Your account has been approved! You can now access all course materials.', 'general', '#dashboard-page', false, '2026-03-10T11:06:35.457Z') ON CONFLICT (_id) DO NOTHING;
