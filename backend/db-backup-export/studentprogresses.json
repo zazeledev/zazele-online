@@ -1,0 +1,679 @@
+[
+  {
+    "_id": "69a84637afaba411fde79957",
+    "studentId": "69a5b15f6c74ab9bc1aa5c41",
+    "moduleId": "69a5b3884c3ac66e63aa196e",
+    "startedFirstLessonDate": null,
+    "currentLessonOrder": 1,
+    "completedLessons": [],
+    "enrollmentDate": "2026-03-04T14:48:23.775Z",
+    "createdAt": "2026-03-04T14:48:23.777Z",
+    "updatedAt": "2026-03-04T14:48:23.777Z",
+    "__v": 0
+  },
+  {
+    "_id": "69ab2b07a087f41d129a9c48",
+    "studentId": "69ab2aaaa087f41d129a9c3d",
+    "moduleId": "69a5b3884c3ac66e63aa196e",
+    "enrollmentDate": "2026-03-06T19:27:38.106Z",
+    "startedFirstLessonDate": "2026-03-06T19:29:54.931Z",
+    "currentLessonOrder": 2,
+    "completedLessons": [
+      {
+        "lessonId": "69a5b38c49a54edb69d22880",
+        "order": 1,
+        "completedAt": "2026-03-06T19:29:54.932Z",
+        "timeSpent": 0,
+        "_id": "69ab2b32a087f41d129a9c54"
+      }
+    ],
+    "createdAt": "2026-03-06T19:29:11.063Z",
+    "updatedAt": "2026-03-06T19:29:54.942Z",
+    "__v": 1
+  },
+  {
+    "_id": "69ab6392be6976f4f166122b",
+    "studentId": "69a80f8540cf3cf0919a3aa1",
+    "moduleId": "69a5b3884c3ac66e63aa196e",
+    "enrollmentDate": "2026-03-04T10:55:01.981Z",
+    "startedFirstLessonDate": null,
+    "currentLessonOrder": 1,
+    "completedLessons": [],
+    "createdAt": "2026-03-06T23:30:26.781Z",
+    "updatedAt": "2026-03-06T23:30:26.781Z",
+    "__v": 0
+  },
+  {
+    "_id": "69ad73e5aaea755878fe9c46",
+    "studentId": "69ac3e94b8f95ca598f96c4c",
+    "moduleId": "69a5b3884c3ac66e63aa196e",
+    "enrollmentDate": "2026-03-07T15:04:52.048Z",
+    "startedFirstLessonDate": "2026-03-08T16:53:14.281Z",
+    "currentLessonOrder": 11,
+    "completedLessons": [
+      {
+        "lessonId": "69a5b38c49a54edb69d22880",
+        "order": 1,
+        "completedAt": "2026-03-08T16:53:14.286Z",
+        "timeSpent": 0,
+        "_id": "69ada97aaaea755878fea789"
+      },
+      {
+        "lessonId": "69a5b38c49a54edb69d22881",
+        "order": 2,
+        "completedAt": "2026-03-08T16:53:19.537Z",
+        "timeSpent": 0,
+        "_id": "69ada97faaea755878fea7aa"
+      },
+      {
+        "lessonId": "69a5b38c49a54edb69d22882",
+        "order": 3,
+        "completedAt": "2026-03-08T16:53:24.458Z",
+        "timeSpent": 0,
+        "_id": "69ada984aaea755878fea7d1"
+      },
+      {
+        "lessonId": "69a5b38c49a54edb69d22883",
+        "order": 4,
+        "completedAt": "2026-03-08T16:53:30.109Z",
+        "timeSpent": 0,
+        "_id": "69ada98aaaea755878fea7f6"
+      },
+      {
+        "lessonId": "69a5b38c49a54edb69d22884",
+        "order": 5,
+        "completedAt": "2026-03-08T16:53:35.632Z",
+        "timeSpent": 0,
+        "_id": "69ada98faaea755878fea81d"
+      },
+      {
+        "lessonId": "69a5b38c49a54edb69d22885",
+        "order": 6,
+        "completedAt": "2026-03-08T16:53:45.641Z",
+        "timeSpent": 0,
+        "_id": "69ada999aaea755878fea846"
+      },
+      {
+        "lessonId": "69a5b38d49a54edb69d22886",
+        "order": 7,
+        "completedAt": "2026-03-08T16:53:53.323Z",
+        "timeSpent": 0,
+        "_id": "69ada9a1aaea755878fea875"
+      },
+      {
+        "lessonId": "69a5b38d49a54edb69d22887",
+        "order": 8,
+        "completedAt": "2026-03-08T16:54:03.834Z",
+        "timeSpent": 0,
+        "_id": "69ada9abaaea755878fea8a6"
+      },
+      {
+        "lessonId": "69a5b38d49a54edb69d22888",
+        "order": 9,
+        "completedAt": "2026-03-08T16:54:12.073Z",
+        "timeSpent": 0,
+        "_id": "69ada9b4aaea755878fea8d9"
+      },
+      {
+        "lessonId": "69a5b38d49a54edb69d22889",
+        "order": 10,
+        "completedAt": "2026-03-08T16:54:20.761Z",
+        "timeSpent": 0,
+        "_id": "69ada9bcaaea755878fea908"
+      }
+    ],
+    "createdAt": "2026-03-08T13:04:37.013Z",
+    "updatedAt": "2026-03-08T16:54:20.768Z",
+    "__v": 10
+  },
+  {
+    "_id": "69ada9cdaaea755878fea945",
+    "studentId": "69ac3e94b8f95ca598f96c4c",
+    "moduleId": "69a6d7f3258e2632ad6e3719",
+    "enrollmentDate": "2026-03-07T15:04:52.048Z",
+    "startedFirstLessonDate": "2026-03-09T11:06:58.561Z",
+    "currentLessonOrder": 8,
+    "completedLessons": [
+      {
+        "lessonId": "69acc4dab8f95ca598f9768d",
+        "order": 1,
+        "completedAt": "2026-03-09T11:06:58.562Z",
+        "timeSpent": 0,
+        "_id": "69aea9d2aaea755878fecc30"
+      },
+      {
+        "lessonId": "69ad76b9aaea755878fe9d85",
+        "order": 2,
+        "completedAt": "2026-03-22T09:21:56.103Z",
+        "timeSpent": 0,
+        "_id": "69bfb4b4456d9fffaa203b18"
+      },
+      {
+        "lessonId": "69aea915aaea755878fecb62",
+        "order": 3,
+        "completedAt": "2026-03-22T09:22:04.097Z",
+        "timeSpent": 0,
+        "_id": "69bfb4bc456d9fffaa203b83"
+      },
+      {
+        "lessonId": "69b14b4daaea755878fee6c3",
+        "order": 4,
+        "completedAt": "2026-03-22T09:22:13.336Z",
+        "timeSpent": 0,
+        "_id": "69bfb4c5456d9fffaa203bf0"
+      },
+      {
+        "lessonId": "69b68998456d9fffaa1ff1a3",
+        "order": 5,
+        "completedAt": "2026-03-22T09:22:25.271Z",
+        "timeSpent": 0,
+        "_id": "69bfb4d1456d9fffaa203c63"
+      },
+      {
+        "lessonId": "69b94e6d456d9fffaa201c5c",
+        "order": 6,
+        "completedAt": "2026-03-22T09:22:31.754Z",
+        "timeSpent": 0,
+        "_id": "69bfb4d7456d9fffaa203cd4"
+      },
+      {
+        "lessonId": "69bbe185456d9fffaa202ef6",
+        "order": 7,
+        "completedAt": "2026-03-22T09:22:42.494Z",
+        "timeSpent": 0,
+        "_id": "69bfb4e2456d9fffaa203d49"
+      }
+    ],
+    "createdAt": "2026-03-08T16:54:37.043Z",
+    "updatedAt": "2026-03-22T09:22:42.497Z",
+    "__v": 7
+  },
+  {
+    "_id": "69b0004eaaea755878fedccc",
+    "studentId": "69afff4daaea755878fedb93",
+    "moduleId": "69a5b3884c3ac66e63aa196e",
+    "enrollmentDate": "2026-03-10T11:23:57.870Z",
+    "startedFirstLessonDate": null,
+    "currentLessonOrder": 1,
+    "completedLessons": [],
+    "createdAt": "2026-03-10T11:28:14.112Z",
+    "updatedAt": "2026-03-10T11:28:14.112Z",
+    "__v": 0
+  },
+  {
+    "_id": "69b08451aaea755878fee08b",
+    "studentId": "69af0513aaea755878fed790",
+    "moduleId": "69a5b3884c3ac66e63aa196e",
+    "enrollmentDate": "2026-03-09T17:36:19.489Z",
+    "startedFirstLessonDate": "2026-03-10T20:52:01.505Z",
+    "currentLessonOrder": 11,
+    "completedLessons": [
+      {
+        "lessonId": "69a5b38c49a54edb69d22880",
+        "order": 1,
+        "completedAt": "2026-03-10T20:52:01.506Z",
+        "timeSpent": 0,
+        "_id": "69b08471aaea755878fee09d"
+      },
+      {
+        "lessonId": "69a5b38c49a54edb69d22881",
+        "order": 2,
+        "completedAt": "2026-03-10T20:52:07.950Z",
+        "timeSpent": 0,
+        "_id": "69b08477aaea755878fee0c2"
+      },
+      {
+        "lessonId": "69a5b38c49a54edb69d22882",
+        "order": 3,
+        "completedAt": "2026-03-10T20:52:23.544Z",
+        "timeSpent": 0,
+        "_id": "69b08487aaea755878fee0e5"
+      },
+      {
+        "lessonId": "69a5b38c49a54edb69d22883",
+        "order": 4,
+        "completedAt": "2026-03-13T16:24:13.085Z",
+        "timeSpent": 0,
+        "_id": "69b43a2d0892b085974b3359"
+      },
+      {
+        "lessonId": "69a5b38c49a54edb69d22884",
+        "order": 5,
+        "completedAt": "2026-03-13T16:24:28.517Z",
+        "timeSpent": 0,
+        "_id": "69b43a3c0892b085974b3380"
+      },
+      {
+        "lessonId": "69a5b38c49a54edb69d22885",
+        "order": 6,
+        "completedAt": "2026-03-13T16:24:45.724Z",
+        "timeSpent": 0,
+        "_id": "69b43a4d0892b085974b33a9"
+      },
+      {
+        "lessonId": "69a5b38d49a54edb69d22886",
+        "order": 7,
+        "completedAt": "2026-03-13T16:25:04.379Z",
+        "timeSpent": 0,
+        "_id": "69b43a600892b085974b33d4"
+      },
+      {
+        "lessonId": "69a5b38d49a54edb69d22887",
+        "order": 8,
+        "completedAt": "2026-03-16T17:05:58.095Z",
+        "timeSpent": 0,
+        "_id": "69b83876456d9fffaa1ffb57"
+      },
+      {
+        "lessonId": "69a5b38d49a54edb69d22888",
+        "order": 9,
+        "completedAt": "2026-03-16T17:06:22.300Z",
+        "timeSpent": 0,
+        "_id": "69b8388e456d9fffaa1ffb86"
+      },
+      {
+        "lessonId": "69a5b38d49a54edb69d22889",
+        "order": 10,
+        "completedAt": "2026-03-16T17:33:56.063Z",
+        "timeSpent": 0,
+        "_id": "69b83f04456d9fffaa1ffc25"
+      }
+    ],
+    "createdAt": "2026-03-10T20:51:29.992Z",
+    "updatedAt": "2026-03-16T17:33:56.070Z",
+    "__v": 10
+  },
+  {
+    "_id": "69b83f43456d9fffaa1ffc62",
+    "studentId": "69af0513aaea755878fed790",
+    "moduleId": "69a6d7f3258e2632ad6e3719",
+    "enrollmentDate": "2026-03-09T17:36:19.489Z",
+    "startedFirstLessonDate": "2026-03-18T07:41:38.919Z",
+    "currentLessonOrder": 8,
+    "completedLessons": [
+      {
+        "lessonId": "69acc4dab8f95ca598f9768d",
+        "order": 1,
+        "completedAt": "2026-03-18T07:41:38.921Z",
+        "timeSpent": 0,
+        "_id": "69ba5732456d9fffaa202458"
+      },
+      {
+        "lessonId": "69ad76b9aaea755878fe9d85",
+        "order": 2,
+        "completedAt": "2026-03-18T10:24:32.169Z",
+        "timeSpent": 0,
+        "_id": "69ba7d60456d9fffaa2026f7"
+      },
+      {
+        "lessonId": "69aea915aaea755878fecb62",
+        "order": 3,
+        "completedAt": "2026-04-25T17:03:55.488Z",
+        "timeSpent": 0,
+        "_id": "69ecf3fb73f25734b0452d0a"
+      },
+      {
+        "lessonId": "69b14b4daaea755878fee6c3",
+        "order": 4,
+        "completedAt": "2026-05-18T09:30:05.874Z",
+        "timeSpent": 0,
+        "_id": "6a0adc1fdc7849e87c5af164"
+      },
+      {
+        "lessonId": "69b68998456d9fffaa1ff1a3",
+        "order": 5,
+        "completedAt": "2026-05-20T11:04:34.416Z",
+        "timeSpent": 0,
+        "_id": "6a0d9542dc7849e87c5af715"
+      },
+      {
+        "lessonId": "69b94e6d456d9fffaa201c5c",
+        "order": 6,
+        "completedAt": "2026-05-20T11:33:41.823Z",
+        "timeSpent": 0,
+        "_id": "6a0d9c15dc7849e87c5af7ee"
+      },
+      {
+        "lessonId": "69bbe185456d9fffaa202ef6",
+        "order": 7,
+        "completedAt": "2026-05-20T11:59:44.906Z",
+        "timeSpent": 0,
+        "_id": "6a0da230dc7849e87c5af8b7"
+      }
+    ],
+    "createdAt": "2026-03-16T17:34:59.255Z",
+    "updatedAt": "2026-05-20T11:59:44.912Z",
+    "__v": 7
+  },
+  {
+    "_id": "69bfb4f0456d9fffaa203dc7",
+    "studentId": "69ac3e94b8f95ca598f96c4c",
+    "moduleId": "69bfb458456d9fffaa203a47",
+    "enrollmentDate": "2026-03-07T15:04:52.048Z",
+    "startedFirstLessonDate": "2026-06-01T08:06:25.959Z",
+    "currentLessonOrder": 12,
+    "completedLessons": [
+      {
+        "lessonId": "69bfb483456d9fffaa203a56",
+        "order": 1,
+        "completedAt": "2026-06-01T08:06:25.964Z",
+        "timeSpent": 0,
+        "_id": "6a1d3d81ed68204b797e972d"
+      },
+      {
+        "lessonId": "69c29142456d9fffaa2063c7",
+        "order": 2,
+        "completedAt": "2026-06-01T08:06:30.537Z",
+        "timeSpent": 0,
+        "_id": "6a1d3d86ed68204b797e979a"
+      },
+      {
+        "lessonId": "69cb9ce77f5418f69ca02649",
+        "order": 3,
+        "completedAt": "2026-06-01T08:06:33.923Z",
+        "timeSpent": 0,
+        "_id": "6a1d3d89ed68204b797e9805"
+      },
+      {
+        "lessonId": "6a11ba20dc7849e87c5b19a8",
+        "order": 4,
+        "completedAt": "2026-06-01T08:06:37.953Z",
+        "timeSpent": 0,
+        "_id": "6a1d3d8ded68204b797e9872"
+      },
+      {
+        "lessonId": "6a140bdfdc7849e87c5b1eb5",
+        "order": 5,
+        "completedAt": "2026-06-01T08:06:41.860Z",
+        "timeSpent": 0,
+        "_id": "6a1d3d91ed68204b797e98e1"
+      },
+      {
+        "lessonId": "6a1568f1dc7849e87c5b28df",
+        "order": 6,
+        "completedAt": "2026-06-01T08:06:47.178Z",
+        "timeSpent": 0,
+        "_id": "6a1d3d97ed68204b797e9952"
+      },
+      {
+        "lessonId": "6a16c6ce7e17f8d5805a8d19",
+        "order": 7,
+        "completedAt": "2026-06-01T08:06:51.536Z",
+        "timeSpent": 0,
+        "_id": "6a1d3d9bed68204b797e99c5"
+      },
+      {
+        "lessonId": "6a1809777e17f8d5805a9195",
+        "order": 8,
+        "completedAt": "2026-06-01T08:06:56.844Z",
+        "timeSpent": 0,
+        "_id": "6a1d3da0ed68204b797e9a3a"
+      },
+      {
+        "lessonId": "6a180f6f7e17f8d5805a920b",
+        "order": 9,
+        "completedAt": "2026-06-01T08:07:01.918Z",
+        "timeSpent": 0,
+        "_id": "6a1d3da5ed68204b797e9aaf"
+      },
+      {
+        "lessonId": "6a1d40e7ed68204b797e9c02",
+        "order": 10,
+        "completedAt": "2026-06-12T10:37:27.969Z",
+        "timeSpent": 0,
+        "_id": "6a2be167ee3702b0ccab1c35"
+      },
+      {
+        "lessonId": "6a1d410ced68204b797e9c15",
+        "order": 11,
+        "completedAt": "2026-06-12T10:37:37.483Z",
+        "timeSpent": 0,
+        "_id": "6a2be171ee3702b0ccab1cae"
+      }
+    ],
+    "createdAt": "2026-03-22T09:22:56.685Z",
+    "updatedAt": "2026-06-12T10:37:37.497Z",
+    "__v": 11
+  },
+  {
+    "_id": "6a0da29adc7849e87c5af939",
+    "studentId": "69af0513aaea755878fed790",
+    "moduleId": "69bfb458456d9fffaa203a47",
+    "enrollmentDate": "2026-03-09T17:36:19.489Z",
+    "startedFirstLessonDate": "2026-05-22T10:40:49.590Z",
+    "currentLessonOrder": 12,
+    "completedLessons": [
+      {
+        "lessonId": "69c29142456d9fffaa2063c7",
+        "order": 2,
+        "completedAt": "2026-05-22T10:40:49.592Z",
+        "timeSpent": 0,
+        "_id": "6a1032b1dc7849e87c5b1264"
+      },
+      {
+        "lessonId": "69bfb483456d9fffaa203a56",
+        "order": 1,
+        "completedAt": "2026-05-22T10:41:18.781Z",
+        "timeSpent": 0,
+        "_id": "6a1032cedc7849e87c5b1465"
+      },
+      {
+        "lessonId": "69cb9ce77f5418f69ca02649",
+        "order": 3,
+        "completedAt": "2026-05-22T10:41:40.122Z",
+        "timeSpent": 0,
+        "_id": "6a1032e4dc7849e87c5b14d0"
+      },
+      {
+        "lessonId": "6a11ba20dc7849e87c5b19a8",
+        "order": 4,
+        "completedAt": "2026-05-25T17:06:16.806Z",
+        "timeSpent": 0,
+        "_id": "6a148188dc7849e87c5b2051"
+      },
+      {
+        "lessonId": "6a140bdfdc7849e87c5b1eb5",
+        "order": 5,
+        "completedAt": "2026-05-25T17:32:57.913Z",
+        "timeSpent": 0,
+        "_id": "6a1487c9dc7849e87c5b2170"
+      },
+      {
+        "lessonId": "6a1568f1dc7849e87c5b28df",
+        "order": 6,
+        "completedAt": "2026-06-03T12:36:37.974Z",
+        "timeSpent": 0,
+        "_id": "6a201fd5368cd4292287b3d7"
+      },
+      {
+        "lessonId": "6a16c6ce7e17f8d5805a8d19",
+        "order": 7,
+        "completedAt": "2026-06-03T12:57:13.385Z",
+        "timeSpent": 0,
+        "_id": "6a2024a9368cd4292287b6ea"
+      },
+      {
+        "lessonId": "6a1809777e17f8d5805a9195",
+        "order": 8,
+        "completedAt": "2026-06-03T13:25:16.547Z",
+        "timeSpent": 0,
+        "_id": "6a202b3c368cd4292287badf"
+      },
+      {
+        "lessonId": "6a180f6f7e17f8d5805a920b",
+        "order": 9,
+        "completedAt": "2026-06-03T17:49:27.784Z",
+        "timeSpent": 0,
+        "_id": "6a206927368cd4292287cc0e"
+      },
+      {
+        "lessonId": "6a1d40e7ed68204b797e9c02",
+        "order": 10,
+        "completedAt": "2026-06-03T18:02:05.617Z",
+        "timeSpent": 0,
+        "_id": "6a206c1d368cd4292287ce0b"
+      },
+      {
+        "lessonId": "6a1d410ced68204b797e9c15",
+        "order": 11,
+        "completedAt": "2026-06-03T18:26:46.106Z",
+        "timeSpent": 0,
+        "_id": "6a2071e6368cd4292287d1a0"
+      }
+    ],
+    "createdAt": "2026-05-20T12:01:30.783Z",
+    "updatedAt": "2026-06-03T18:26:46.112Z",
+    "__v": 11
+  },
+  {
+    "_id": "6a2af532718b0deca336f192",
+    "studentId": "69af0513aaea755878fed790",
+    "moduleId": "6a1e9451368cd4292287ad1b",
+    "enrollmentDate": "2026-03-09T17:36:19.489Z",
+    "startedFirstLessonDate": "2026-06-12T06:56:18.826Z",
+    "currentLessonOrder": 8,
+    "completedLessons": [
+      {
+        "lessonId": "6a1e9494368cd4292287ad41",
+        "order": 1,
+        "completedAt": "2026-06-12T06:56:18.831Z",
+        "timeSpent": 0,
+        "_id": "6a2bad92718b0deca336f492"
+      },
+      {
+        "lessonId": "6a2086be368cd429228803f6",
+        "order": 2,
+        "completedAt": "2026-06-12T06:56:44.417Z",
+        "timeSpent": 0,
+        "_id": "6a2badac718b0deca336f4fb"
+      },
+      {
+        "lessonId": "6a2315df2885847c1d368142",
+        "order": 3,
+        "completedAt": "2026-06-12T07:21:29.685Z",
+        "timeSpent": 0,
+        "_id": "6a2bb379718b0deca336f5ca"
+      },
+      {
+        "lessonId": "6a23eecf6635beea196bb3f4",
+        "order": 4,
+        "completedAt": "2026-06-23T18:51:01.708Z",
+        "timeSpent": 0,
+        "_id": "6a3ad5950c818c6e4cc7785c"
+      },
+      {
+        "lessonId": "6a2aca2b03a3c16a918ecde9",
+        "order": 5,
+        "completedAt": "2026-07-22T11:06:06.081Z",
+        "timeSpent": 0,
+        "_id": "6a60a41e9bd3033887a925dc"
+      },
+      {
+        "lessonId": "6a2aca6c03a3c16a918ecdff",
+        "order": 6,
+        "completedAt": "2026-07-22T14:23:35.800Z",
+        "timeSpent": 0,
+        "_id": "6a60d2679bd3033887a92908"
+      },
+      {
+        "lessonId": "6a2aca8d03a3c16a918ece15",
+        "order": 7,
+        "completedAt": "2026-07-22T14:51:06.864Z",
+        "timeSpent": 0,
+        "_id": "6a60d8da9bd3033887a929e5"
+      }
+    ],
+    "createdAt": "2026-06-11T17:49:38.157Z",
+    "updatedAt": "2026-07-22T14:51:06.868Z",
+    "__v": 7
+  },
+  {
+    "_id": "6a2be1cdee3702b0ccab1d3c",
+    "studentId": "69ac3e94b8f95ca598f96c4c",
+    "moduleId": "6a1e9451368cd4292287ad1b",
+    "enrollmentDate": "2026-03-07T15:04:52.048Z",
+    "startedFirstLessonDate": "2026-07-01T10:50:28.544Z",
+    "currentLessonOrder": 8,
+    "completedLessons": [
+      {
+        "lessonId": "6a1e9494368cd4292287ad41",
+        "order": 1,
+        "completedAt": "2026-07-01T10:50:28.549Z",
+        "timeSpent": 0,
+        "_id": "6a44f0f44d30eb55a6e565cd"
+      },
+      {
+        "lessonId": "6a2086be368cd429228803f6",
+        "order": 2,
+        "completedAt": "2026-08-23T11:56:07.091Z",
+        "timeSpent": 0,
+        "_id": "6a8adfd70c4d289c8d9ebc9b"
+      },
+      {
+        "lessonId": "6a2315df2885847c1d368142",
+        "order": 3,
+        "completedAt": "2026-08-23T11:56:12.498Z",
+        "timeSpent": 0,
+        "_id": "6a8adfdc0c4d289c8d9ebd06"
+      },
+      {
+        "lessonId": "6a23eecf6635beea196bb3f4",
+        "order": 4,
+        "completedAt": "2026-08-23T11:56:17.619Z",
+        "timeSpent": 0,
+        "_id": "6a8adfe10c4d289c8d9ebd73"
+      },
+      {
+        "lessonId": "6a2aca2b03a3c16a918ecde9",
+        "order": 5,
+        "completedAt": "2026-08-23T11:56:25.126Z",
+        "timeSpent": 0,
+        "_id": "6a8adfe90c4d289c8d9ebde2"
+      },
+      {
+        "lessonId": "6a2aca6c03a3c16a918ecdff",
+        "order": 6,
+        "completedAt": "2026-08-23T11:56:30.336Z",
+        "timeSpent": 0,
+        "_id": "6a8adfee0c4d289c8d9ebe53"
+      },
+      {
+        "lessonId": "6a2aca8d03a3c16a918ece15",
+        "order": 7,
+        "completedAt": "2026-08-23T11:56:37.310Z",
+        "timeSpent": 0,
+        "_id": "6a8adff50c4d289c8d9ebec4"
+      }
+    ],
+    "createdAt": "2026-06-12T10:39:09.962Z",
+    "updatedAt": "2026-08-23T11:56:37.314Z",
+    "__v": 7
+  },
+  {
+    "_id": "6a60d8f89bd3033887a92a67",
+    "studentId": "69af0513aaea755878fed790",
+    "moduleId": "6a2d660e3c26ac04a78d8308",
+    "enrollmentDate": "2026-03-09T17:36:19.489Z",
+    "startedFirstLessonDate": "2026-08-05T13:28:44.714Z",
+    "currentLessonOrder": 3,
+    "completedLessons": [
+      {
+        "lessonId": "6a2d66c73c26ac04a78d833c",
+        "order": 1,
+        "completedAt": "2026-08-05T13:28:44.718Z",
+        "timeSpent": 0,
+        "_id": "6a733a8c51dffb6fbef3d176"
+      },
+      {
+        "lessonId": "6a2d67003c26ac04a78d8355",
+        "order": 2,
+        "completedAt": "2026-08-05T14:19:53.803Z",
+        "timeSpent": 0,
+        "_id": "6a73468951dffb6fbef3d377"
+      }
+    ],
+    "createdAt": "2026-07-22T14:51:36.862Z",
+    "updatedAt": "2026-08-05T14:19:53.806Z",
+    "__v": 2
+  }
+]

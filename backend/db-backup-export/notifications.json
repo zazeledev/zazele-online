@@ -1,0 +1,210 @@
+[
+  {
+    "_id": "69ab50fea087f41d129aa249",
+    "recipient": "69a80f8540cf3cf0919a3aa1",
+    "sender": "69a96d5384ab6a2ee1ed4042",
+    "message": "Your support request status has been updated to completed.",
+    "type": "support_confirmed",
+    "link": "#support-page",
+    "isRead": true,
+    "createdAt": "2026-03-06T22:11:10.655Z",
+    "__v": 0
+  },
+  {
+    "_id": "69ab54b9be6976f4f1660fcf",
+    "recipient": "69ab2aaaa087f41d129a9c3d",
+    "sender": "69a96d5384ab6a2ee1ed4042",
+    "message": "Congratulations! You have been marked as COMPLETED for your course. Check your profile for details.",
+    "type": "general",
+    "isRead": false,
+    "createdAt": "2026-03-06T22:27:05.415Z",
+    "__v": 0
+  },
+  {
+    "_id": "69ab55c6be6976f4f166102b",
+    "recipient": "69a5afc06c74ab9bc1aa5c3b",
+    "sender": "69ab5181a087f41d129aa297",
+    "message": "New profile update request from student",
+    "type": "general",
+    "link": "#admin-profile-updates",
+    "isRead": false,
+    "createdAt": "2026-03-06T22:31:34.989Z",
+    "__v": 0
+  },
+  {
+    "_id": "69ab55c6be6976f4f166102c",
+    "recipient": "69a96d5384ab6a2ee1ed4042",
+    "sender": "69ab5181a087f41d129aa297",
+    "message": "New profile update request from student",
+    "type": "general",
+    "link": "#admin-profile-updates",
+    "isRead": true,
+    "createdAt": "2026-03-06T22:31:34.989Z",
+    "__v": 0
+  },
+  {
+    "_id": "69ab55e4be6976f4f166104c",
+    "recipient": "69a5afc06c74ab9bc1aa5c3b",
+    "sender": "69ab5181a087f41d129aa297",
+    "message": "New support request from student",
+    "type": "support_request",
+    "link": "#admin-support-sessions",
+    "isRead": false,
+    "createdAt": "2026-03-06T22:32:04.453Z",
+    "__v": 0
+  },
+  {
+    "_id": "69ab55e4be6976f4f166104d",
+    "recipient": "69a96d5384ab6a2ee1ed4042",
+    "sender": "69ab5181a087f41d129aa297",
+    "message": "New support request from student",
+    "type": "support_request",
+    "link": "#admin-support-sessions",
+    "isRead": true,
+    "createdAt": "2026-03-06T22:32:04.453Z",
+    "__v": 0
+  },
+  {
+    "_id": "69ab55e7be6976f4f1661050",
+    "recipient": "69a5afc06c74ab9bc1aa5c3b",
+    "sender": "69ab5181a087f41d129aa297",
+    "message": "New support request from student",
+    "type": "support_request",
+    "link": "#admin-support-sessions",
+    "isRead": false,
+    "createdAt": "2026-03-06T22:32:07.313Z",
+    "__v": 0
+  },
+  {
+    "_id": "69ab55e7be6976f4f1661051",
+    "recipient": "69a96d5384ab6a2ee1ed4042",
+    "sender": "69ab5181a087f41d129aa297",
+    "message": "New support request from student",
+    "type": "support_request",
+    "link": "#admin-support-sessions",
+    "isRead": true,
+    "createdAt": "2026-03-06T22:32:07.314Z",
+    "__v": 0
+  },
+  {
+    "_id": "69ab5df6be6976f4f1661143",
+    "recipient": "69ab5181a087f41d129aa297",
+    "sender": "69a96d5384ab6a2ee1ed4042",
+    "message": "Your support request for Module 1: Introduction to Computers has been updated to scheduled.",
+    "type": "support_confirmed",
+    "link": "#support-session?moduleId=69a5b3884c3ac66e63aa196e",
+    "isRead": false,
+    "createdAt": "2026-03-06T23:06:30.922Z",
+    "__v": 0
+  },
+  {
+    "_id": "69ab5f53be6976f4f1661161",
+    "recipient": "69ab5181a087f41d129aa297",
+    "sender": "69a96d5384ab6a2ee1ed4042",
+    "message": "Your profile update request has been rejected.",
+    "type": "general",
+    "link": "#profile-page",
+    "isRead": true,
+    "createdAt": "2026-03-06T23:12:19.870Z",
+    "__v": 0
+  },
+  {
+    "_id": "69af0553aaea755878fed796",
+    "recipient": "69ac22dcb8f95ca598f96a94",
+    "sender": "69af0513aaea755878fed790",
+    "message": "New student registered: Nonhlanhla . Awaiting approval.",
+    "type": "general",
+    "link": "#admin-users",
+    "isRead": true,
+    "createdAt": "2026-03-09T17:37:23.097Z",
+    "__v": 0
+  },
+  {
+    "_id": "69af0553aaea755878fed797",
+    "recipient": "69ac2848b8f95ca598f96b66",
+    "sender": "69af0513aaea755878fed790",
+    "message": "New student registered: Nonhlanhla . Awaiting approval.",
+    "type": "general",
+    "link": "#admin-users",
+    "isRead": true,
+    "createdAt": "2026-03-09T17:37:23.098Z",
+    "__v": 0
+  },
+  {
+    "_id": "69affb3baaea755878fedb47",
+    "recipient": "69af0513aaea755878fed790",
+    "sender": "69ac2848b8f95ca598f96b66",
+    "message": "Your account has been approved! You can now access all course materials.",
+    "type": "general",
+    "link": "#dashboard-page",
+    "isRead": false,
+    "createdAt": "2026-03-10T11:06:35.457Z",
+    "__v": 0
+  },
+  {
+    "_id": "69affb3eaaea755878fedb49",
+    "recipient": "69af0513aaea755878fed790",
+    "sender": "69ac2848b8f95ca598f96b66",
+    "message": "Your account has been approved! You can now access all course materials.",
+    "type": "general",
+    "link": "#dashboard-page",
+    "isRead": false,
+    "createdAt": "2026-03-10T11:06:38.567Z",
+    "__v": 0
+  },
+  {
+    "_id": "69affb44aaea755878fedb4f",
+    "recipient": "69af0513aaea755878fed790",
+    "sender": "69ac2848b8f95ca598f96b66",
+    "message": "Your account has been approved! You can now access all course materials.",
+    "type": "general",
+    "link": "#dashboard-page",
+    "isRead": false,
+    "createdAt": "2026-03-10T11:06:44.687Z",
+    "__v": 0
+  },
+  {
+    "_id": "69afff8daaea755878fedbc9",
+    "recipient": "69ac22dcb8f95ca598f96a94",
+    "sender": "69afff4daaea755878fedb93",
+    "message": "New student registered: W3AYS Photography. Awaiting approval.",
+    "type": "general",
+    "link": "#admin-users",
+    "isRead": false,
+    "createdAt": "2026-03-10T11:25:01.094Z",
+    "__v": 0
+  },
+  {
+    "_id": "69afff8daaea755878fedbca",
+    "recipient": "69ac2848b8f95ca598f96b66",
+    "sender": "69afff4daaea755878fedb93",
+    "message": "New student registered: W3AYS Photography. Awaiting approval.",
+    "type": "general",
+    "link": "#admin-users",
+    "isRead": true,
+    "createdAt": "2026-03-10T11:25:01.094Z",
+    "__v": 0
+  },
+  {
+    "_id": "69afffe6aaea755878fedc4c",
+    "recipient": "69afff4daaea755878fedb93",
+    "sender": "69ac2848b8f95ca598f96b66",
+    "message": "Your account has been approved! You can now access all course materials.",
+    "type": "general",
+    "link": "#dashboard-page",
+    "isRead": true,
+    "createdAt": "2026-03-10T11:26:30.878Z",
+    "__v": 0
+  },
+  {
+    "_id": "69afffe7aaea755878fedc67",
+    "recipient": "69afff4daaea755878fedb93",
+    "sender": "69ac2848b8f95ca598f96b66",
+    "message": "Your account has been approved! You can now access all course materials.",
+    "type": "general",
+    "link": "#dashboard-page",
+    "isRead": true,
+    "createdAt": "2026-03-10T11:26:31.727Z",
+    "__v": 0
+  }
+]

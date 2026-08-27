@@ -1,0 +1,50 @@
+[
+  {
+    "_id": "69a5b3884c3ac66e63aa196e",
+    "title": "Module 1: Introduction to Computers",
+    "description": "Learn the basics of computing, from hardware to software",
+    "order": 1,
+    "createdAt": "2026-03-02T15:58:00.903Z",
+    "__v": 0
+  },
+  {
+    "_id": "69a6d7f3258e2632ad6e3719",
+    "title": "Module 2: Files and Folders",
+    "description": "How to stay organised",
+    "order": 2,
+    "createdAt": "2026-03-03T12:45:39.702Z",
+    "__v": 0
+  },
+  {
+    "_id": "69bfb458456d9fffaa203a47",
+    "title": "Module 3: WordProcessing",
+    "description": "Master Microsoft Word",
+    "order": 3,
+    "createdAt": "2026-03-22T09:20:24.596Z",
+    "__v": 0
+  },
+  {
+    "_id": "6a1e9451368cd4292287ad1b",
+    "title": "Module 4: Presentation (PowerPoint)",
+    "description": "Master Microsoft PowerPoint",
+    "order": 4,
+    "createdAt": "2026-06-02T08:29:05.115Z",
+    "__v": 0
+  },
+  {
+    "_id": "6a2d660e3c26ac04a78d8308",
+    "title": "Module 5: Spreadsheet (Microsoft Excel)",
+    "description": "Workbooks and Worksheets",
+    "order": 5,
+    "createdAt": "2026-06-13T14:15:42.278Z",
+    "__v": 0
+  },
+  {
+    "_id": "6a8452f685e0de577163a431",
+    "title": "Module 6: Drawing",
+    "description": "Drawing",
+    "order": 6,
+    "createdAt": "2026-08-18T12:41:26.790Z",
+    "__v": 0
+  }
+]

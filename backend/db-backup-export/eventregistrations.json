@@ -1,0 +1,12 @@
+[
+  {
+    "_id": "6a4b7161dbd73b8b8eea5322",
+    "eventId": "6a4b70e3e58252352bf9c43f",
+    "fullName": "Automated Tester",
+    "email": "autotest@example.com",
+    "contactNumber": "+27100000001",
+    "linkSent": false,
+    "createdAt": "2026-07-06T09:12:01.995Z",
+    "__v": 0
+  }
+]

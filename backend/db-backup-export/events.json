@@ -1,0 +1,13 @@
+[
+  {
+    "_id": "6a4b70e3e58252352bf9c43f",
+    "name": "Test Intro Webinar",
+    "description": "This is a test event inserted by automation.",
+    "date": "2026-07-07T08:00:00.000Z",
+    "time": "10:00",
+    "teamsLink": "https://teams.microsoft.com/l/meetup-join/sample-link",
+    "archived": false,
+    "createdAt": "2026-07-06T09:09:55.924Z",
+    "__v": 0
+  }
+]
