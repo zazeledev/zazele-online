@@ -134,6 +134,31 @@ app.get('/js/env.js', (req, res) => {
 // Serve frontend static files (if hosted on same server)
 app.use(express.static(path.join(__dirname, '../../frontend')));
 
+// Connect to PostgreSQL (cPanel / Local)
+const pgDb = require('./config/db');
+let isPgConnected = false;
+global.pgLastConnectedTime = null;
+
+async function initPostgres() {
+  try {
+    const conn = await pgDb.testConnection();
+    if (conn.connected) {
+      isPgConnected = true;
+      global.pgLastConnectedTime = new Date();
+      console.log(`[${new Date().toISOString()}] ✅ PostgreSQL connected successfully to "${conn.database}"`);
+      await pgDb.initSchema();
+    } else {
+      console.warn(`[${new Date().toISOString()}] ⚠️ PostgreSQL connection check:`, conn.error);
+    }
+  } catch (err) {
+    console.error(`[${new Date().toISOString()}] ❌ PostgreSQL error:`, err.message);
+  }
+}
+
+if (process.env.PGDATABASE || process.env.DB_NAME || process.env.DATABASE_URL) {
+  initPostgres();
+}
+
 // Connect to MongoDB
 const mongooseOptions = {
   useNewUrlParser: true,
@@ -306,9 +331,21 @@ app.use('/api/events', eventRoutes);
 // Health check
 app.get('/api/health', async (req, res) => {
   const start = Date.now();
-  const dbStatus = mongoose.connection.readyState === 1 ? 'connected' : 'disconnected';
   
-  let dbName = 'N/A';
+  let pgStatus = 'disconnected';
+  let pgDatabase = 'N/A';
+  try {
+    const pgTest = await pgDb.testConnection();
+    if (pgTest.connected) {
+      pgStatus = 'connected';
+      pgDatabase = pgTest.database;
+    }
+  } catch (e) {}
+
+  const mongoStatus = mongoose.connection.readyState === 1 ? 'connected' : 'disconnected';
+  const overallDbStatus = (pgStatus === 'connected' || mongoStatus === 'connected') ? 'connected' : 'disconnected';
+  
+  let dbName = pgStatus === 'connected' ? pgDatabase : (mongoose.connection.name || 'N/A');
   let collections = [];
   let dbPingTime = -1;
   
@@ -336,14 +373,20 @@ app.get('/api/health', async (req, res) => {
 
   res.json({
     status: 'ok',
-    database: dbStatus, // Root level string for compatibility
+    database: overallDbStatus, // Root level string for compatibility
+    engine: pgStatus === 'connected' ? 'PostgreSQL' : 'MongoDB',
+    postgres: {
+      status: pgStatus,
+      database: pgDatabase,
+      lastConnection: global.pgLastConnectedTime ? global.pgLastConnectedTime.toISOString() : 'N/A'
+    },
     databaseDetails: { // Detailed object for ops center
-      status: dbStatus,
+      status: overallDbStatus,
       name: dbName,
       collections: collections,
       pingTimeMs: dbPingTime,
       reconnectAttempts: global.mongoReconnectAttempts,
-      lastConnection: global.mongoLastConnectedTime ? global.mongoLastConnectedTime.toISOString() : 'N/A'
+      lastConnection: global.mongoLastConnectedTime ? global.mongoLastConnectedTime.toISOString() : (global.pgLastConnectedTime ? global.pgLastConnectedTime.toISOString() : 'N/A')
     },
     uploads: {
       status: checkUploadsDir() ? 'healthy' : 'unhealthy',

@@ -177,19 +177,46 @@ async function runDiagnostics(port = 5000) {
   }
 
   // 2. Database Connection Check
+  const pgDb = require('../config/db');
+  let pgConnected = false;
+  let pgDbName = 'N/A';
+  try {
+    const pgTest = await pgDb.testConnection();
+    pgConnected = pgTest.connected;
+    if (pgConnected) pgDbName = pgTest.database;
+  } catch (e) {}
+
   const dbState = mongoose.connection.readyState;
-  if (dbState === 1) {
-    addResult('smoke', 'MongoDB', 'PASS', `Connected to database: ${mongoose.connection.name}`);
+  if (pgConnected) {
+    addResult('smoke', 'Database (PostgreSQL)', 'PASS', `Connected to PostgreSQL database: ${pgDbName}`);
+  } else if (dbState === 1) {
+    addResult('smoke', 'Database (MongoDB)', 'PASS', `Connected to database: ${mongoose.connection.name}`);
   } else {
-    addResult('smoke', 'MongoDB', 'FAIL', 'Database is disconnected or buffering');
+    addResult('smoke', 'Database', 'FAIL', 'Database is disconnected or buffering');
   }
 
-  // 3. Dynamic User Account Validations (Safe Mongoose lookups)
-  if (dbState === 1) {
+  // 3. Dynamic User Account Validations
+  if (pgConnected) {
+    try {
+      const studentRes = await pgDb.query("SELECT _id FROM users WHERE role = 'student' LIMIT 1");
+      if (studentRes.rows.length > 0) {
+        addResult('smoke', 'Student Account exists', 'PASS', 'Verified student accounts exist in database');
+      } else {
+        addResult('smoke', 'Student Account exists', 'WARNING', 'No users with student role found in database');
+      }
+
+      const adminRes = await pgDb.query("SELECT _id FROM users WHERE role = 'admin' LIMIT 1");
+      if (adminRes.rows.length > 0) {
+        addResult('smoke', 'Admin Account exists', 'PASS', 'Verified admin accounts exist in database');
+      } else {
+        addResult('smoke', 'Admin Account exists', 'WARNING', 'No users with admin role found in database');
+      }
+    } catch (e) {
+      addResult('smoke', 'Auth Accounts validation', 'FAIL', `PostgreSQL lookup error: ${e.message}`);
+    }
+  } else if (dbState === 1) {
     try {
       const User = mongoose.models.User || mongoose.model('User');
-      
-      // Production-safe check: check if any student account exists
       const student = await User.findOne({ role: 'student' });
       if (student) {
         addResult('smoke', 'Student Account exists', 'PASS', 'Verified student accounts exist in database');
@@ -197,7 +224,6 @@ async function runDiagnostics(port = 5000) {
         addResult('smoke', 'Student Account exists', 'WARNING', 'No users with student role found in database');
       }
 
-      // Production-safe check: check if any admin account exists
       const admin = await User.findOne({ role: 'admin' });
       if (admin) {
         addResult('smoke', 'Admin Account exists', 'PASS', 'Verified admin accounts exist in database');
@@ -208,7 +234,7 @@ async function runDiagnostics(port = 5000) {
       addResult('smoke', 'Auth Accounts validation', 'FAIL', `Mongoose lookup error: ${e.message}`);
     }
   } else {
-    addResult('smoke', 'Auth Accounts validation', 'FAIL', 'Skipped - MongoDB disconnected');
+    addResult('smoke', 'Auth Accounts validation', 'FAIL', 'Skipped - Database disconnected');
   }
 
   // 4. API Endpoints Check
