@@ -40,35 +40,50 @@ function localGet(port, urlPath) {
   });
 }
 
-// Helper to perform public HTTPS GET calls
-function checkUrl(url) {
+// Helper to perform public HTTPS GET calls with redirect support
+function checkUrl(url, maxRedirects = 3) {
   return new Promise((resolve) => {
     const start = Date.now();
-    const client = url.startsWith('https') ? https : http;
-    const req = client.get(url, { timeout: 4000 }, (res) => {
-      let data = '';
-      res.on('data', chunk => data += chunk);
-      res.on('end', () => {
-        resolve({
-          status: res.statusCode === 200 ? 'PASS' : 'FAIL',
-          statusCode: res.statusCode,
-          responseTimeMs: Date.now() - start,
-          message: res.statusCode === 200 ? '' : `HTTP ${res.statusCode}`,
-          content: data
+
+    function fetchUrl(targetUrl, redirectsRemaining) {
+      const client = targetUrl.startsWith('https') ? https : http;
+      const req = client.get(targetUrl, { timeout: 5000 }, (res) => {
+        // Follow 3xx redirects (301, 302, 307, 308)
+        if ([301, 302, 307, 308].includes(res.statusCode) && res.headers.location && redirectsRemaining > 0) {
+          let nextUrl = res.headers.location;
+          if (!nextUrl.startsWith('http://') && !nextUrl.startsWith('https://')) {
+            const parsed = new URL(targetUrl);
+            nextUrl = `${parsed.protocol}//${parsed.host}${nextUrl.startsWith('/') ? '' : '/'}${nextUrl}`;
+          }
+          return fetchUrl(nextUrl, redirectsRemaining - 1);
+        }
+
+        let data = '';
+        res.on('data', chunk => data += chunk);
+        res.on('end', () => {
+          resolve({
+            status: res.statusCode === 200 ? 'PASS' : 'FAIL',
+            statusCode: res.statusCode,
+            responseTimeMs: Date.now() - start,
+            message: res.statusCode === 200 ? '' : `HTTP ${res.statusCode}`,
+            content: data
+          });
         });
       });
-    });
 
-    req.on('error', (err) => {
-      resolve({
-        status: 'FAIL',
-        statusCode: 0,
-        responseTimeMs: Date.now() - start,
-        message: err.message,
-        content: ''
+      req.on('error', (err) => {
+        resolve({
+          status: 'FAIL',
+          statusCode: 0,
+          responseTimeMs: Date.now() - start,
+          message: err.message,
+          content: ''
+        });
       });
-    });
-    req.end();
+      req.end();
+    }
+
+    fetchUrl(url, maxRedirects);
   });
 }
 
@@ -151,13 +166,13 @@ async function runDiagnostics(port = 5000) {
     const homeCheck = await checkUrl('https://www.zazele.online/');
     addResult('smoke', 'Homepage loads', homeCheck.status, homeCheck.message, { responseTimeMs: homeCheck.responseTimeMs });
 
-    const portalCheck = await checkUrl('https://www.zazele.online/portal.html');
+    const portalCheck = await checkUrl('https://www.zazele.online/portal');
     addResult('smoke', 'Portal loads', portalCheck.status, portalCheck.message, { responseTimeMs: portalCheck.responseTimeMs });
   } else {
     const homeCheck = await localGet(port, '/');
     addResult('smoke', 'Homepage loads', homeCheck.status, homeCheck.message, { responseTimeMs: homeCheck.responseTimeMs });
 
-    const portalCheck = await localGet(port, '/portal.html');
+    const portalCheck = await localGet(port, '/portal');
     addResult('smoke', 'Portal loads', portalCheck.status, portalCheck.message, { responseTimeMs: portalCheck.responseTimeMs });
   }
 
