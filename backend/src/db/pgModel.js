@@ -268,6 +268,10 @@ class PgQuery {
     return this;
   }
 
+  lean() {
+    return this;
+  }
+
   populate(field) {
     if (field) this._populateFields.push(field);
     return this;
@@ -398,11 +402,28 @@ function createModel(modelName) {
     });
   };
 
+  ModelInstance.findOneAndUpdate = function(filter = {}, update = {}, options = {}) {
+    return new PgQuery(modelName, async () => {
+      const existing = await ModelInstance.findOne(filter).exec();
+      if (!existing) return null;
+      return ModelInstance.findByIdAndUpdate(existing._id, update, options).exec();
+    });
+  };
+
   ModelInstance.findByIdAndDelete = function(id) {
     return new PgQuery(modelName, async () => {
       if (!id) return null;
       const idStr = id.toString();
       const res = await db.query(`DELETE FROM ${table} WHERE _id = $1 RETURNING *`, [idStr]);
+      return res.rows.length > 0 ? attachMethods(modelName, formatDoc(table, res.rows[0])) : null;
+    });
+  };
+
+  ModelInstance.findOneAndDelete = function(filter = {}) {
+    return new PgQuery(modelName, async () => {
+      const { whereSql, values } = buildWhere(table, filter);
+      const sql = `DELETE FROM ${table} WHERE _id IN (SELECT _id FROM ${table} ${whereSql} LIMIT 1) RETURNING *`;
+      const res = await db.query(sql, values);
       return res.rows.length > 0 ? attachMethods(modelName, formatDoc(table, res.rows[0])) : null;
     });
   };
