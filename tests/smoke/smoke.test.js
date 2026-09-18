@@ -130,8 +130,8 @@ async function run(testPort = 5001) {
     if (json.status !== 'ok') throw new Error(`Expected ok, got ${json.status}`);
   });
 
-  // 4. MongoDB connection available
-  addTest('MongoDB connection available', async () => {
+  // 4. PostgreSQL connection available
+  addTest('PostgreSQL connection available', async () => {
     const res = await httpGet(`${localBase}/api/health`);
     const json = JSON.parse(res.body);
     if (json.database !== 'connected') throw new Error(`Database state is ${json.database}`);

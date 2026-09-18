@@ -68,12 +68,12 @@ async function run(testPort = 5001) {
     if (secret.length < 32) throw new Error('JWT_SECRET is weak (must be at least 32 characters long)');
   });
 
-  // 4. Mongo URI configuration check
-  await runTest('MongoDB URI configured', async () => {
+  // 4. PostgreSQL Database configuration check
+  await runTest('PostgreSQL Database configured', async () => {
     const envPath = path.resolve(__dirname, '../../backend/.env');
     const content = fs.readFileSync(envPath, 'utf8');
-    const uriMatch = content.match(/^MONGODB_URI=(.+)$/m);
-    if (!uriMatch || !uriMatch[1].trim()) throw new Error('MONGODB_URI is not set in backend .env');
+    const hasPg = content.match(/^PGDATABASE=(.+)$/m) || content.match(/^DATABASE_URL=(.+)$/m);
+    if (!hasPg) throw new Error('PGDATABASE or DATABASE_URL is not set in backend .env');
   });
 
   // 5. Environment variables fully loaded (backend check)
@@ -81,7 +81,7 @@ async function run(testPort = 5001) {
     const envPath = path.resolve(__dirname, '../../backend/.env');
     const content = fs.readFileSync(envPath, 'utf8');
     
-    const requiredVars = ['PORT', 'JWT_SECRET', 'MONGODB_URI', 'EMAIL_USER', 'EMAIL_PASS', 'EMAIL_HOST', 'EMAIL_PORT'];
+    const requiredVars = ['PORT', 'JWT_SECRET', 'PGDATABASE', 'PGUSER', 'EMAIL_USER', 'EMAIL_PASS', 'EMAIL_HOST', 'EMAIL_PORT'];
     const missing = [];
     requiredVars.forEach(v => {
       const regex = new RegExp(`^${v}=(.+)$`, 'm');

@@ -462,6 +462,10 @@ function createModel(modelName) {
     return Array.isArray(data) ? createdDocs : createdDocs[0];
   };
 
+  ModelInstance.insertMany = async function(data) {
+    return ModelInstance.create(data);
+  };
+
   return ModelInstance;
 }
 

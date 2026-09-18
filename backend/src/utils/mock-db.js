@@ -1,227 +1,232 @@
-const mongoose = require('mongoose');
+/**
+ * PostgreSQL In-Memory Mock Database for QA & Test Runners
+ * Allows full backend test execution without requiring an active PostgreSQL service.
+ */
+
 const bcrypt = require('bcryptjs');
+const db = require('../config/db');
+const { generateId, formatDoc } = require('../db/pgAdapter');
 
-console.log('[Mock DB] Mongoose Mock Database active for testing.');
-
-// Override connect
-mongoose.connect = function() {
-  console.log('[Mock DB] Mock MongoDB connected successfully');
-  mongoose.connection.readyState = 1; // Connected
-  setTimeout(() => {
-    mongoose.connection.emit('connected');
-  }, 10);
-  return Promise.resolve();
-};
+console.log('[Mock DB] PostgreSQL In-Memory Mock Database active for testing.');
 
 const store = {
-  User: [
+  users: [
     {
       _id: '507f1f77bcf86cd799439011',
-      fullName: 'Zazele Admin',
+      full_name: 'Zazele Admin',
       email: 'admin@zazele.com',
-      passwordHash: bcrypt.hashSync('CHANGE_ME_IMMEDIATELY_IN_PROD', 10),
+      password_hash: bcrypt.hashSync('CHANGE_ME_IMMEDIATELY_IN_PROD', 10),
       role: 'admin',
       approved: true,
       country: 'South Africa',
       province: 'Gauteng',
-      contactNumber: '0821234567'
+      contact_number: '0821234567',
+      status: 'active',
+      enrolled_courses: JSON.stringify(['M1', 'M2']),
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
     },
     {
       _id: '507f1f77bcf86cd799439012',
-      fullName: 'Zazele Student',
+      full_name: 'Zazele Student',
       email: 'student@zazele.com',
-      passwordHash: bcrypt.hashSync('student123', 10),
+      password_hash: bcrypt.hashSync('student123', 10),
       role: 'student',
       approved: true,
       country: 'South Africa',
       province: 'Western Cape',
-      contactNumber: '0837654321'
+      contact_number: '0837654321',
+      status: 'active',
+      enrolled_courses: JSON.stringify(['M1']),
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString()
     }
   ],
-  Module: [
-    { _id: '507f1f77bcf86cd799439021', title: 'Module 1: Introduction', description: 'Intro module', code: 'M1', order: 1 }
+  modules: [
+    {
+      _id: '507f1f77bcf86cd799439021',
+      title: 'Module 1: Introduction',
+      description: 'Intro module',
+      code: 'M1',
+      order_num: 1,
+      created_at: new Date().toISOString()
+    }
   ],
-  Lesson: [
-    { _id: '507f1f77bcf86cd799439031', moduleId: '507f1f77bcf86cd799439021', title: 'Lesson 1.1', content: 'Basic Lesson', order: 1 }
+  lessons: [
+    {
+      _id: '507f1f77bcf86cd799439031',
+      module_id: '507f1f77bcf86cd799439021',
+      title: 'Lesson 1.1',
+      description: 'Basic Lesson',
+      order_num: 1,
+      created_at: new Date().toISOString()
+    }
   ],
-  Assignment: [],
-  AssignmentQuestion: [],
-  Event: [
-    { _id: '507f1f77bcf86cd799439041', title: 'Orientation Webinar', description: 'Welcome', date: new Date(Date.now() + 86400000).toISOString(), link: 'https://zoom.us' }
+  assignments: [],
+  assignment_questions: [],
+  events: [
+    {
+      _id: '507f1f77bcf86cd799439041',
+      name: 'Orientation Webinar',
+      description: 'Welcome',
+      date: new Date(Date.now() + 86400000).toISOString().split('T')[0],
+      time: '18:00',
+      teams_link: 'https://teams.microsoft.com',
+      archived: false,
+      created_at: new Date().toISOString()
+    }
   ],
-  EventRegistration: [],
-  Notification: [],
-  ProfileUpdateRequest: [],
-  StudentProgress: [],
-  SupportRequest: []
+  event_registrations: [],
+  notifications: [],
+  profile_update_requests: [],
+  student_progress: [],
+  support_requests: []
 };
 
-// Custom query class matching Mongoose query interface
-class MockQuery {
-  constructor(modelName, result) {
-    this.modelName = modelName;
-    this.result = result;
+// Simple SQL query parser & executor for mock DB
+async function mockQuery(sql, params = []) {
+  if (global.mockDbFail) {
+    return Promise.reject(new Error('PostgreSQL connection timeout simulating DB failure'));
   }
-  exec() {
-    if (global.mockDbFail) {
-      return Promise.reject(new Error('Mongoose connection timeout simulating DB failure'));
-    }
-    return Promise.resolve(this.result);
-  }
-  then(resolve, reject) {
-    if (global.mockDbFail) {
-      return Promise.reject(new Error('Mongoose connection timeout simulating DB failure')).then(resolve, reject);
-    }
-    return Promise.resolve(this.result).then(resolve, reject);
-  }
-  catch(reject) {
-    if (global.mockDbFail) {
-      return Promise.reject(new Error('Mongoose connection timeout simulating DB failure')).catch(reject);
-    }
-    return Promise.resolve(this.result).catch(reject);
-  }
-  select() { return this; }
-  populate() { return this; }
-  sort() { return this; }
-  limit() { return this; }
-  skip() { return this; }
-}
 
-// Convert plain objects to mongoose documents
-function toDoc(modelName, data) {
-  if (!data) return null;
-  if (Array.isArray(data)) {
-    return data.map(item => toDoc(modelName, item));
+  const normalized = sql.trim().replace(/\s+/g, ' ');
+
+  // Health check query
+  if (normalized.includes('current_database()') || normalized.includes('SELECT NOW()')) {
+    return {
+      rowCount: 1,
+      rows: [{ now: new Date().toISOString(), db: 'zazele_test_mock' }]
+    };
   }
-  const Model = mongoose.models[modelName];
-  if (!Model) return data;
-  const doc = new Model(data);
-  // Ensure save can be called
-  doc.save = function() {
-    const list = store[modelName] || [];
-    const idx = list.findIndex(x => x._id.toString() === this._id.toString());
+
+  // Determine target table
+  const tableMatch = normalized.match(/(?:FROM|INTO|UPDATE|TABLE)\s+([a-z_]+)/i);
+  const table = tableMatch ? tableMatch[1].toLowerCase() : null;
+  const list = (table && store[table]) ? store[table] : [];
+
+  // 1. SELECT COUNT(*)
+  if (normalized.startsWith('SELECT COUNT(*)')) {
+    let count = list.length;
+    return { rowCount: 1, rows: [{ count: String(count) }] };
+  }
+
+  // 2. SELECT
+  if (normalized.startsWith('SELECT')) {
+    let rows = [...list];
+
+    // Filter by params
+    if (params && params.length > 0) {
+      if (normalized.includes('email = $1') || normalized.includes('LOWER(email) = LOWER($1)')) {
+        rows = rows.filter(r => (r.email || '').toLowerCase() === String(params[0]).toLowerCase());
+      } else if (normalized.includes('_id = $1')) {
+        rows = rows.filter(r => String(r._id) === String(params[0]));
+      } else if (normalized.includes('role = $1')) {
+        rows = rows.filter(r => r.role === params[0]);
+      } else if (normalized.includes('reset_password_token = $1')) {
+        rows = rows.filter(r => r.reset_password_token === params[0]);
+      } else if (normalized.includes('student_id = $1') && normalized.includes('module_id = $2')) {
+        rows = rows.filter(r => String(r.student_id) === String(params[0]) && String(r.module_id) === String(params[1]));
+      } else if (normalized.includes('module_id = $1')) {
+        rows = rows.filter(r => String(r.module_id) === String(params[0]));
+      } else if (normalized.includes('student_id = $1')) {
+        rows = rows.filter(r => String(r.student_id) === String(params[0]));
+      }
+    }
+
+    // Direct string match filter
+    if (normalized.includes("role = 'student'")) {
+      rows = rows.filter(r => r.role === 'student');
+    } else if (normalized.includes("role = 'admin'")) {
+      rows = rows.filter(r => r.role === 'admin');
+    }
+
+    // LIMIT
+    const limitMatch = normalized.match(/LIMIT\s+(\d+)/i);
+    if (limitMatch) {
+      const l = parseInt(limitMatch[1], 10);
+      rows = rows.slice(0, l);
+    }
+
+    return { rowCount: rows.length, rows };
+  }
+
+  // 3. INSERT
+  if (normalized.startsWith('INSERT INTO')) {
+    const colsMatch = normalized.match(/INSERT INTO\s+[a-z_]+\s*\(([^)]+)\)/i);
+    if (colsMatch) {
+      const cols = colsMatch[1].split(',').map(c => c.trim());
+      const newRow = {};
+      cols.forEach((col, idx) => {
+        newRow[col] = params[idx] !== undefined ? params[idx] : null;
+      });
+      if (!newRow._id) {
+        newRow._id = generateId();
+      }
+      if (!newRow.created_at) {
+        newRow.created_at = new Date().toISOString();
+      }
+      list.push(newRow);
+      return { rowCount: 1, rows: [newRow] };
+    }
+    return { rowCount: 1, rows: [] };
+  }
+
+  // 4. UPDATE
+  if (normalized.startsWith('UPDATE')) {
+    const idParam = params[params.length - 1];
+    const idx = list.findIndex(r => String(r._id) === String(idParam));
     if (idx >= 0) {
-      list[idx] = this.toObject();
-    } else {
-      list.push(this.toObject());
+      const row = list[idx];
+      // Basic update extraction
+      const setMatch = normalized.match(/SET\s+(.+?)\s+WHERE/i);
+      if (setMatch) {
+        const assignments = setMatch[1].split(',').map(a => a.trim());
+        assignments.forEach((assign, pIdx) => {
+          const colMatch = assign.match(/([a-z_]+)\s*=\s*\$(\d+)/i);
+          if (colMatch) {
+            const col = colMatch[1];
+            const paramNumber = parseInt(colMatch[2], 10);
+            row[col] = params[paramNumber - 1];
+          }
+        });
+      }
+      return { rowCount: 1, rows: [row] };
     }
-    return Promise.resolve(this);
-  };
-  return doc;
+    return { rowCount: 0, rows: [] };
+  }
+
+  // 5. DELETE
+  if (normalized.startsWith('DELETE FROM')) {
+    if (params && params.length > 0 && normalized.includes('_id = $1')) {
+      const idx = list.findIndex(r => String(r._id) === String(params[0]));
+      if (idx >= 0) list.splice(idx, 1);
+    } else if (params && params.length > 0 && normalized.includes('module_id = $1')) {
+      store[table] = list.filter(r => String(r.module_id) !== String(params[0]));
+    } else {
+      store[table] = [];
+    }
+    return { rowCount: 1, rows: [] };
+  }
+
+  return { rowCount: 0, rows: [] };
 }
 
-// Patch Model methods
-const Model = mongoose.Model;
-
-Model.find = function(conditions = {}) {
-  const modelName = this.modelName;
-  let list = store[modelName] || [];
-  if (conditions._id) {
-    list = list.filter(x => x._id.toString() === conditions._id.toString());
-  }
-  if (conditions.email) {
-    list = list.filter(x => x.email === conditions.email);
-  }
-  if (conditions.role) {
-    list = list.filter(x => x.role === conditions.role);
-  }
-  return new MockQuery(modelName, toDoc(modelName, list));
+// Override db methods
+db.query = mockQuery;
+db.getPool = function() {
+  return {
+    query: mockQuery,
+    on: () => {}
+  };
 };
-
-Model.findOne = function(conditions = {}) {
-  const modelName = this.modelName;
-  const list = store[modelName] || [];
-  let found = null;
-  if (conditions.email) {
-    found = list.find(x => x.email === conditions.email);
-  } else if (conditions.resetPasswordToken) {
-    found = list.find(x => x.resetPasswordToken === conditions.resetPasswordToken);
-  } else if (conditions._id) {
-    found = list.find(x => x._id.toString() === conditions._id.toString());
-  } else {
-    found = list[0] || null;
-  }
-  return new MockQuery(modelName, toDoc(modelName, found));
-};
-
-Model.findById = function(id) {
-  const modelName = this.modelName;
-  const list = store[modelName] || [];
-  const found = list.find(x => x._id.toString() === id.toString());
-  return new MockQuery(modelName, toDoc(modelName, found));
-};
-
-Model.findByIdAndUpdate = function(id, update, options = {}) {
-  const modelName = this.modelName;
-  const list = store[modelName] || [];
-  const idx = list.findIndex(x => x._id.toString() === id.toString());
-  if (idx >= 0) {
-    const updated = { ...list[idx], ...update };
-    list[idx] = updated;
-    return new MockQuery(modelName, toDoc(modelName, updated));
-  }
-  return new MockQuery(modelName, null);
-};
-
-Model.countDocuments = function(conditions = {}) {
-  const modelName = this.modelName;
-  const list = store[modelName] || [];
-  return new MockQuery(modelName, list.length);
-};
-
-Model.create = function(data) {
+db.testConnection = async function() {
   if (global.mockDbFail) {
-    return Promise.reject(new Error('Mongoose connection timeout simulating DB failure'));
+    return { connected: false, error: 'PostgreSQL connection timeout simulating DB failure' };
   }
-  const modelName = this.modelName;
-  const list = store[modelName] || [];
-  const docData = Array.isArray(data) ? data : [data];
-  const docs = docData.map(item => {
-    const d = { _id: new mongoose.Types.ObjectId().toString(), ...item };
-    list.push(d);
-    return toDoc(modelName, d);
-  });
-  return Promise.resolve(Array.isArray(data) ? docs : docs[0]);
+  return { connected: true, database: 'zazele_test_mock', timestamp: new Date().toISOString() };
+};
+db.initSchema = async function() {
+  return Promise.resolve();
 };
 
-Model.insertMany = function(data) {
-  if (global.mockDbFail) {
-    return Promise.reject(new Error('Mongoose connection timeout simulating DB failure'));
-  }
-  const modelName = this.modelName;
-  const list = store[modelName] || [];
-  const docData = Array.isArray(data) ? data : [data];
-  const docs = docData.map(item => {
-    const d = { _id: new mongoose.Types.ObjectId().toString(), ...item };
-    list.push(d);
-    return toDoc(modelName, d);
-  });
-  return Promise.resolve(docs);
-};
-
-Model.deleteOne = function() { return Promise.resolve({ deletedCount: 1 }); };
-Model.deleteMany = function() { return Promise.resolve({ deletedCount: 1 }); };
-Model.updateOne = function() { return Promise.resolve({ nModified: 1 }); };
-Model.updateMany = function() { return Promise.resolve({ nModified: 1 }); };
-
-// Override Model save globally to mock storage
-mongoose.Model.prototype.save = async function() {
-  if (global.mockDbFail) {
-    return Promise.reject(new Error('Mongoose connection timeout simulating DB failure'));
-  }
-  const modelName = this.constructor.modelName;
-  
-  if (modelName === 'User' && this.isModified && this.isModified('passwordHash')) {
-    const salt = await bcrypt.genSalt(10);
-    this.passwordHash = await bcrypt.hash(this.passwordHash, salt);
-  }
-  
-  const list = store[modelName] || [];
-  const idx = list.findIndex(x => x._id.toString() === this._id.toString());
-  if (idx >= 0) {
-    list[idx] = this.toObject();
-  } else {
-    list.push(this.toObject());
-  }
-  return this;
-};
+module.exports = { store, mockQuery };

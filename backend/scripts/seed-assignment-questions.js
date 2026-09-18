@@ -1,5 +1,4 @@
 require('dotenv').config();
-const mongoose = require('mongoose');
 const Module = require('../src/models/Module');
 const AssignmentQuestion = require('../src/models/AssignmentQuestion');
 
@@ -929,12 +928,8 @@ const moduleQuestionsSetA = [
 
 async function seedAssignmentQuestions() {
   try {
-    // Connect to MongoDB
-    await mongoose.connect(process.env.MONGODB_URI);
-    console.log('Connected to MongoDB');
-
     // Find Module 1
-    const module = await Module.findOne({ title: 'Introduction to Computers' });
+    const module = await Module.findOne({ title: /Introduction to Computers/i });
     if (!module) {
       console.log('Module "Introduction to Computers" not found');
       process.exit(1);

@@ -39,7 +39,8 @@ window.env = {
         ...process.env,
         PORT: port,
         NODE_ENV: 'test',
-        MONGODB_URI: process.env.MONGODB_URI || 'mongodb://localhost:27017/zazele-test'
+        MOCK_DB: 'true',
+        PGDATABASE: process.env.PGDATABASE || 'zazele_test_mock'
       }
     });
 

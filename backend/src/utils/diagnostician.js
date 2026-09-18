@@ -4,7 +4,6 @@ const dns = require('dns');
 const tls = require('tls');
 const http = require('http');
 const https = require('https');
-const mongoose = require('mongoose');
 
 // Helper to perform HTTP GET requests locally
 function localGet(port, urlPath) {
@@ -156,9 +155,8 @@ async function runDiagnostics(port = 5000) {
     }
   };
 
-  // Determine if running on live production server (cPanel/MongoDB Atlas)
+  // Determine if running on live production server (cPanel)
   const isProduction = process.env.NODE_ENV === 'production' || 
-                       (mongoose.connection.host && mongoose.connection.host.includes('mongodb.net')) ||
                        !process.env.PORT || isNaN(process.env.PORT);
 
   // 1. Homepage & Portal Loading Checks
@@ -186,13 +184,10 @@ async function runDiagnostics(port = 5000) {
     if (pgConnected) pgDbName = pgTest.database;
   } catch (e) {}
 
-  const dbState = mongoose.connection.readyState;
   if (pgConnected) {
     addResult('smoke', 'Database (PostgreSQL)', 'PASS', `Connected to PostgreSQL database: ${pgDbName}`);
-  } else if (dbState === 1) {
-    addResult('smoke', 'Database (MongoDB)', 'PASS', `Connected to database: ${mongoose.connection.name}`);
   } else {
-    addResult('smoke', 'Database', 'FAIL', 'Database is disconnected or buffering');
+    addResult('smoke', 'Database (PostgreSQL)', 'FAIL', 'Database is disconnected or unreachable');
   }
 
   // 3. Dynamic User Account Validations
@@ -213,25 +208,6 @@ async function runDiagnostics(port = 5000) {
       }
     } catch (e) {
       addResult('smoke', 'Auth Accounts validation', 'FAIL', `PostgreSQL lookup error: ${e.message}`);
-    }
-  } else if (dbState === 1) {
-    try {
-      const User = mongoose.models.User || mongoose.model('User');
-      const student = await User.findOne({ role: 'student' });
-      if (student) {
-        addResult('smoke', 'Student Account exists', 'PASS', 'Verified student accounts exist in database');
-      } else {
-        addResult('smoke', 'Student Account exists', 'WARNING', 'No users with student role found in database');
-      }
-
-      const admin = await User.findOne({ role: 'admin' });
-      if (admin) {
-        addResult('smoke', 'Admin Account exists', 'PASS', 'Verified admin accounts exist in database');
-      } else {
-        addResult('smoke', 'Admin Account exists', 'WARNING', 'No users with admin role found in database');
-      }
-    } catch (e) {
-      addResult('smoke', 'Auth Accounts validation', 'FAIL', `Mongoose lookup error: ${e.message}`);
     }
   } else {
     addResult('smoke', 'Auth Accounts validation', 'FAIL', 'Skipped - Database disconnected');
@@ -284,12 +260,12 @@ async function runDiagnostics(port = 5000) {
   // 7. Security Ignored Configuration Check
   const envPath = path.resolve(__dirname, '../../../.env');
   const hasEnvFile = fs.existsSync(envPath);
-  const hasEnvVars = !!(process.env.MONGODB_URI && process.env.JWT_SECRET);
+  const hasEnvVars = !!((process.env.DATABASE_URL || process.env.PGDATABASE) && process.env.JWT_SECRET);
   
   if (hasEnvVars) {
     addResult('security', 'Sensitive files (.env)', 'PASS', hasEnvFile ? 'Local .env file configuration loaded' : 'Process environment variables securely configured');
   } else {
-    addResult('security', 'Sensitive files (.env)', 'FAIL', 'Missing MONGODB_URI or JWT_SECRET configuration parameters');
+    addResult('security', 'Sensitive files (.env)', 'FAIL', 'Missing DATABASE_URL or JWT_SECRET configuration parameters');
   }
 
   // 8. Localhost references in static scripts check

@@ -1,5 +1,4 @@
 require('dotenv').config();
-const mongoose = require('mongoose');
 const User = require('./src/models/User');
 const Module = require('./src/models/Module');
 const Lesson = require('./src/models/Lesson');
@@ -7,9 +6,7 @@ const AssignmentQuestion = require('./src/models/AssignmentQuestion');
 
 async function debugSystem() {
   try {
-    console.log('--- System Debug Audit ---');
-    await mongoose.connect(process.env.MONGODB_URI);
-    console.log('✅ MongoDB Connected');
+    console.log('--- System Debug Audit (PostgreSQL) ---');
 
     // 1. Check Users
     const userCount = await User.countDocuments();
@@ -26,7 +23,7 @@ async function debugSystem() {
     console.log(`- Seeded Questions: ${questionCount} total`);
 
     // 4. Verify Environment Variables
-    const requiredVars = ['JWT_SECRET', 'EMAIL_USER', 'EMAIL_PASS', 'PORT'];
+    const requiredVars = ['JWT_SECRET', 'EMAIL_USER', 'EMAIL_PASS', 'PORT', 'PGDATABASE', 'PGUSER'];
     const missing = requiredVars.filter(v => !process.env[v]);
     if (missing.length > 0) {
       console.log(`❌ Missing Env Vars: ${missing.join(', ')}`);
@@ -50,10 +47,10 @@ async function debugSystem() {
       console.log('❌ Email Transporter failed: ' + e.message);
     }
 
-    await mongoose.disconnect();
     console.log('--- Audit Complete ---');
+    process.exit(0);
   } catch (error) {
-    console.error('❌ Debug failed:', error);
+    console.error('❌ Debug failed:', error.message);
     process.exit(1);
   }
 }

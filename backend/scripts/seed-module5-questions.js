@@ -1,6 +1,5 @@
 const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '../.env') });
-const mongoose = require('mongoose');
 const Module = require('../src/models/Module');
 const AssignmentQuestion = require('../src/models/AssignmentQuestion');
 
@@ -2745,9 +2744,6 @@ const setCJSON = `[
 
 async function seedModule5Questions() {
   try {
-    await mongoose.connect(process.env.MONGODB_URI);
-    console.log('Connected to MongoDB');
-
     let module = await Module.findOne({ order: 5 });
     if (!module) {
       module = await Module.findOne({ title: /Spreadsheet|Excel|Module 5/i });

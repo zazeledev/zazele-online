@@ -1,5 +1,4 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const cors = require('cors');
 const helmet = require('helmet');
 const path = require('path');
@@ -138,9 +137,11 @@ app.use(express.static(path.join(__dirname, '../../frontend')));
 const pgDb = require('./config/db');
 let isPgConnected = false;
 global.pgLastConnectedTime = null;
+global.pgReconnectAttempts = 0;
 
 async function initPostgres() {
   try {
+    global.pgReconnectAttempts++;
     const conn = await pgDb.testConnection();
     if (conn.connected) {
       isPgConnected = true;
@@ -148,71 +149,18 @@ async function initPostgres() {
       console.log(`[${new Date().toISOString()}] ✅ PostgreSQL connected successfully to "${conn.database}"`);
       await pgDb.initSchema();
     } else {
-      console.warn(`[${new Date().toISOString()}] ⚠️ PostgreSQL connection check:`, conn.error);
+      console.warn(`[${new Date().toISOString()}] ⚠️ PostgreSQL connection check failed:`, conn.error);
+      setTimeout(initPostgres, 5000);
     }
   } catch (err) {
     console.error(`[${new Date().toISOString()}] ❌ PostgreSQL error:`, err.message);
+    setTimeout(initPostgres, 5000);
   }
 }
 
-if (process.env.NODE_ENV !== 'test' && (process.env.PGDATABASE || process.env.DB_NAME || process.env.DATABASE_URL)) {
+if (process.env.NODE_ENV !== 'test') {
   initPostgres();
 }
-
-// Connect to MongoDB
-const mongooseOptions = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  serverSelectionTimeoutMS: 5000, // Reduced from 15s to fail faster and retry
-  socketTimeoutMS: 45000,
-  heartbeatFrequencyMS: 10000,
-};
-
-global.mongoReconnectAttempts = 0;
-global.mongoLastConnectedTime = null;
-let isConnected = false;
-
-let reconnectTimeout = null;
-
-function connectWithRetry() {
-  global.mongoReconnectAttempts++;
-  console.log(`[${new Date().toISOString()}] Attempting MongoDB connection (Attempt #${global.mongoReconnectAttempts})...`);
-  mongoose
-    .connect(process.env.MONGODB_URI, mongooseOptions)
-    .then(() => {
-      console.log(`[${new Date().toISOString()}] ✅ MongoDB connected successfully`);
-      isConnected = true;
-      global.mongoLastConnectedTime = new Date();
-    })
-    .catch((err) => {
-      console.error(`[${new Date().toISOString()}] ❌ MongoDB connection error:`, err.message);
-      isConnected = false;
-      console.log('Retrying in 5 seconds...');
-      if (!reconnectTimeout) {
-        reconnectTimeout = setTimeout(() => {
-          reconnectTimeout = null;
-          connectWithRetry();
-        }, 5000);
-      }
-    });
-}
-
-mongoose.connection.on('disconnected', () => {
-  isConnected = false;
-  console.warn(`[${new Date().toISOString()}] ⚠️ MongoDB disconnected! Attempting to reconnect...`);
-  if (!reconnectTimeout) {
-    reconnectTimeout = setTimeout(() => {
-      reconnectTimeout = null;
-      connectWithRetry();
-    }, 5000);
-  }
-});
-
-mongoose.connection.on('error', (err) => {
-  console.error(`[${new Date().toISOString()}] 🔥 MongoDB connection error:`, err);
-});
-
-connectWithRetry();
 
 // Helper functions for expanded health stats
 const os = require('os');
@@ -334,35 +282,22 @@ app.get('/api/health', async (req, res) => {
   
   let pgStatus = 'disconnected';
   let pgDatabase = 'N/A';
+  let dbPingTime = -1;
+  let tables = [];
+
   try {
+    const pingStart = Date.now();
     const pgTest = await pgDb.testConnection();
+    dbPingTime = Date.now() - pingStart;
     if (pgTest.connected) {
       pgStatus = 'connected';
       pgDatabase = pgTest.database;
+      try {
+        const tableRes = await pgDb.query("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'");
+        tables = tableRes.rows.map(r => r.table_name);
+      } catch (tErr) {}
     }
   } catch (e) {}
-
-  const mongoStatus = mongoose.connection.readyState === 1 ? 'connected' : 'disconnected';
-  const overallDbStatus = (pgStatus === 'connected' || mongoStatus === 'connected') ? 'connected' : 'disconnected';
-  
-  let dbName = pgStatus === 'connected' ? pgDatabase : (mongoose.connection.name || 'N/A');
-  let collections = [];
-  let dbPingTime = -1;
-  
-  if (mongoose.connection.readyState === 1 && mongoose.connection.db) {
-    try {
-      dbName = mongoose.connection.name;
-      const adminDb = mongoose.connection.db.admin();
-      const pingStart = Date.now();
-      await adminDb.ping();
-      dbPingTime = Date.now() - pingStart;
-      
-      const cols = await mongoose.connection.db.listCollections().toArray();
-      collections = cols.map(c => c.name);
-    } catch (e) {
-      console.error('Failed to get mongo metadata:', e.message);
-    }
-  }
 
   const uptime = process.uptime();
   const memoryUsage = process.memoryUsage();
@@ -373,20 +308,20 @@ app.get('/api/health', async (req, res) => {
 
   res.json({
     status: 'ok',
-    database: overallDbStatus, // Root level string for compatibility
-    engine: pgStatus === 'connected' ? 'PostgreSQL' : 'MongoDB',
+    database: pgStatus, // Root level string for compatibility
+    engine: 'PostgreSQL',
     postgres: {
       status: pgStatus,
       database: pgDatabase,
       lastConnection: global.pgLastConnectedTime ? global.pgLastConnectedTime.toISOString() : 'N/A'
     },
-    databaseDetails: { // Detailed object for ops center
-      status: overallDbStatus,
-      name: dbName,
-      collections: collections,
+    databaseDetails: {
+      status: pgStatus,
+      name: pgDatabase,
+      tables: tables,
       pingTimeMs: dbPingTime,
-      reconnectAttempts: global.mongoReconnectAttempts,
-      lastConnection: global.mongoLastConnectedTime ? global.mongoLastConnectedTime.toISOString() : (global.pgLastConnectedTime ? global.pgLastConnectedTime.toISOString() : 'N/A')
+      reconnectAttempts: global.pgReconnectAttempts || 0,
+      lastConnection: global.pgLastConnectedTime ? global.pgLastConnectedTime.toISOString() : 'N/A'
     },
     uploads: {
       status: checkUploadsDir() ? 'healthy' : 'unhealthy',
@@ -562,10 +497,7 @@ process.on('SIGTERM', () => {
   console.info('SIGTERM signal received.');
   server.close(() => {
     console.log('Http server closed.');
-    mongoose.connection.close(false, () => {
-      console.log('Mongo connection closed.');
-      process.exit(0);
-    });
+    process.exit(0);
   });
 });
 
