@@ -33,14 +33,54 @@ exports.getAssignment = async (req, res) => {
         (typeof a.questionId === 'object' && a.questionId ? a.questionId._id : a.questionId)?.toString()
       ).filter(Boolean);
 
-      const loadedQuestions = questionIds.length > 0 
+      let loadedQuestions = questionIds.length > 0 
         ? await AssignmentQuestion.find({ _id: { $in: questionIds } })
         : [];
+
+      // Self-healing fallback: If question IDs in existing answers were not found in database,
+      // load valid questions for this module and heal the assignment record
+      if (loadedQuestions.length === 0 || loadedQuestions.length < answersList.length) {
+        const moduleQuestions = await AssignmentQuestion.find({ moduleId }).sort({ questionNumber: 1 });
+        if (moduleQuestions.length > 0) {
+          // If no questions matched at all and module has questions, heal and re-populate assignment
+          if (loadedQuestions.length === 0) {
+            const countToTake = Math.min(moduleQuestions.length, 70);
+            const shuffled = moduleQuestions.sort(() => Math.random() - 0.5).slice(0, countToTake);
+            assignment.answers = shuffled.map(q => ({
+              questionId: q._id,
+              selectedAnswer: null,
+              isCorrect: null,
+            }));
+            assignment.totalQuestions = countToTake;
+            await assignment.save();
+            return res.json({
+              assignment: {
+                _id: assignment._id,
+                moduleId: assignment.moduleId,
+                status: assignment.status,
+                timeStarted: assignment.timeStarted,
+                totalQuestions: assignment.totalQuestions,
+              },
+              questions: shuffled.map(q => ({
+                _id: q._id,
+                question: q.question || '',
+                options: (q.options && typeof q.options === 'object') ? q.options : {},
+                section: q.section || '',
+                lessonReference: q.lessonReference || '',
+                studentAnswer: null,
+              }))
+            });
+          }
+          loadedQuestions = moduleQuestions;
+        }
+      }
+
       const questionsMap = new Map(loadedQuestions.map(q => [q._id.toString(), q]));
 
-      const questions = answersList.map((a) => {
+      const questions = answersList.map((a, idx) => {
         const qId = (typeof a.questionId === 'object' && a.questionId ? a.questionId._id : a.questionId)?.toString();
-        const qDoc = questionsMap.get(qId) || (typeof a.questionId === 'object' && a.questionId ? a.questionId : {});
+        // Fallback to index-based module question if specific qId not found
+        const qDoc = questionsMap.get(qId) || (loadedQuestions[idx] || (typeof a.questionId === 'object' && a.questionId ? a.questionId : {}));
         return {
           _id: qDoc._id || qId,
           question: qDoc.question || '',
@@ -256,6 +296,7 @@ exports.retakeAssignment = async (req, res) => {
     assignment.timeSubmitted = null;
     assignment.timeSpent = null;
     assignment.retakeCount = retakeCount;
+    assignment.totalQuestions = selectedQuestions.length;
     assignment.answers = selectedQuestions.map((q) => ({
       questionId: q._id,
       selectedAnswer: null,
