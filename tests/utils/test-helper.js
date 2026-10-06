@@ -46,6 +46,7 @@ window.env = {
 
     let isResolved = false;
     const checkServerReady = () => {
+      if (isResolved) return;
       const req = http.get(`http://localhost:${port}/api/health`, (res) => {
         if (!isResolved) {
           isResolved = true;

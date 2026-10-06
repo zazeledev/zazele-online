@@ -15,7 +15,7 @@ exports.getAssignment = async (req, res) => {
     }
 
     // Check if student already has an assignment for this module
-    let assignment = await Assignment.findOne({ studentId, moduleId }).populate('answers.questionId');
+    let assignment = await Assignment.findOne({ studentId, moduleId });
     
     if (assignment) {
       // Resume existing assignment
@@ -27,13 +27,29 @@ exports.getAssignment = async (req, res) => {
         });
       }
 
-      // Return existing in-progress assignment
-      const questions = assignment.answers.map((a) => ({
-        _id: a.questionId._id,
-        question: a.questionId.question,
-        options: a.questionId.options,
-        studentAnswer: a.selectedAnswer,
-      }));
+      // Return existing in-progress assignment with questions populated
+      const answersList = Array.isArray(assignment.answers) ? assignment.answers : [];
+      const questionIds = answersList.map(a => 
+        (typeof a.questionId === 'object' && a.questionId ? a.questionId._id : a.questionId)?.toString()
+      ).filter(Boolean);
+
+      const loadedQuestions = questionIds.length > 0 
+        ? await AssignmentQuestion.find({ _id: { $in: questionIds } })
+        : [];
+      const questionsMap = new Map(loadedQuestions.map(q => [q._id.toString(), q]));
+
+      const questions = answersList.map((a) => {
+        const qId = (typeof a.questionId === 'object' && a.questionId ? a.questionId._id : a.questionId)?.toString();
+        const qDoc = questionsMap.get(qId) || (typeof a.questionId === 'object' && a.questionId ? a.questionId : {});
+        return {
+          _id: qDoc._id || qId,
+          question: qDoc.question || '',
+          options: (qDoc.options && typeof qDoc.options === 'object') ? qDoc.options : {},
+          section: qDoc.section || '',
+          lessonReference: qDoc.lessonReference || '',
+          studentAnswer: a.selectedAnswer || null,
+        };
+      });
 
       return res.json({
         assignment: {
@@ -73,15 +89,12 @@ exports.getAssignment = async (req, res) => {
       })),
     });
 
-    // Populate for response
-    assignment = await assignment.populate('answers.questionId');
-
     const questions = selectedQuestions.map((q) => ({
       _id: q._id,
-      question: q.question,
-      options: q.options,
-      section: q.section,
-      lessonReference: q.lessonReference,
+      question: q.question || '',
+      options: (q.options && typeof q.options === 'object') ? q.options : {},
+      section: q.section || '',
+      lessonReference: q.lessonReference || '',
     }));
 
     res.json({
@@ -118,7 +131,11 @@ exports.saveAnswer = async (req, res) => {
     }
 
     // Update answer
-    const answerIndex = assignment.answers.findIndex((a) => a.questionId.toString() === questionId);
+    const answersList = Array.isArray(assignment.answers) ? assignment.answers : [];
+    const answerIndex = answersList.findIndex((a) => {
+      const qId = (typeof a.questionId === 'object' && a.questionId ? a.questionId._id : a.questionId)?.toString();
+      return String(qId) === String(questionId);
+    });
     if (answerIndex !== -1) {
       assignment.answers[answerIndex].selectedAnswer = selectedAnswer;
     }
@@ -139,9 +156,7 @@ exports.submitAssignment = async (req, res) => {
     const studentId = req.user.userId;
 
     // Get assignment with questions
-    const assignment = await Assignment.findOne({ _id: assignmentId, studentId }).populate(
-      'answers.questionId'
-    );
+    const assignment = await Assignment.findOne({ _id: assignmentId, studentId });
 
     if (!assignment) {
       return res.status(403).json({ message: 'Unauthorized' });
@@ -151,13 +166,27 @@ exports.submitAssignment = async (req, res) => {
       return res.status(400).json({ message: 'Assignment already submitted' });
     }
 
+    const answersList = Array.isArray(assignment.answers) ? assignment.answers : [];
+    const questionIds = answersList.map(a => 
+      (typeof a.questionId === 'object' && a.questionId ? a.questionId._id : a.questionId)?.toString()
+    ).filter(Boolean);
+
+    const loadedQuestions = questionIds.length > 0
+      ? await AssignmentQuestion.find({ _id: { $in: questionIds } })
+      : [];
+    const questionsMap = new Map(loadedQuestions.map(q => [q._id.toString(), q]));
+
     // Calculate score
     let correctCount = 0;
-    assignment.answers.forEach((answer) => {
-      if (answer.questionId) {
-        const isCorrect = answer.selectedAnswer === answer.questionId.correctAnswer;
+    answersList.forEach((answer) => {
+      const qId = (typeof answer.questionId === 'object' && answer.questionId ? answer.questionId._id : answer.questionId)?.toString();
+      const qDoc = questionsMap.get(qId) || (typeof answer.questionId === 'object' && answer.questionId ? answer.questionId : null);
+      if (qDoc && qDoc.correctAnswer) {
+        const isCorrect = String(answer.selectedAnswer || '').toLowerCase().trim() === String(qDoc.correctAnswer).toLowerCase().trim();
         answer.isCorrect = isCorrect;
         if (isCorrect) correctCount++;
+      } else {
+        answer.isCorrect = false;
       }
     });
 
@@ -235,15 +264,12 @@ exports.retakeAssignment = async (req, res) => {
 
     await assignment.save();
 
-    // Populate for response
-    assignment = await assignment.populate('answers.questionId');
-
     const questions = selectedQuestions.map((q) => ({
       _id: q._id,
-      question: q.question,
-      options: q.options,
-      section: q.section,
-      lessonReference: q.lessonReference,
+      question: q.question || '',
+      options: (q.options && typeof q.options === 'object') ? q.options : {},
+      section: q.section || '',
+      lessonReference: q.lessonReference || '',
     }));
 
     res.json({
@@ -269,9 +295,7 @@ exports.getAssignmentResults = async (req, res) => {
     const { assignmentId } = req.params;
     const studentId = req.user.userId;
 
-    const assignment = await Assignment.findOne({ _id: assignmentId, studentId }).populate(
-      'answers.questionId'
-    );
+    const assignment = await Assignment.findOne({ _id: assignmentId, studentId });
 
     if (!assignment) {
       return res.status(403).json({ message: 'Unauthorized' });
@@ -281,19 +305,30 @@ exports.getAssignmentResults = async (req, res) => {
       return res.status(400).json({ message: 'Assignment not yet submitted' });
     }
 
-    // Filter out answers where questionId might be missing/deleted
-    const validAnswers = assignment.answers.filter(a => a.questionId);
+    const answersList = Array.isArray(assignment.answers) ? assignment.answers : [];
+    const questionIds = answersList.map(a => 
+      (typeof a.questionId === 'object' && a.questionId ? a.questionId._id : a.questionId)?.toString()
+    ).filter(Boolean);
 
-    const questions = validAnswers.map((answer) => ({
-      _id: answer.questionId._id,
-      questionNumber: answer.questionId.questionNumber,
-      question: answer.questionId.question,
-      options: answer.questionId.options || { a: '', b: '', c: '', d: '' },
-      studentAnswer: answer.selectedAnswer,
-      correctAnswer: answer.questionId.correctAnswer,
-      isCorrect: answer.isCorrect,
-      section: answer.questionId.section,
-    }));
+    const loadedQuestions = questionIds.length > 0
+      ? await AssignmentQuestion.find({ _id: { $in: questionIds } })
+      : [];
+    const questionsMap = new Map(loadedQuestions.map(q => [q._id.toString(), q]));
+
+    const questions = answersList.map((answer) => {
+      const qId = (typeof answer.questionId === 'object' && answer.questionId ? answer.questionId._id : answer.questionId)?.toString();
+      const qDoc = questionsMap.get(qId) || (typeof answer.questionId === 'object' && answer.questionId ? answer.questionId : {});
+      return {
+        _id: qDoc._id || qId,
+        questionNumber: qDoc.questionNumber,
+        question: qDoc.question || '',
+        options: (qDoc.options && typeof qDoc.options === 'object') ? qDoc.options : { a: '', b: '', c: '', d: '' },
+        studentAnswer: answer.selectedAnswer,
+        correctAnswer: qDoc.correctAnswer,
+        isCorrect: answer.isCorrect,
+        section: qDoc.section || '',
+      };
+    });
 
     res.json({
       assignment: {

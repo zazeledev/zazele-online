@@ -220,11 +220,16 @@ function attachMethods(modelName, doc) {
     }
   };
 
+  doc.populate = async function() {
+    return this;
+  };
+
   doc.toObject = function() {
     const o = { ...this };
     delete o.save;
     delete o.toObject;
     delete o.comparePassword;
+    delete o.populate;
     return o;
   };
 
@@ -330,11 +335,16 @@ function createModel(modelName) {
       return attachMethods(modelName, created);
     }
 
+    async populate() {
+      return this;
+    }
+
     toObject() {
       const o = { ...this };
       delete o.save;
       delete o.toObject;
       delete o.comparePassword;
+      delete o.populate;
       return o;
     }
   }

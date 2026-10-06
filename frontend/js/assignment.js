@@ -12,12 +12,12 @@ async function loadAssignment(moduleId, token) {
   try {
     const data = await AssignmentAPI.getAssignment(moduleId, token);
     currentAssignment = data.assignment;
-    currentQuestions = data.questions;
+    currentQuestions = Array.isArray(data.questions) ? data.questions : [];
     
-    if (currentQuestions.length === 0 && currentAssignment.status === 'submitted') {
+    if (currentQuestions.length === 0 && currentAssignment && currentAssignment.status === 'submitted') {
       // Assignment already submitted, show results instead
       const resultData = await AssignmentAPI.getResults(currentAssignment._id, token);
-      displayResults(resultData, resultData.assignment.totalQuestions);
+      displayResults(resultData, resultData.assignment ? resultData.assignment.totalQuestions : 70);
       return {
         status: 'submitted',
         assignment: currentAssignment,
@@ -105,8 +105,9 @@ function displayQuiz() {
 // Display a specific question
 function displayQuestion(index) {
   currentQuestionIndex = index;
-  const question = currentQuestions[index];
+  const question = currentQuestions[index] || {};
   const container = document.getElementById('question-container');
+  const options = (question.options && typeof question.options === 'object') ? question.options : {};
 
   container.innerHTML = `
     <div class="quiz-question">
@@ -115,9 +116,9 @@ function displayQuestion(index) {
         ${question.section ? `<span class="question-section">${question.section}</span>` : ''}
         ${question.lessonReference ? `<span class="question-lesson">${question.lessonReference}</span>` : ''}
       </div>
-      <h3 class="question-text">${question.question}</h3>
+      <h3 class="question-text">${question.question || ''}</h3>
       <div class="question-options">
-        ${Object.entries(question.options)
+        ${Object.entries(options)
           .map(
             ([key, value]) => `
           <label class="option-label">
@@ -397,7 +398,7 @@ async function displayReview(assignmentId) {
               </div>
               <h3 class="review-q-text">${q.question}</h3>
               <div class="review-options">
-                ${Object.entries(q.options || {}).map(([key, val]) => {
+                ${Object.entries((q && q.options && typeof q.options === 'object') ? q.options : {}).map(([key, val]) => {
                   let statusClass = '';
                   if (key === q.correctAnswer) statusClass = 'correct-option';
                   if (key === q.studentAnswer && !q.isCorrect) statusClass = 'wrong-option';

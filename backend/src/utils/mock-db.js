@@ -128,6 +128,9 @@ async function mockQuery(sql, params = []) {
         rows = rows.filter(r => String(r.student_id) === String(params[0]) && String(r.module_id) === String(params[1]));
       } else if (normalized.includes('module_id = $1')) {
         rows = rows.filter(r => String(r.module_id) === String(params[0]));
+      } else if (normalized.includes('_id = ANY($1)') || normalized.includes('_id = ANY($')) {
+        const idSet = new Set((params[0] || []).map(String));
+        rows = rows.filter(r => idSet.has(String(r._id)));
       } else if (normalized.includes('student_id = $1')) {
         rows = rows.filter(r => String(r.student_id) === String(params[0]));
       }
