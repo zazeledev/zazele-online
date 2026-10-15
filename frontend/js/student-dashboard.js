@@ -100,14 +100,15 @@ async function loadAndDisplayModules(token) {
     }
 
     container.innerHTML = progressList
-      .map((module) => {
+      .map((module, index) => {
         const isLocked = !module.isUnlocked && !module.isFuture;
         const isFuture = module.isFuture;
         
         return `
           <div class="module-select-card ${isLocked || isFuture ? 'locked' : ''}" 
-               ${isLocked || isFuture ? '' : `onclick="openModuleViewer('${module.moduleId}')"`}>
+               ${isLocked || isFuture ? '' : `data-module-id="${module.moduleId}"`}>
             <div>
+              <div class="module-card-meta"><span>Module ${String(index + 1).padStart(2, '0')}</span><span class="${isLocked || isFuture ? '' : 'available'}">${isFuture ? 'Coming soon' : (isLocked ? 'Locked' : (module.isCompleted ? 'Completed' : 'Available'))}</span></div>
               <h3>${module.moduleName}</h3>
               <p>${isFuture ? 'Coming soon to the platform.' : (isLocked ? 'Complete the previous module to unlock this one.' : 'Access all lessons and resources.')}</p>
             </div>
@@ -118,6 +119,11 @@ async function loadAndDisplayModules(token) {
         `;
       })
       .join('');
+
+    // Keep the card and its keyboard-accessible button usable without inline handlers.
+    container.querySelectorAll('.module-select-card[data-module-id]').forEach(card => {
+      card.addEventListener('click', () => openModuleViewer(card.dataset.moduleId));
+    });
   } catch (error) {
     console.error('Error loading modules:', error);
     document.getElementById('modules-container').innerHTML =
@@ -179,7 +185,7 @@ function closeModuleViewer() {
 // Render content for all tabs in the viewer
 function renderModulePanels(moduleData, moduleId, token, moduleProgress) {
   const lessons = moduleData.lessons;
-  const allLessonsCompleted = lessons.every(l => l.isCompleted);
+  const allLessonsCompleted = lessons.length > 0 && lessons.every(l => l.isCompleted);
   const assignmentPassed = moduleProgress && moduleProgress.isCompleted;
   const assignmentSubmitted = moduleProgress && moduleProgress.isSubmitted;
 
@@ -251,7 +257,7 @@ function renderModulePanels(moduleData, moduleId, token, moduleProgress) {
   }
   // Otherwise show lessons with a button at the bottom
   else {
-    let finalHTML = contentHTML;
+    let finalHTML = contentHTML || '<div class="portal-empty-state"><h3>Lessons are on their way.</h3><p>No lessons are available in this module yet. Check back later or contact your instructor.</p></div>';
     if (assignmentSubmitted) {
        finalHTML += `
          <div style="margin-top:40px; text-align:center; padding:32px; background:var(--bg-secondary); border-radius:12px;">
@@ -273,9 +279,28 @@ function renderModulePanels(moduleData, moduleId, token, moduleProgress) {
     document.getElementById('panel-content').innerHTML = finalHTML;
   }
 
-// ... rest of renderModulePanels remains same
-
-  // ... (resources panel remains same)
+  // Resources belong to unlocked lessons; build links without injecting file metadata as HTML.
+  const resourcesPanel = document.getElementById('panel-resources');
+  resourcesPanel.replaceChildren();
+  const resources = lessons.filter(lesson => lesson.isUnlocked && lesson.notesPath);
+  if (!resources.length) {
+    resourcesPanel.innerHTML = '<div class="portal-empty-state"><h3>Your lesson resources</h3><p>No downloadable resources are available for your unlocked lessons yet. Any notes added by your instructor will appear here.</p></div>';
+  } else {
+    resources.forEach(lesson => {
+      const row = document.createElement('div');
+      row.className = 'resource-item';
+      const title = document.createElement('strong');
+      title.textContent = lesson.title;
+      const link = document.createElement('a');
+      link.className = 'btn btn-secondary btn-small';
+      link.textContent = 'Open lesson notes ↗';
+      link.href = `${UPLOAD_BASE_URL}/${encodeURIComponent(lesson.notesPath)}`;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      row.append(title, link);
+      resourcesPanel.append(row);
+    });
+  }
 
   // 3. Assessment Panel
   document.getElementById('panel-assessment').innerHTML = `

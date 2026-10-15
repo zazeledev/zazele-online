@@ -56,6 +56,13 @@ async function run(testPort = 5001) {
 
   const localBase = `http://localhost:${testPort}`;
 
+  if (process.env.PORTAL_DESIGN_ONLY === '1') {
+    await runE2ETest('E2E: Portal, student and admin workspaces across viewports and themes', async page => {
+      await require('./portal-design.test')(page, localBase);
+    });
+    return results;
+  }
+
   // 1. Student Login & Dashboard Flow
   await runE2ETest('E2E: Student Login and Dashboard Loading', async (page) => {
     await page.goto(`${localBase}/portal.html`, { waitUntil: 'load' });
@@ -67,7 +74,7 @@ async function run(testPort = 5001) {
     await page.$eval('#login-form button[type="submit"]', btn => btn.click());
     
     // Wait for student dashboard to load
-    await page.waitForSelector('#modules-container, .overall-progress-card', { timeout: 8000 });
+    await page.waitForSelector('#dashboard-page.active .module-select-card', { timeout: 8000, visible: true });
   });
 
   // 2. Forgot Password Modal Flow
@@ -94,14 +101,14 @@ async function run(testPort = 5001) {
     await page.$eval('#login-form button[type="submit"]', btn => btn.click());
     
     // Wait for admin header
-    await page.waitForSelector('#admin-user-name', { timeout: 8000 });
+    await page.waitForSelector('#admin-page.active', { timeout: 8000, visible: true });
     
     // Try navigating to webinars section
     await page.waitForSelector('.admin-nav-item[data-section="webinars"]');
     await page.$eval('.admin-nav-item[data-section="webinars"]', btn => btn.click());
     
     // Check for webinars title or button
-    await page.waitForSelector('#add-event-btn', { timeout: 5000 });
+    await page.waitForSelector('#webinars-section.active #add-event-btn', { timeout: 5000, visible: true });
   });
 
   // 4. Logout Flow
@@ -114,13 +121,13 @@ async function run(testPort = 5001) {
     await page.$eval('#login-form button[type="submit"]', btn => btn.click());
     
     // Wait for logout button to appear or check dashboard navigation
-    await page.waitForSelector('#logout-btn, .logout-btn', { timeout: 8000 });
+    await page.waitForSelector('#logout-btn', { timeout: 8000, visible: true });
     
     // Click logout
     await page.$eval('#logout-btn, .logout-btn', btn => btn.click());
     
     // Verify login portal page is active again
-    await page.waitForSelector('#login-email', { timeout: 5000 });
+    await page.waitForSelector('#login-email', { timeout: 5000, visible: true });
   });
 
   await runE2ETest('E2E: Public pages fit desktop and mobile viewports', async (page) => {
@@ -157,6 +164,10 @@ async function run(testPort = 5001) {
         }
       }
     }
+  });
+
+  await runE2ETest('E2E: Portal, student and admin workspaces across viewports and themes', async page => {
+    await require('./portal-design.test')(page, localBase);
   });
 
   return results;

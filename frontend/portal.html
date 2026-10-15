@@ -17,8 +17,9 @@
   <link rel="icon" href="/assets/logo.png" type="image/png">
   <link rel="stylesheet" href="/css/styles.css">
   <link rel="stylesheet" href="/css/mobile.css">
+  <link rel="stylesheet" href="/css/portal.css">
 </head>
-<body>
+<body class="portal-site">
   <div id="app">
     <!-- Header -->
     <header class="app-header">
@@ -36,8 +37,8 @@
           </div>
           <ul>
             <li><a href="/" class="nav-link-home">Home</a></li>
-            <li><a href="/services" class="nav-link-services">Services</a></li>
-            <li><a href="/courses" class="nav-link-courses">Courses</a></li>
+            <li><a href="/services" class="nav-link-services">Web Services</a></li>
+            <li><a href="/courses" class="nav-link-courses">Academy</a></li>
             <li><a href="/about" class="nav-link-about">About</a></li>
             <li><a href="/contact" class="nav-link-contact">Contact</a></li>
             <li><a href="/portal#login" class="btn btn-pill btn-pill-secondary btn-small nav-link-portal active">Student Portal</a></li>
@@ -117,29 +118,32 @@
     <!-- 1. LOGIN & REGISTER FORMS -->
     <div id="portal-login-page" class="page active">
       <main class="landing-main" style="padding-top: 140px; padding-bottom: 80px;">
-        <section id="portal" class="portal-section app-container">
-          <div class="section-header">
-            <h2>Student Portal</h2>
-            <p>Already a student? Login to continue your learning journey. New here? Register for our accredited courses.</p>
-          </div>
-          
-          <div style="max-width: 600px; margin: 0 auto;">
+        <section id="portal" class="portal-section app-container portal-entry">
+          <aside class="portal-welcome">
+            <p class="portal-eyebrow">Zazele Academy</p>
+            <h1>Your next chapter<br>starts here.</h1>
+            <p>Practical skills. Growing confidence. A place to learn at your own pace and keep moving forward.</p>
+            <div class="welcome-path"><div><span>01</span><p><strong>Learn something useful.</strong>Work through your course, one lesson at a time.</p></div><div><span>02</span><p><strong>See your progress.</strong>Find your resources, assessments and results in one place.</p></div><div><span>03</span><p><strong>Get the support you need.</strong>Request help from your instructor when you need it.</p></div></div>
+            <a href="/courses" class="portal-text-link">Explore the course before you join ↗</a>
+          </aside>
+          <div class="portal-entry-form">
             <div class="portal-form-box app-card">
+              <p class="portal-eyebrow">Your learning space</p><h2>Welcome to the academy.</h2><p class="portal-form-intro">Sign in to continue, or create your student account.</p>
               <div class="form-tabs portal-tabs">
-                <button class="tab-btn active portal-tab" data-tab="login">Login</button>
-                <button class="tab-btn portal-tab" data-tab="register">Register</button>
+                <button class="tab-btn active portal-tab" data-tab="login">Sign in</button>
+                <button class="tab-btn portal-tab" data-tab="register">Create account</button>
               </div>
 
               <form id="login-form" class="form active">
                 <div id="login-error" class="error-message"></div>
                 <div class="form-group">
                   <label for="login-email">Email</label>
-                  <input type="email" id="login-email" required>
+                  <input type="email" id="login-email" autocomplete="username" placeholder="you@example.com" required>
                 </div>
                 <div class="form-group">
                   <label for="login-password">Password</label>
                   <div class="password-wrapper">
-                    <input type="password" id="login-password" required>
+                    <input type="password" id="login-password" autocomplete="current-password" required>
                     <span class="toggle-password" data-target="login-password"></span>
                   </div>
                 </div>
@@ -221,41 +225,17 @@
     <!-- 3. STUDENT DASHBOARD -->
     <div id="dashboard-page" class="page">
       <main class="app-container" style="padding-top: 100px; padding-bottom: 80px;">
-        <section class="app-card" style="margin-bottom:24px; padding:32px;">
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 20px;">
-            <div style="flex: 1; min-width: 300px;">
-              <h2 style="font-size: 1.8rem; margin-bottom: 20px;">e-Learner Platinum Certificate</h2>
-              <div style="margin-bottom: 24px;">
-                <h3 style="font-size: 1.2rem; color: var(--primary); margin-bottom: 8px;">Together We Will Explore</h3>
-                <p style="color: var(--text-soft); margin-bottom: 16px;">This MICT SETA accredited program takes you through seven essential units of digital mastery:</p>
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; color: var(--text-soft); font-size: 0.9rem;">
-                  <div style="display: flex; align-items: center; gap: 8px;"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 16px; height: 16px; min-width: 16px;"><polyline points="20 6 9 17 4 12"></polyline></svg> IT Basics</div>
-                  <div style="display: flex; align-items: center; gap: 8px;"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 16px; height: 16px; min-width: 16px;"><polyline points="20 6 9 17 4 12"></polyline></svg> File Management</div>
-                  <div style="display: flex; align-items: center; gap: 8px;"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 16px; height: 16px; min-width: 16px;"><polyline points="20 6 9 17 4 12"></polyline></svg> Word Processing</div>
-                  <div style="display: flex; align-items: center; gap: 8px;"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 16px; height: 16px; min-width: 16px;"><polyline points="20 6 9 17 4 12"></polyline></svg> Spreadsheets</div>
-                  <div style="display: flex; align-items: center; gap: 8px;"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 16px; height: 16px; min-width: 16px;"><polyline points="20 6 9 17 4 12"></polyline></svg> Presentations</div>
-                  <div style="display: flex; align-items: center; gap: 8px;"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 16px; height: 16px; min-width: 16px;"><polyline points="20 6 9 17 4 12"></polyline></svg> Web & Email</div>
-                  <div style="display: flex; align-items: center; gap: 8px;"><svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 16px; height: 16px; min-width: 16px;"><polyline points="20 6 9 17 4 12"></polyline></svg> Drawing & Design</div>
-                </div>
-              </div>
-            </div>
-            <div style="flex: 1; min-width: 300px; padding: 24px; background: var(--bg-secondary); border-radius: var(--radius);">
-              <h3 style="font-size: 1.1rem; color: var(--primary); margin-bottom: 12px;">Why This Course Matters</h3>
-              <p style="color: var(--text-soft); font-size: 0.95rem; margin-bottom: 12px;">Beyond digital skills, we focus on <strong>entrepreneurial empowerment</strong>. Our goal is to enable you to create opportunities and even manage your own computer literacy hub.</p>
-              <p style="color: var(--text-soft); font-size: 0.95rem;">Zazele Trainers are here to support your journey with real-world business experience and expert technical knowledge.</p>
-            </div>
-          </div>
-        </section>
-
+        <header class="workspace-heading"><div><p class="portal-eyebrow">Your academy / Student workspace</p><h1>Make room for<br>your next step.</h1><p>Pick up a lesson, check your progress or find the support you need.</p></div><a class="btn btn-primary" href="#learning-modules">Explore your modules ↓</a></header>
+        <div class="course-strip"><div><span class="course-mark" aria-hidden="true">Z / A</span><div><p class="portal-eyebrow">Your course</p><h2>e-Learner Platinum Certificate</h2></div></div><span>Learn · Practise · Progress</span></div>
         <section style="margin-bottom:40px;">
-          <h2 class="section-title">Learning Progress</h2>
+          <h2 class="section-title">Your progress</h2>
           <div id="progress-overview" class="progress-section-card" style="margin-bottom:0; padding:0;">
             <p class="loading">Loading progress...</p>
           </div>
         </section>
 
         <section style="margin-bottom:40px;">
-          <h2 class="section-title">Course Content</h2>
+          <h2 class="section-title" id="learning-modules">Your course modules</h2><p class="section-description">Open an available module to access its lessons, resources and assessment.</p>
           <div class="module-selector-grid" id="modules-container">
             <p class="loading">Loading modules...</p>
           </div>
@@ -364,10 +344,11 @@
 
     <!-- 4. ADMIN PORTAL -->
     <div id="admin-page" class="page">
-      <main class="app-container" style="padding-top: 100px; padding-bottom: 80px;">
-        <nav class="admin-nav-bar">
-          <button class="admin-nav-item active" data-section="users">Active Learners</button>
-          <button class="admin-nav-item" data-section="archive">Archive (Graduated)</button>
+      <main class="app-container admin-workspace">
+        <header class="workspace-heading"><div><p class="portal-eyebrow">Zazele Academy / Administration</p><h1>A clear view.<br>A better learning experience.</h1><p>Manage learners, course content and the support that keeps everyone moving.</p></div><a href="/" class="portal-text-link">View public website ↗</a></header>
+        <nav class="admin-nav-bar" aria-label="Administration"><p class="portal-eyebrow">Workspace</p>
+          <button class="admin-nav-item active" data-section="users">Learners</button>
+          <button class="admin-nav-item" data-section="archive">Graduates &amp; archive</button>
           <button class="admin-nav-item" data-section="profile-requests">Profile Requests</button>
           <button class="admin-nav-item" data-section="support-sessions">Support Sessions</button>
           <button class="admin-nav-item" data-section="modules">Course Modules</button>
@@ -398,7 +379,8 @@
         </section>
 
         <section id="users-section" class="admin-section active">
-          <h2 class="section-title">User Management</h2>
+          <h2 class="section-title">Learners</h2><p class="section-description">Review registrations, verify documents and follow each learner's progress.</p>
+          <div class="admin-summary" aria-label="Learner overview"><div><span>Learners</span><strong id="summary-learners">—</strong></div><div><span>Awaiting approval</span><strong id="summary-pending">—</strong></div><div><span>Approved</span><strong id="summary-approved">—</strong></div></div>
           <div id="users-list">
             <p class="loading">Loading users...</p>
           </div>
@@ -679,70 +661,7 @@
     </div>
 
     <!-- GLOBAL SHAREABLE FOOTER -->
-    <footer class="app-footer">
-      <div class="home-container">
-        <div class="footer-main-grid">
-          <div class="footer-brand-col">
-            <a href="/" class="school-brand">
-              <img src="/assets/logo.png" alt="Zazele Online Logo" class="brand-logo" onerror="this.style.display='none'">
-              <span>Zazele <span>Online</span></span>
-            </a>
-            <p class="footer-brand-desc">
-              Engineering high-performance web applications and delivering accredited digital skills training across South Africa since 2011.
-            </p>
-            <div class="footer-social-icons">
-              <a href="https://wa.me/27798420873" target="_blank" class="social-icon-btn" title="WhatsApp" aria-label="WhatsApp">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.262 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.457L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.967C16.59 2.016 14.12 1.01 11.5 1.012c-5.437 0-9.862 4.371-9.866 9.8.001 1.955.513 3.866 1.482 5.568l-1.009 3.687 3.774-.989zm11.758-6.974c-.31-.155-1.826-.9-2.106-1.002-.275-.101-.477-.153-.677.147-.2.3-.777.98-.952 1.18-.175.2-.351.224-.661.07-.31-.155-1.307-.48-2.486-1.531-.918-.819-1.537-1.83-1.717-2.139-.18-.3-.02-.463.135-.617.14-.139.31-.362.466-.543.155-.181.206-.31.31-.517.103-.207.052-.388-.026-.543-.078-.155-.677-1.633-.928-2.239-.244-.589-.493-.51-.677-.52l-.578-.01c-.2 0-.527.075-.803.376-.276.3-1.054 1.03-1.054 2.51 0 1.48 1.08 2.913 1.23 3.116.15.203 2.126 3.242 5.15 4.547.719.31 1.28.495 1.718.633.723.23 1.381.198 1.9.12.578-.087 1.826-.747 2.083-1.469.258-.722.258-1.342.181-1.469-.077-.127-.278-.201-.588-.356z"/></svg>
-              </a>
-              <a href="mailto:support@zazele.online" class="social-icon-btn" title="Email" aria-label="Email">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M0 3v18h24V3H0zm21.518 2L12 12.713 2.482 5h19.036zM2 19V7.183l10 8.104 10-8.104V19H2z"/></svg>
-              </a>
-              <a href="https://linkedin.com" target="_blank" class="social-icon-btn" title="LinkedIn" aria-label="LinkedIn">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-              </a>
-            </div>
-          </div>
-          
-          <div class="footer-links-col">
-            <h4>Services</h4>
-            <ul>
-              <li><a href="/services#packages" class="nav-link-services">Web Packages</a></li>
-              <li><a href="/services" class="nav-link-services">Custom Web Apps</a></li>
-              <li><a href="/services#process" class="nav-link-services">Development Process</a></li>
-              <li><a href="/contact?subject=Web+Design+Package" class="nav-link-contact">Request a Quote</a></li>
-            </ul>
-          </div>
-          
-          <div class="footer-links-col">
-            <h4>Academy</h4>
-            <ul>
-              <li><a href="/courses" class="nav-link-courses">Accredited Courses</a></li>
-              <li><a href="/courses#curriculum" class="nav-link-courses">e-Learner Syllabus</a></li>
-              <li><a href="/portal#login" class="nav-link-portal">Student Portal</a></li>
-              <li><a href="/portal#register" class="nav-link-portal">Register Account</a></li>
-            </ul>
-          </div>
-          
-          <div class="footer-links-col">
-            <h4>Company</h4>
-            <ul>
-              <li><a href="/about" class="nav-link-about">About Zazele</a></li>
-              <li><a href="/about#credentials" class="nav-link-about">Proven Legacy</a></li>
-              <li><a href="/contact" class="nav-link-contact">Contact Us</a></li>
-              <li><a href="mailto:support@zazele.online">Direct Support</a></li>
-            </ul>
-          </div>
-        </div>
-        
-        <div class="footer-bottom">
-          <p>&copy; 2026 Zazele Online. All Rights Reserved.</p>
-          <div class="footer-legal-links">
-            <a href="/about">About Us</a>
-            <a href="/contact">Support</a>
-          </div>
-        </div>
-      </div>
-    </footer>
+    <footer class="app-footer portal-footer"><div><span>© 2026 Zazele Online · Academy</span><nav aria-label="Academy support"><a href="/courses">Course information</a><a href="mailto:support@zazele.online">Need help?</a><a href="/">Back to website ↗</a></nav></div></footer>
 
     <!-- Event Registration Modal -->
     <div id="event-registration-modal" class="modal">

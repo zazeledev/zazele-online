@@ -137,6 +137,17 @@ function renderUsersList() {
   const container = document.getElementById('users-list');
   if (!container) return;
 
+  const learners = allUsers.filter(user => user.role === 'student');
+  const summary = {
+    'summary-learners': learners.length,
+    'summary-pending': learners.filter(user => !user.approved).length,
+    'summary-approved': learners.filter(user => user.approved).length
+  };
+  Object.entries(summary).forEach(([id, value]) => {
+    const element = document.getElementById(id);
+    if (element) element.textContent = value;
+  });
+
   if (allUsers.length === 0) {
     container.innerHTML = '<p class="loading">No users found.</p>';
     return;

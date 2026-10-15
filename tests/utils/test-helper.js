@@ -40,6 +40,8 @@ window.env = {
         PORT: port,
         NODE_ENV: 'test',
         MOCK_DB: 'true',
+        VITE_API_URL: `http://localhost:${port}/api`,
+        VITE_UPLOAD_URL: `http://localhost:${port}/uploads`,
         PGDATABASE: process.env.PGDATABASE || 'zazele_test_mock'
       }
     });
