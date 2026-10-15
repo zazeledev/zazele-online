@@ -17,7 +17,8 @@
   <link rel="icon" href="/assets/logo.png" type="image/png">
   <link rel="stylesheet" href="/css/styles.css">
   <link rel="stylesheet" href="/css/mobile.css">
-  
+  <link rel="stylesheet" href="/css/studio.css">
+
   <!-- Schema.org Structured Data -->
   <script type="application/ld+json">
   {
@@ -69,7 +70,8 @@
   }
   </script>
 </head>
-<body>
+<body class="studio-site">
+  <a class="skip-link" href="#main-content">Skip to content</a>
   <div id="app">
     <!-- Header -->
     <header class="app-header">
@@ -86,19 +88,16 @@
             </a>
           </div>
           <ul>
-            <li><a href="/" class="nav-link-home">Home</a></li>
-            <li><a href="/services" class="nav-link-services">Services</a></li>
-            <li><a href="/courses" class="nav-link-courses active">Courses</a></li>
+            <li><a href="/#work" class="nav-link-work">Our Work</a></li>
+            <li><a href="/services" class="nav-link-services">Web Services</a></li>
+            <li><a href="/courses" class="nav-link-courses active">Academy</a></li>
             <li><a href="/about" class="nav-link-about">About</a></li>
             <li><a href="/contact" class="nav-link-contact">Contact</a></li>
             <li><a href="/portal#login" class="btn btn-pill btn-pill-secondary btn-small nav-link-portal">Student Portal</a></li>
           </ul>
         </nav>
         <div class="header-actions">
-          <button class="btn-theme-toggle" title="Toggle Theme" aria-label="Toggle Theme">
-            <svg class="theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-            <svg class="theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-          </button>
+
           <button class="mobile-menu-toggle" aria-label="Toggle Menu" id="mobile-menu-toggle">
             <span></span>
             <span></span>
@@ -108,14 +107,14 @@
       </div>
     </header>
 
-    <main class="landing-main">
+    <main class="landing-main" id="main-content">
       <!-- 1. Hero Section -->
       <section id="courses-hero" class="home-hero-section">
         <div class="home-container">
           <div class="home-hero-content">
-            <div class="badge-pill">Secondary Service &bull; Digital Academy</div>
-            <h1 class="font-serif">MICT SETA Accredited <span class="italic-accent">Computer Training</span></h1>
-            <p class="home-hero-lead">Empowering individuals, job seekers, and entrepreneurs across South Africa with accredited digital literacy certifications, essential computer competencies, and interactive learning.</p>
+            <div class="badge-pill">Zazele Academy</div>
+            <h1 class="studio-heading">Practical skills.<br>New possibilities.</h1>
+            <p class="home-hero-lead">Build confidence with computers, documents, spreadsheets and online communication. Explore our e-Learner Platinum Certificate and learn at your own pace.</p>
             <div class="hero-ctas">
               <a href="#pricing" class="btn-pill btn-pill-primary">Register for Course</a>
               <a href="/portal#login" class="btn-pill btn-pill-secondary">Student Portal Login</a>
@@ -154,10 +153,10 @@
           <div class="section-header">
             <div class="section-tag">Accredited Curriculum</div>
             <h2>e-Learner Platinum Certificate Modules</h2>
-            <p>A rigorous, practical curriculum designed to prepare students for real-world workplace tasks and entrepreneurial hub management.</p>
+            <p>Seven modules covering the computer skills you can use at work and in everyday life.</p>
           </div>
 
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 24px;">
             <div class="feature-card">
               <div class="icon-box">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
@@ -282,7 +281,7 @@
           <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 48px; align-items: center;" class="info-grid">
             <div>
               <div class="section-tag">Accredited Credentials</div>
-              <h2 class="font-serif" style="font-size: 2.4rem; margin-bottom: 20px; line-height: 1.25;">Nationally Recognized <span class="italic-accent">Certification</span></h2>
+              <h2 class="studio-heading" style="font-size: 2.4rem; margin-bottom: 20px; line-height: 1.25;">Nationally Recognized <span class="italic-accent">Certification</span></h2>
               <p style="color: var(--text-soft); font-size: 1.05rem; line-height: 1.8; margin-bottom: 16px;">Upon passing all 7 module assessments with an 80% mark, you receive the official e-Learner Platinum Certificate backed by MICT SETA accreditation standards.</p>
               <p style="color: var(--text-soft); font-size: 1.05rem; line-height: 1.8; margin-bottom: 28px;">This certification demonstrates practical, job-ready digital capabilities to employers and organizations throughout South Africa.</p>
               <a href="/portal#register" class="btn-pill btn-pill-primary">Enroll Now &rarr;</a>
@@ -315,7 +314,7 @@
             <p>Common questions regarding enrollment, accreditation, and the learning portal.</p>
           </div>
 
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 28px;">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 28px;">
             <div class="app-card" style="padding: 36px; border-radius: 20px; border: 1px solid var(--border-color); background: var(--bg-card);">
               <h4 style="margin-bottom: 12px; color: var(--secondary); font-size: 1.15rem;">Are Zazele computer courses accredited in South Africa?</h4>
               <p style="color: var(--text-soft); line-height: 1.7; font-size: 0.95rem;">Yes, our courses are accredited by the Media, Information and Communication Technologies Sector Education and Training Authority (MICT SETA) of South Africa.</p>
@@ -338,7 +337,7 @@
       <section class="cta-banner-section">
         <div class="home-container">
           <div class="cta-banner-content">
-            <h2 class="font-serif">Ready to Accelerate Your Digital Skills?</h2>
+            <h2 class="studio-heading">Ready to Accelerate Your Digital Skills?</h2>
             <p>Join thousands of empowered graduates across South Africa. Register today and gain instant access to your online student dashboard.</p>
             <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
               <a href="/portal#register" class="btn-pill btn-pill-white">Register Online</a>
@@ -359,7 +358,7 @@
               <span>Zazele <span>Online</span></span>
             </a>
             <p class="footer-brand-desc">
-              Engineering high-performance web applications and delivering accredited digital skills training across South Africa since 2011.
+              Websites, custom applications and practical digital skills. Built for people in South Africa.
             </p>
             <div class="footer-social-icons">
               <a href="https://wa.me/27798420873" target="_blank" class="social-icon-btn" title="WhatsApp" aria-label="WhatsApp">
@@ -368,12 +367,10 @@
               <a href="mailto:support@zazele.online" class="social-icon-btn" title="Email" aria-label="Email">
                 <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M0 3v18h24V3H0zm21.518 2L12 12.713 2.482 5h19.036zM2 19V7.183l10 8.104 10-8.104V19H2z"/></svg>
               </a>
-              <a href="https://linkedin.com" target="_blank" class="social-icon-btn" title="LinkedIn" aria-label="LinkedIn">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-              </a>
+
             </div>
           </div>
-          
+
           <div class="footer-links-col">
             <h4>Services</h4>
             <ul>
@@ -383,7 +380,7 @@
               <li><a href="/contact?subject=Web+Design+Package" class="nav-link-contact">Request a Quote</a></li>
             </ul>
           </div>
-          
+
           <div class="footer-links-col">
             <h4>Academy</h4>
             <ul>
@@ -393,18 +390,18 @@
               <li><a href="/portal#register" class="nav-link-portal">Register Account</a></li>
             </ul>
           </div>
-          
+
           <div class="footer-links-col">
             <h4>Company</h4>
             <ul>
               <li><a href="/about" class="nav-link-about">About Zazele</a></li>
-              <li><a href="/about#credentials" class="nav-link-about">Proven Legacy</a></li>
+              <li><a href="/about#credentials" class="nav-link-about">Our Story</a></li>
               <li><a href="/contact" class="nav-link-contact">Contact Us</a></li>
               <li><a href="mailto:support@zazele.online">Direct Support</a></li>
             </ul>
           </div>
         </div>
-        
+
         <div class="footer-bottom">
           <p>&copy; 2026 Zazele Online. All Rights Reserved.</p>
           <div class="footer-legal-links">
@@ -433,13 +430,6 @@
     </div>
   </div>
 
-  <script src="/js/env.js"></script>
-  <script src="/js/api.js"></script>
-  <script src="/js/notifications.js"></script>
-  <script src="/js/auth.js"></script>
-  <script src="/js/assignment.js"></script>
-  <script src="/js/student-dashboard.js"></script>
-  <script src="/js/admin-dashboard.js"></script>
   <script src="/js/app.js"></script>
 </body>
 </html>

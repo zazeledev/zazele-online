@@ -140,6 +140,8 @@ function initModals() {
 
 // Theme Toggle Logic (Dark Mode)
 function initThemeToggle() {
+  // The public studio has a fixed palette; keep the saved preference for the portal.
+  if (document.body.classList.contains('studio-site')) return;
   const themeToggles = document.querySelectorAll('.btn-theme-toggle, #landing-theme-toggle, #webdev-theme-toggle, #home-theme-toggle, .theme-toggle');
   
   // Check for saved theme preference
@@ -272,18 +274,14 @@ function initContactForm() {
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-    const btn = form.querySelector('button[type="submit"]');
-    const originalText = btn.textContent;
-    btn.disabled = true;
-    btn.textContent = 'Sending...';
-
-    // Simulate sending with a timeout
-    setTimeout(() => {
-      alert('Thank you for contacting us! Bafana Binda and the Zazele Team will get back to you shortly.');
-      form.reset();
-      btn.disabled = false;
-      btn.textContent = originalText;
-    }, 1200);
+    const name = document.getElementById('contact-name').value.trim();
+    const email = document.getElementById('contact-email').value.trim();
+    const subject = document.getElementById('contact-subject').value;
+    const message = document.getElementById('contact-message').value.trim();
+    const body = `Name: ${name}\nReply email: ${email}\n\n${message}`;
+    window.location.href = `mailto:support@zazele.online?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const status = document.getElementById('contact-status');
+    if (status) status.textContent = 'Your email app has been requested. Send the message there to complete your enquiry. If no app opens, email support@zazele.online or use WhatsApp. Your details remain here.';
   });
 }
 

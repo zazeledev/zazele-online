@@ -123,6 +123,42 @@ async function run(testPort = 5001) {
     await page.waitForSelector('#login-email', { timeout: 5000 });
   });
 
+  await runE2ETest('E2E: Public pages fit desktop and mobile viewports', async (page) => {
+    for (const width of [1440, 768, 375, 320]) {
+      await page.setViewport({ width, height: 1000 });
+      for (const route of ['/', '/services', '/courses', '/about', '/contact']) {
+        await page.goto(`${localBase}${route}`, { waitUntil: 'networkidle2' });
+        await page.evaluate(() => document.fonts.ready);
+        await page.evaluate(async () => {
+          await Promise.all([...document.querySelectorAll('main img')].map(async img => {
+            img.loading = 'eager';
+            try { await img.decode(); } catch { /* Report failed images below. */ }
+          }));
+        });
+        const issues = await page.evaluate(() => {
+          const problems = [];
+          if (document.querySelectorAll('main h1').length !== 1) problems.push('Expected one main heading');
+          if (document.documentElement.scrollWidth > innerWidth + 1) problems.push('Page overflows viewport');
+          for (const img of document.querySelectorAll('main img')) {
+            if (!img.naturalWidth) problems.push('Broken image: ' + img.getAttribute('src'));
+          }
+          for (const el of document.querySelectorAll('main h1, main h2, main h3, main input, main select, main textarea, main .btn-pill')) {
+            const rect = el.getBoundingClientRect();
+            if (rect.width && (rect.right > innerWidth + 1 || rect.left < -1)) problems.push('Content outside viewport: ' + el.tagName);
+          }
+          return problems;
+        });
+        if (issues.length) throw new Error(`${route} at ${width}px: ${issues.join('; ')}`);
+        if (process.env.PUBLIC_DESIGN_SCREENSHOTS === '1' && (width === 1440 || width === 375)) {
+          const dir = path.resolve(__dirname, '../../.tmp-redesign/previews');
+          fs.mkdirSync(dir, { recursive: true });
+          if (route === '/') await page.screenshot({ path: path.join(dir, `home-${width}-first-screen.png`) });
+          await page.screenshot({ path: path.join(dir, `${route === '/' ? 'home' : route.slice(1)}-${width}.png`), fullPage: true });
+        }
+      }
+    }
+  });
+
   return results;
 }
 

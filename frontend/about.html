@@ -17,8 +17,10 @@
   <link rel="icon" href="/assets/logo.png" type="image/png">
   <link rel="stylesheet" href="/css/styles.css">
   <link rel="stylesheet" href="/css/mobile.css">
+  <link rel="stylesheet" href="/css/studio.css">
 </head>
-<body>
+<body class="studio-site">
+  <a class="skip-link" href="#main-content">Skip to content</a>
   <div id="app">
     <!-- Header -->
     <header class="app-header">
@@ -35,19 +37,16 @@
             </a>
           </div>
           <ul>
-            <li><a href="/" class="nav-link-home">Home</a></li>
-            <li><a href="/services" class="nav-link-services">Services</a></li>
-            <li><a href="/courses" class="nav-link-courses">Courses</a></li>
+            <li><a href="/#work" class="nav-link-work">Our Work</a></li>
+            <li><a href="/services" class="nav-link-services">Web Services</a></li>
+            <li><a href="/courses" class="nav-link-courses">Academy</a></li>
             <li><a href="/about" class="nav-link-about active">About</a></li>
             <li><a href="/contact" class="nav-link-contact">Contact</a></li>
             <li><a href="/portal#login" class="btn btn-pill btn-pill-secondary btn-small nav-link-portal">Student Portal</a></li>
           </ul>
         </nav>
         <div class="header-actions">
-          <button class="btn-theme-toggle" title="Toggle Theme" aria-label="Toggle Theme">
-            <svg class="theme-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-            <svg class="theme-icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-          </button>
+
           <button class="mobile-menu-toggle" aria-label="Toggle Menu" id="mobile-menu-toggle">
             <span></span>
             <span></span>
@@ -57,166 +56,10 @@
       </div>
     </header>
 
-    <main class="landing-main">
-      <!-- 0. Hero Section -->
-      <section id="about-hero" class="home-hero-section">
-        <div class="home-container">
-          <div class="home-hero-content">
-            <div class="badge-pill">Established in 2011 &bull; Digital Innovation & Education</div>
-            <h1 class="font-serif">Bridging the Gap Between <span class="italic-accent">Learning & Building</span></h1>
-            <p class="home-hero-lead">Zazele Online is a dual-engine digital enterprise dedicated to engineering custom, high-impact web platforms for modern businesses while delivering accredited digital literacy education across South Africa.</p>
-            <div class="hero-ctas">
-              <a href="/services" class="btn-pill btn-pill-primary">Explore Web Services</a>
-              <a href="/courses" class="btn-pill btn-pill-secondary">View Academy Courses</a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- 1. Metrics Strip -->
-      <section class="metrics-strip">
-        <div class="home-container">
-          <div class="metrics-grid">
-            <div class="metric-item">
-              <strong>Since 2011</strong>
-              <span>15 Years of Excellence</span>
-            </div>
-            <div class="metric-item">
-              <strong>3,500+</strong>
-              <span>Certified Graduates</span>
-            </div>
-            <div class="metric-item">
-              <strong>Full-Stack</strong>
-              <span>Custom Engineering</span>
-            </div>
-            <div class="metric-item">
-              <strong>MICT SETA</strong>
-              <span>Accredited Standards</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- 2. Dual Engine Vision Section -->
-      <section class="section-clean" id="vision">
-        <div class="home-container">
-          <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 48px; align-items: center;" class="info-grid">
-            <div>
-              <div class="section-tag">Our Vision</div>
-              <h2 class="font-serif" style="font-size: 2.4rem; margin-bottom: 20px; line-height: 1.25;">Dual-Engine <span class="italic-accent">Empowerment</span></h2>
-              <p style="color: var(--text-soft); font-size: 1.05rem; line-height: 1.8; margin-bottom: 16px;">We believe sustainable digital growth requires both the knowledge to navigate technology and the infrastructure to lead in the digital economy.</p>
-              <p style="color: var(--text-soft); font-size: 1.05rem; line-height: 1.8; margin-bottom: 28px;">Our primary focus is engineering bespoke websites and full-stack software for businesses, non-profits, and institutions. Concurrently, our secondary academy equips community members with workplace computer competencies to operate and manage these tools effectively.</p>
-              
-              <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-                <a href="/services" class="btn-pill btn-pill-primary">Web Engineering</a>
-                <a href="/courses" class="btn-pill btn-pill-secondary">Digital Academy</a>
-              </div>
-            </div>
-
-            <div style="display: grid; gap: 20px;">
-              <div class="app-card" style="padding: 32px; border-radius: 20px; border-left: 4px solid var(--primary); background: var(--bg-card);">
-                <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 12px;">
-                  <div class="icon-box" style="margin-bottom: 0; width: 44px; height: 44px;">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
-                  </div>
-                  <h4 style="font-size: 1.2rem; color: var(--secondary); margin: 0;">Primary: Web Engineering</h4>
-                </div>
-                <p style="color: var(--text-soft); font-size: 0.95rem; line-height: 1.6; margin: 0;">Custom full-stack web applications, lead generation engines, and secure digital portals built with clean code and modern aesthetics.</p>
-              </div>
-
-              <div class="app-card" style="padding: 32px; border-radius: 20px; border-left: 4px solid var(--accent); background: var(--bg-card);">
-                <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 12px;">
-                  <div class="icon-box" style="margin-bottom: 0; width: 44px; height: 44px; background: rgba(0, 194, 255, 0.08); color: var(--accent);">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
-                  </div>
-                  <h4 style="font-size: 1.2rem; color: var(--secondary); margin: 0;">Secondary: Digital Academy</h4>
-                </div>
-                <p style="color: var(--text-soft); font-size: 0.95rem; line-height: 1.6; margin: 0;">MICT SETA accredited e-Learner Platinum Certificate program empowering individuals to launch and manage their own computer hub businesses.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- 3. Legacy Credentials Section -->
-      <section id="credentials" class="section-muted">
-        <div class="home-container">
-          <div class="section-header">
-            <div class="section-tag">Legacy & Proven Track Record</div>
-            <h2>15 Years of Digital Impact Across South Africa</h2>
-            <p>From community computer literacy centers to bespoke software platforms, our mission has always been grassroots empowerment.</p>
-          </div>
-
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 28px;">
-            <div class="feature-card">
-              <div class="icon-box">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-              </div>
-              <h3 style="font-size: 1.25rem;">Community Empowerment</h3>
-              <p>Zazele is dedicated to creating sustainable economic pathways, digital literacy, and entrepreneurial leadership across local communities.</p>
-            </div>
-
-            <div class="feature-card">
-              <div class="icon-box">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-              </div>
-              <h3 style="font-size: 1.25rem;">3,500+ Certified Graduates</h3>
-              <p>Our students have gone on to work across IT departments, municipal offices, schools, and self-employed computer services hubs.</p>
-            </div>
-
-            <div class="feature-card">
-              <div class="icon-box">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-              </div>
-              <h3 style="font-size: 1.25rem;">Industry Standard Quality</h3>
-              <p>We combine strict MICT SETA educational rigor with cutting-edge web architecture, modern typography, and robust database design.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- 4. Team Section -->
-      <section id="team" class="section-clean">
-        <div class="home-container">
-          <div class="section-header">
-            <div class="section-tag">Engineering Leadership</div>
-            <h2>Meet the Developer Behind Zazele Platforms</h2>
-            <p>Combining modern UI/UX design with reliable full-stack architecture.</p>
-          </div>
-
-          <div style="max-width: 650px; margin: 0 auto;">
-            <div class="app-card" style="padding: 48px; text-align: center; border-radius: 24px; border: 1px solid var(--border-color); background: var(--bg-card); box-shadow: var(--shadow-soft);">
-              <div style="width: 130px; height: 130px; border-radius: 50%; overflow: hidden; margin: 0 auto 24px auto; border: 4px solid var(--border-color); box-shadow: var(--shadow-soft);">
-                <img src="/assets/bafanadev.jpg" alt="Bafana Binda" style="width: 100%; height: 100%; object-fit: cover;">
-              </div>
-              <h3 style="margin-bottom: 6px; color: var(--secondary); font-size: 1.6rem;">Bafana Binda</h3>
-              <p style="color: var(--primary); font-weight: 700; margin-bottom: 20px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em;">Lead Web Developer & System Designer</p>
-              <p style="color: var(--text-soft); line-height: 1.8; font-size: 1rem; margin-bottom: 24px;">
-                Bafana is the lead engineer responsible for Zazele Online's software architecture and client web development. He merges accessible, editorial design principles with full-stack Node.js and modern client frameworks to create scalable, reliable digital experiences.
-              </p>
-              <div style="display: flex; gap: 12px; justify-content: center;">
-                <a href="/contact?subject=Web+Design+Package" class="btn-pill btn-pill-primary">Work with Bafana</a>
-                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="btn-pill btn-pill-secondary">LinkedIn Profile</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- 5. High-Impact CTA Banner -->
-      <section class="cta-banner-section">
-        <div class="home-container">
-          <div class="cta-banner-content">
-            <h2 class="font-serif">Partner with Zazele Online</h2>
-            <p>Whether you need a custom web platform engineered for your business or accredited computer training for your staff, we are here to assist.</p>
-            <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
-              <a href="/contact" class="btn-pill btn-pill-white">Get in Touch</a>
-              <a href="/services" class="btn-pill btn-pill-outline-white">Explore Web Services</a>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
+    <main class="landing-main" id="main-content"><section class="home-hero-section"><div class="home-container"><div class="home-hero-content"><p class="eyebrow">About Zazele</p><h1>Technology is useful<br>when people can use it.</h1><p class="home-hero-lead">We build websites and teach digital skills. Both start with the same question: what will help someone take their next step?</p></div></div></section>
+<section class="studio-section" id="credentials"><div class="home-container studio-section-heading"><h2>Rooted in learning.<br>Focused on building.</h2><div><p>Zazele began in digital education in 2011. Today, our work brings together practical computer training and website development for businesses and organisations in South Africa.</p><p>Our studio designs and develops websites and custom applications. Our academy helps learners build confidence with the digital tools used at work and in everyday life.</p></div></div></section>
+<section class="studio-section services-section" id="team"><div class="home-container studio-about"><img src="/assets/bafanadev.jpg" width="500" height="600" alt="Bafana Binda, lead web developer" loading="lazy"><div><p class="eyebrow">Meet your developer</p><h2>Bafana Binda</h2><p class="team-role">Web developer &amp; system designer</p><p>Bafana leads Zazele's website and application development, from the structure of a site to the systems behind it. His work includes the W3AYS photography website and the StreetBiz Foundation platform.</p><p>Have a project in mind? Start with a conversation about who it needs to serve and what it needs to do.</p><a href="/contact?subject=Web+Design+Package" class="btn-pill btn-pill-primary">Work with Bafana ↗</a></div></div></section>
+<section class="studio-section"><div class="home-container academy-panel"><div><p class="eyebrow">Zazele Academy</p><h2>Skills you can put to work.</h2><p>Explore the e-Learner Platinum Certificate and the practical computer skills covered in its seven modules.</p><a href="/courses" class="text-link">Explore courses ↗</a></div><div><p>Learning with us already?</p><a href="/portal#login" class="btn-pill btn-pill-secondary">Open the student portal →</a></div></div></section><section class="studio-cta"><div class="home-container"><p class="eyebrow">Your next chapter</p><div class="studio-cta-row"><h2>Have something<br>in mind?</h2><div><p>Tell us what you want to build.<br>We'll help you work out the next step.</p><a href="/contact?subject=Web+Design+Package" class="btn-pill btn-pill-primary">Let's talk about it <span aria-hidden="true">↗</span></a></div></div></div></section></main>
 
     <!-- GLOBAL SHAREABLE FOOTER -->
     <footer class="app-footer">
@@ -228,7 +71,7 @@
               <span>Zazele <span>Online</span></span>
             </a>
             <p class="footer-brand-desc">
-              Engineering high-performance web applications and delivering accredited digital skills training across South Africa since 2011.
+              Websites, custom applications and practical digital skills. Built for people in South Africa.
             </p>
             <div class="footer-social-icons">
               <a href="https://wa.me/27798420873" target="_blank" class="social-icon-btn" title="WhatsApp" aria-label="WhatsApp">
@@ -237,12 +80,10 @@
               <a href="mailto:support@zazele.online" class="social-icon-btn" title="Email" aria-label="Email">
                 <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M0 3v18h24V3H0zm21.518 2L12 12.713 2.482 5h19.036zM2 19V7.183l10 8.104 10-8.104V19H2z"/></svg>
               </a>
-              <a href="https://linkedin.com" target="_blank" class="social-icon-btn" title="LinkedIn" aria-label="LinkedIn">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-              </a>
+
             </div>
           </div>
-          
+
           <div class="footer-links-col">
             <h4>Services</h4>
             <ul>
@@ -252,7 +93,7 @@
               <li><a href="/contact?subject=Web+Design+Package" class="nav-link-contact">Request a Quote</a></li>
             </ul>
           </div>
-          
+
           <div class="footer-links-col">
             <h4>Academy</h4>
             <ul>
@@ -262,18 +103,18 @@
               <li><a href="/portal#register" class="nav-link-portal">Register Account</a></li>
             </ul>
           </div>
-          
+
           <div class="footer-links-col">
             <h4>Company</h4>
             <ul>
               <li><a href="/about" class="nav-link-about">About Zazele</a></li>
-              <li><a href="/about#credentials" class="nav-link-about">Proven Legacy</a></li>
+              <li><a href="/about#credentials" class="nav-link-about">Our Story</a></li>
               <li><a href="/contact" class="nav-link-contact">Contact Us</a></li>
               <li><a href="mailto:support@zazele.online">Direct Support</a></li>
             </ul>
           </div>
         </div>
-        
+
         <div class="footer-bottom">
           <p>&copy; 2026 Zazele Online. All Rights Reserved.</p>
           <div class="footer-legal-links">
@@ -285,13 +126,6 @@
     </footer>
   </div>
 
-  <script src="/js/env.js"></script>
-  <script src="/js/api.js"></script>
-  <script src="/js/notifications.js"></script>
-  <script src="/js/auth.js"></script>
-  <script src="/js/assignment.js"></script>
-  <script src="/js/student-dashboard.js"></script>
-  <script src="/js/admin-dashboard.js"></script>
   <script src="/js/app.js"></script>
 </body>
 </html>

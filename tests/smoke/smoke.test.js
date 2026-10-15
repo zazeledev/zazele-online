@@ -252,8 +252,8 @@ async function run(testPort = 5001) {
 
   // 14. Clean URL routing endpoints return 200
   const cleanRoutes = [
-    { route: '/services', contentCheck: 'Custom Website' },
-    { route: '/courses', contentCheck: 'Computer Training' },
+    { route: '/services', contentCheck: 'id="webdev-hero"' },
+    { route: '/courses', contentCheck: 'id="courses-hero"' },
     { route: '/about', contentCheck: 'About Zazele' },
     { route: '/contact', contentCheck: 'Contact Information' },
     { route: '/portal', contentCheck: 'portal-form-box' }
@@ -269,7 +269,7 @@ async function run(testPort = 5001) {
   });
 
   // 15. Static assets load with status 200
-  const staticAssets = ['/css/styles.css', '/css/mobile.css', '/js/api.js', '/assets/logo.png'];
+  const staticAssets = ['/css/styles.css', '/css/mobile.css', '/css/studio.css', '/js/api.js', '/assets/logo.png', '/assets/w3ays-project.jpg', '/assets/streetbiz-project.jpg'];
   staticAssets.forEach(asset => {
     addTest(`Static asset ${asset} loads directly`, async () => {
       const res = await httpGet(`${localBase}${asset}`);

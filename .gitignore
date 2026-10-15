@@ -17,3 +17,4 @@ uploads/*
 !uploads/.gitkeep
 .vercel
 .next
+.tmp-redesign/
