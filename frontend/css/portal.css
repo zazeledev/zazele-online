@@ -17,6 +17,7 @@
 .portal-site h1, .portal-site h2, .portal-site h3, .portal-site h4, .portal-site .school-brand { font-family: inherit; color: var(--text-main); }
 .portal-site h1, .portal-site h2 { font-weight: 600; letter-spacing: -.045em; }
 .portal-site p { line-height: 1.7; }
+.portal-site .page.active { opacity: 1; animation: none; }
 .portal-site a { color: var(--primary); }
 .portal-site a:focus-visible, .portal-site button:focus-visible, .portal-site input:focus-visible, .portal-site select:focus-visible, .portal-site textarea:focus-visible { outline: 3px solid var(--primary); outline-offset: 4px; }
 .portal-site .app-header { background: var(--bg-body) !important; backdrop-filter: none; box-shadow: none; border-bottom: 1px solid var(--border-color); }
@@ -138,6 +139,7 @@
 .portal-site .notification-btn { border-radius: 5px; background: var(--bg-card); color: var(--text-main); border: 1px solid var(--border-color); }
 .portal-site .notification-dropdown { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 6px; }
 .portal-site .user-info-text .name { font-size: .8rem; }
+.portal-site .user-info-text { flex-direction: column; align-items: flex-start; gap: 2px; }
 .portal-site .user-info-text .role { font-size: .65rem; color: var(--text-muted); }
 .portal-site .modal-content { background: var(--bg-card); padding: 32px; max-height: calc(100dvh - 40px); overflow: auto; }
 .portal-site .portal-footer { background: var(--bg-body); color: var(--text-muted); margin: 0; padding: 28px 32px; border-top: 1px solid var(--border-color); }

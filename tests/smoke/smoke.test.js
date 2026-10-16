@@ -269,7 +269,7 @@ async function run(testPort = 5001) {
   });
 
   // 15. Static assets load with status 200
-  const staticAssets = ['/css/styles.css', '/css/mobile.css', '/css/studio.css', '/js/api.js', '/assets/logo.png', '/assets/w3ays-project.jpg', '/assets/streetbiz-project.jpg'];
+  const staticAssets = ['/css/styles.css', '/css/mobile.css', '/css/studio.css', '/css/portal.css', '/js/api.js', '/assets/logo.png', '/assets/w3ays-project.jpg', '/assets/streetbiz-project.jpg'];
   staticAssets.forEach(asset => {
     addTest(`Static asset ${asset} loads directly`, async () => {
       const res = await httpGet(`${localBase}${asset}`);

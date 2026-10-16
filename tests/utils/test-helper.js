@@ -47,11 +47,18 @@ window.env = {
     });
 
     let isResolved = false;
+    let startupTimeout;
+    const clearStartupTimers = () => {
+      clearInterval(pollInterval);
+      clearTimeout(startupTimeout);
+    };
     const checkServerReady = () => {
       if (isResolved) return;
       const req = http.get(`http://localhost:${port}/api/health`, (res) => {
-        if (!isResolved) {
+        res.resume();
+        if (!isResolved && res.statusCode === 200) {
           isResolved = true;
+          clearStartupTimers();
           console.log(`[QA Helper] Backend test server responded active.`);
           resolve(serverProcess);
         }
@@ -79,20 +86,32 @@ window.env = {
     });
 
     serverProcess.on('error', (err) => {
-      clearInterval(pollInterval);
+      if (isResolved) return;
+      isResolved = true;
+      clearStartupTimers();
       console.error('[QA Helper] Failed to start backend server:', err);
       restoreEnvFile();
       reject(err);
     });
 
+    serverProcess.on('exit', (code) => {
+      if (isResolved) return;
+      isResolved = true;
+      clearStartupTimers();
+      restoreEnvFile();
+      reject(new Error(`Mock backend exited before becoming ready (code ${code}).`));
+    });
+
     // Fallback timeout if server takes too long
-    setTimeout(() => {
+    startupTimeout = setTimeout(() => {
       if (!isResolved) {
         isResolved = true;
-        clearInterval(pollInterval);
-        resolve(serverProcess);
+        clearStartupTimers();
+        serverProcess.kill('SIGTERM');
+        restoreEnvFile();
+        reject(new Error('Mock backend did not become ready within 90 seconds.'));
       }
-    }, 10000);
+    }, 90000);
   });
 }
 
