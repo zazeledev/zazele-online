@@ -21,54 +21,62 @@
 
   <!-- Schema.org Structured Data -->
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "ProfessionalService",
-        "@id": "https://zazele.online/services#prof-service",
-        "name": "Zazele Web Development Services",
-        "url": "https://zazele.online/services",
-        "parentOrganization": {
-          "@type": "Organization",
-          "name": "Zazele Online",
-          "url": "https://zazele.online"
-        },
-        "description": "Custom full-stack website design and software development services in South Africa.",
-        "telephone": "+27-79-842-0873",
-        "priceRange": "ZAR"
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://zazele.online/services#prof-service",
+      "name": "Zazele Web Development Services",
+      "url": "https://zazele.online/services",
+      "parentOrganization": {
+        "@type": "Organization",
+        "name": "Zazele Online",
+        "url": "https://zazele.online"
       },
-      {
-        "@type": "FAQPage",
-        "mainEntity": [
-          {
-            "@type": "Question",
-            "name": "What types of websites do you design and build?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "We build professional business websites, school and NGO portals, e-commerce stores, custom databases, booking apps, and bespoke full-stack applications."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Can you integrate local payment options like Yoco or PayFast?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes, we integrate South African payment processors like PayFast, Yoco, and PayGate to enable secure local transactions on e-commerce websites."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "Do you provide website maintenance and support?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Yes, we offer custom monthly support packages that include security monitoring, content updates, SEO tuning, and domain hosting management."
-            }
+      "description": "Custom full-stack website design and software development services in South Africa.",
+      "telephone": "+27-79-842-0873",
+      "priceRange": "ZAR"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What types of websites do you design and build?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We build professional business websites, school and NGO portals, e-commerce stores, custom databases, booking apps, and bespoke full-stack applications."
           }
-        ]
-      }
-    ]
-  }
+        },
+        {
+          "@type": "Question",
+          "name": "Can you integrate local payment options like Yoco or PayFast?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, we integrate South African payment processors like PayFast, Yoco, and PayGate to enable secure local transactions on e-commerce websites."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you provide website maintenance and hosting?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. We offer once-off website updates at R450 per hour, monthly website support at R750, and hosting from R180 per month. We assess your website and agree on the scope before starting. Technical maintenance, backups and security services are confirmed separately in your quote."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need to move my hosting to Zazele?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. You can use our website update services while keeping your existing hosting, provided we have the access needed to complete the work."
+          }
+        }
+      ]
+    }
+  ]
+}
   </script>
 </head>
 <body class="studio-site">
@@ -255,13 +263,65 @@
         </div>
       </section>
 
+      <section id="support-hosting" class="section-muted" aria-labelledby="support-hosting-heading">
+        <div class="home-container">
+          <div class="section-header">
+            <h2 id="support-hosting-heading">Website Support &amp; Hosting</h2>
+            <p>Keep your website up to date, with support that fits your business.</p>
+          </div>
+          <div class="packages-grid support-packages-grid">
+            <article class="package-card">
+              <h3>Once-off Website Updates</h3>
+              <div class="package-price">R450 <span class="support-price-period">per hour</span></div>
+              <p>For businesses that need occasional changes to an existing website.</p>
+              <ul class="check-list">
+                <li><svg class="check-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Updates to supplied text, images, room or service information, and contact details.</span></li>
+                <li><svg class="check-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Simple new pages using the existing website design.</span></li>
+                <li><svg class="check-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Desktop and mobile checks of updated pages.</span></li>
+              </ul>
+              <p class="support-terms">Minimum charge of one hour. Additional time is charged in 30-minute increments. Scope and estimated cost are agreed before work begins.</p>
+              <a href="/contact?subject=Once-off+Website+Updates" class="btn-pill btn-pill-secondary">Request an Update</a>
+            </article>
+            <article class="package-card">
+              <h3>Monthly Website Support</h3>
+              <div class="package-price">R750 <span class="support-price-period">per month</span></div>
+              <p>Regular support to keep your website information current.</p>
+              <ul class="check-list">
+                <li><svg class="check-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Up to two hours of website support each month.</span></li>
+                <li><svg class="check-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Text, image and simple page updates.</span></li>
+                <li><svg class="check-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg><span>A monthly check of key pages and links.</span></li>
+                <li><svg class="check-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg><span>A short summary of completed work.</span></li>
+              </ul>
+              <p class="support-terms">Checks count towards the included time. Unused time does not roll over. Additional work is R450 per hour, with approval before proceeding.</p>
+              <a href="/contact?subject=Monthly+Website+Support" class="btn-pill btn-pill-secondary">Discuss Monthly Support</a>
+            </article>
+            <article class="package-card">
+              <h3>Website Hosting</h3>
+              <div class="package-price">From R180 <span class="support-price-period">per month</span></div>
+              <p>Hosting suited to your website and its needs.</p>
+              <ul class="check-list">
+                <li><svg class="check-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Pricing depends on the website’s platform, storage, traffic and technical requirements.</span></li>
+                <li><svg class="check-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Hosting resources and support are confirmed in the quote.</span></li>
+                <li><svg class="check-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg><span>Any email and backup services are specified in the quote.</span></li>
+              </ul>
+              <p class="support-terms">Domain registration, renewals, website updates and migrations are quoted separately.</p>
+              <a href="/contact?subject=Website+Hosting" class="btn-pill btn-pill-secondary">Get a Hosting Quote</a>
+            </article>
+          </div>
+          <div class="support-notes">
+            <p>Already have a website? We can assess it and confirm how we can help. Support depends on the platform, access and condition of your website. Clients supply approved text and images. Redesigns, custom features, booking-system changes, copywriting and substantial repairs are quoted separately.</p>
+            <p>Monthly support is paid in advance and can be cancelled before the next billing month.</p>
+          </div>
+        </div>
+      </section>
+
       <!-- 4. 4-Step Engineering Workflow -->
       <section id="process" class="section-muted">
         <div class="home-container">
           <div class="section-header">
             <div class="section-tag">From brief to launch</div>
             <h2>Know what happens next.</h2>
-            <p>A transparent, milestone-driven development process from concept to deployment and long-term maintenance.</p>
+            <p>A transparent, milestone-driven development process from concept to deployment, with ongoing support subject to your agreed quote.</p>
           </div>
 
           <div class="steps-grid-4">
@@ -283,7 +343,7 @@
             <div class="step-card">
               <div class="step-number">04</div>
               <h4>Testing & Launch</h4>
-              <p>We execute cross-browser validation, mobile testing, and SSL setup before deploying your platform with ongoing support.</p>
+              <p>We check your website across browsers and mobile devices before launch. SSL setup and management, ongoing support, security monitoring, backups and SEO tuning are subject to your agreed quote.</p>
             </div>
           </div>
         </div>
@@ -303,18 +363,23 @@
 
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 28px;">
             <div class="app-card" style="padding: 36px; border-radius: 20px; border: 1px solid var(--border-color); background: var(--bg-card);">
-              <h4 style="margin-bottom: 12px; color: var(--secondary); font-size: 1.15rem;">What types of websites do you engineer?</h4>
+              <h3 style="margin-bottom: 12px; color: var(--secondary); font-size: 1.15rem;">What types of websites do you engineer?</h3>
               <p style="color: var(--text-soft); line-height: 1.7; font-size: 0.95rem;">We build corporate showcase websites, NGO platforms, school websites, automated booking platforms, e-commerce storefronts, and bespoke full-stack applications with secure databases.</p>
             </div>
 
             <div class="app-card" style="padding: 36px; border-radius: 20px; border: 1px solid var(--border-color); background: var(--bg-card);">
-              <h4 style="margin-bottom: 12px; color: var(--secondary); font-size: 1.15rem;">Can you integrate South African payment options?</h4>
+              <h3 style="margin-bottom: 12px; color: var(--secondary); font-size: 1.15rem;">Can you integrate South African payment options?</h3>
               <p style="color: var(--text-soft); line-height: 1.7; font-size: 0.95rem;">Yes, we integrate leading South African payment providers including PayFast, Yoco, and PayGate to enable secure debit/credit card and instant EFT transactions.</p>
             </div>
 
             <div class="app-card" style="padding: 36px; border-radius: 20px; border: 1px solid var(--border-color); background: var(--bg-card);">
-              <h4 style="margin-bottom: 12px; color: var(--secondary); font-size: 1.15rem;">Do you provide maintenance and hosting management?</h4>
-              <p style="color: var(--text-soft); line-height: 1.7; font-size: 0.95rem;">Yes, we offer ongoing monthly maintenance packages that include security monitoring, regular backups, SSL management, SEO tuning, and content updates.</p>
+              <h3 style="margin-bottom: 12px; color: var(--secondary); font-size: 1.15rem;">Do you provide website maintenance and hosting?</h3>
+              <p style="color: var(--text-soft); line-height: 1.7; font-size: 0.95rem;">Yes. We offer once-off website updates at R450 per hour, monthly website support at R750, and hosting from R180 per month. We assess your website and agree on the scope before starting. Technical maintenance, backups and security services are confirmed separately in your quote.</p>
+            </div>
+
+            <div class="app-card" style="padding: 36px; border-radius: 20px; border: 1px solid var(--border-color); background: var(--bg-card);">
+              <h3 style="margin-bottom: 12px; color: var(--secondary); font-size: 1.15rem;">Do I need to move my hosting to Zazele?</h3>
+              <p style="color: var(--text-soft); line-height: 1.7; font-size: 0.95rem;">No. You can use our website update services while keeping your existing hosting, provided we have the access needed to complete the work.</p>
             </div>
           </div>
         </div>

@@ -130,6 +130,13 @@
 .studio-site .package-card.featured:hover { transform: none; }
 .studio-site .package-badge { border-radius: 0; background: var(--primary); }
 .studio-site .package-price { font-family: inherit; letter-spacing: -.04em; }
+.studio-site .support-packages-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); }
+.studio-site .support-packages-grid .package-card { min-width: 0; }
+.studio-site .support-price-period { display: block; font-size: .95rem; font-weight: 500; letter-spacing: normal; color: var(--text-soft); }
+.studio-site .support-packages-grid .support-terms { font-size: .85rem; padding-top: 20px; border-top: 1px solid var(--border-color); }
+.studio-site .support-packages-grid .btn-pill { width: 100%; white-space: normal; text-align: center; }
+.studio-site .support-notes { max-width: 900px; margin-top: 32px; color: var(--text-soft); font-size: .9rem; line-height: 1.7; }
+.studio-site .support-notes p + p { margin-top: 16px; }
 .studio-site #contact-help, .studio-site #contact-status { color: var(--text-soft); font-size: .82rem; }
 .studio-site .icon-box { border-radius: 4px; background: #eeefe8; color: #244cde; }
 .studio-site .cta-banner-section { background: #e7ebdf; padding: 64px 0; border-radius: 0; }
