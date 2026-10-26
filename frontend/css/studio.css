@@ -191,3 +191,12 @@
 @media (prefers-reduced-motion: reduce) {
   .studio-site *, .studio-site *::before, .studio-site *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
+
+/* Fixed quote support cards and responsive steps. */
+.studio-site .support-packages-grid .package-price { font-size: 2rem; }
+.studio-site .support-quote-process { margin-top: 48px; }
+.studio-site .support-quote-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 32px; padding-left: 24px; margin-top: 24px; }
+.studio-site .support-quote-steps li { padding-left: 8px; }
+.studio-site .support-quote-steps li::marker { color: var(--primary); font-weight: 600; }
+.studio-site .support-quote-steps h4 { margin-bottom: 12px; }
+.studio-site .support-quote-steps p { color: var(--text-soft); font-size: .9rem; line-height: 1.7; }
